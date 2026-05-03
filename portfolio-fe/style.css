@@ -408,16 +408,6 @@ body.theme-light .grid-glow {
   justify-content: center;
   align-items: center;
 }
-.about-right {
-  display: none !important;
-}
-.about-inner {
-  grid-template-columns: 1fr !important;
-}
-.about-left {
-  max-width: 720px;
-  margin: 0 auto;
-}
 .about-right img {
   width: 100%;
   max-width: 460px;
@@ -1620,6 +1610,8 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
   .service-list li { font-size: 15px; }
   .about-inner { grid-template-columns: 1fr; padding: 100px 30px 30px; gap: 30px; }
   .about-heading { font-size: 36px; }
+  .about-right { display: none !important; }
+  .about-left { max-width: 720px; margin: 0 auto; }
   .about-right img { height: 360px; max-width: 280px; }
   .about-strip { padding: 16px 20px; font-size: 11px; flex-wrap: wrap; gap: 8px; }
   .projects-inner { padding: 60px 24px 40px; }
