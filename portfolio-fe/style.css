@@ -1994,3 +1994,18 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
 
   .service-card { width: 46vw; max-width: 560px; }
 }
+/* --- ABOUT IMAGE — match hero photo dimensions --- */
+.about-right img {
+  width: clamp(260px, 20vw, 320px);
+  max-width: 320px;
+  height: clamp(390px, 30vw, 480px);
+}
+
+/* Tighten about padding so content fits without scrolling */
+.about-inner {
+  padding: clamp(80px, 7vw, 110px) clamp(40px, 6vw, 100px) 30px;
+  gap: clamp(30px, 4vw, 60px);
+}
+.about-heading { margin-bottom: 20px; }
+.about-desc    { margin-bottom: 28px; }
+.about-actions { margin-bottom: 28px; }
