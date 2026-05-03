@@ -1908,76 +1908,87 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
     pointer-events: none;
   }
 }
+
 /* ============================================================
    SCALING FIX — Mac/Windows DPI parity
-   Append this to the END of your existing CSS file (after all
-   existing media queries). It overrides the desktop sizing to
-   be fluid instead of hardcoded.
+   DESKTOP-ONLY (≥1025px). Wrapped in a media query so the
+   clamp() minimums don't override the mobile rules above.
    ============================================================ */
+@media (min-width: 1025px) {
 
-/* --- 1. FLUID HERO + LOADER (desktop default) --- */
-.letter        { font-size: clamp(140px, 16vw, 280px); }
-.emblem        { width: clamp(180px, 20vw, 320px); }
+  /* --- 1. FLUID HERO + LOADER --- */
+  .letter        { font-size: clamp(140px, 16vw, 280px); }
+  .emblem        { width: clamp(180px, 20vw, 320px); }
 
-.logo-j, .logo-k { font-size: clamp(38px, 3.6vw, 58px); }
-.logo-emblem     { width: clamp(44px, 4.2vw, 68px); }
-.site-header     { padding: clamp(20px, 2vw, 32px) clamp(28px, 3.2vw, 52px); }
+  .logo-j, .logo-k { font-size: clamp(38px, 3.6vw, 58px); }
+  .logo-emblem     { width: clamp(44px, 4.2vw, 68px); }
+  .site-header     { padding: clamp(20px, 2vw, 32px) clamp(28px, 3.2vw, 52px); }
 
-.hero-content {
-  gap: clamp(40px, 5vw, 80px);
-  padding: 0 clamp(40px, 5vw, 80px);
-  grid-template-columns: 1fr clamp(260px, 20vw, 320px) 1fr;
+  .hero-content {
+    gap: clamp(40px, 5vw, 80px);
+    padding: 0 clamp(40px, 5vw, 80px);
+    grid-template-columns: 1fr clamp(260px, 20vw, 320px) 1fr;
+  }
+  .photo-spacer,
+  .shared-photo {
+    width:  clamp(260px, 20vw, 320px);
+    height: clamp(390px, 30vw, 480px);
+  }
+  .name { font-size: clamp(64px, 7vw, 110px); }
+
+  /* --- 2. FLUID SKILLS + WORK TEXT BLOCKS --- */
+  .skills-text {
+    padding-left: clamp(40px, 7vw, 120px);
+    max-width: min(620px, 46vw);
+  }
+  .work-text {
+    padding-right: clamp(40px, 7vw, 120px);
+    max-width: min(620px, 46vw);
+  }
+  .skills-heading,
+  .work-heading { font-size: clamp(40px, 4.4vw, 64px); }
+  .skills-kicker,
+  .work-kicker  { font-size: clamp(20px, 1.9vw, 28px); }
+
+  /* --- 3. SERVICE CARDS --- */
+  .service-card {
+    padding: clamp(36px, 3.6vw, 56px) clamp(36px, 4vw, 60px);
+    width: clamp(420px, 44vw, 640px);
+  }
+  .service-title { font-size: clamp(24px, 2.4vw, 34px); }
+
+  /* --- 4. PROJECTS / CAREER / CONTACT HEADINGS --- */
+  .projects-heading,
+  .career-heading { font-size: clamp(40px, 4.4vw, 64px); }
+  .contact-heading { font-size: clamp(44px, 5vw, 72px); }
+  .career-role     { font-size: clamp(26px, 2.5vw, 36px); }
+
+  .projects-inner,
+  .career-inner { padding: clamp(50px, 5vw, 80px) clamp(40px, 5vw, 80px); }
+
+  /* --- 5. ABOUT CURTAIN --- */
+  .about-inner { padding: clamp(80px, 7vw, 110px) clamp(40px, 6vw, 100px) 30px; gap: clamp(30px, 4vw, 60px); }
+  .about-heading { font-size: clamp(36px, 3.8vw, 56px); margin-bottom: 20px; }
+  .about-desc    { margin-bottom: 28px; }
+  .about-actions { margin-bottom: 28px; }
+
+  /* --- 6. ABOUT IMAGE — match hero photo dimensions --- */
+  .about-right img {
+    width: clamp(260px, 20vw, 320px);
+    max-width: 320px;
+    height: clamp(390px, 30vw, 480px);
+  }
+
+  /* --- 7. QUOTE --- */
+  .quote { padding: 0 clamp(40px, 6vw, 100px); }
+  .quote-text { font-size: clamp(20px, 2.2vw, 32px); }
+
+  /* --- 8. NAV OVERLAY --- */
+  .nav-list a { font-size: clamp(48px, 6vw, 84px); }
+  .nav-inner  { padding: clamp(32px, 3.6vw, 48px) clamp(40px, 5vw, 80px); }
 }
-.photo-spacer,
-.shared-photo {
-  width:  clamp(260px, 20vw, 320px);
-  height: clamp(390px, 30vw, 480px);
-}
-.name { font-size: clamp(64px, 7vw, 110px); }
 
-/* --- 2. FLUID SKILLS + WORK TEXT BLOCKS --- */
-.skills-text {
-  padding-left: clamp(40px, 7vw, 120px);
-  max-width: min(620px, 46vw);
-}
-.work-text {
-  padding-right: clamp(40px, 7vw, 120px);
-  max-width: min(620px, 46vw);
-}
-.skills-heading,
-.work-heading { font-size: clamp(40px, 4.4vw, 64px); }
-.skills-kicker,
-.work-kicker  { font-size: clamp(20px, 1.9vw, 28px); }
-
-/* --- 3. SERVICE CARDS --- */
-.service-card {
-  padding: clamp(36px, 3.6vw, 56px) clamp(36px, 4vw, 60px);
-  width: clamp(420px, 44vw, 640px);
-}
-.service-title { font-size: clamp(24px, 2.4vw, 34px); }
-
-/* --- 4. PROJECTS / CAREER / CONTACT HEADINGS --- */
-.projects-heading,
-.career-heading { font-size: clamp(40px, 4.4vw, 64px); }
-.contact-heading { font-size: clamp(44px, 5vw, 72px); }
-.career-role     { font-size: clamp(26px, 2.5vw, 36px); }
-
-.projects-inner,
-.career-inner { padding: clamp(50px, 5vw, 80px) clamp(40px, 5vw, 80px); }
-
-/* --- 5. ABOUT CURTAIN --- */
-.about-inner { padding: clamp(80px, 8vw, 120px) clamp(40px, 6vw, 100px) 40px; }
-.about-heading { font-size: clamp(36px, 3.8vw, 56px); }
-
-/* --- 6. QUOTE --- */
-.quote { padding: 0 clamp(40px, 6vw, 100px); }
-.quote-text { font-size: clamp(20px, 2.2vw, 32px); }
-
-/* --- 7. NAV OVERLAY --- */
-.nav-list a { font-size: clamp(48px, 6vw, 84px); }
-.nav-inner  { padding: clamp(32px, 3.6vw, 48px) clamp(40px, 5vw, 80px); }
-
-/* --- 8. MID-DESKTOP BREAKPOINT
+/* --- 9. MID-DESKTOP BREAKPOINT
    Targets Windows laptops at 125% scaling (effective 1100–1440px).
    Tightens the grid so the photo column doesn't crush the names. --- */
 @media (min-width: 1025px) and (max-width: 1440px) {
@@ -1994,18 +2005,3 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
 
   .service-card { width: 46vw; max-width: 560px; }
 }
-/* --- ABOUT IMAGE — match hero photo dimensions --- */
-.about-right img {
-  width: clamp(260px, 20vw, 320px);
-  max-width: 320px;
-  height: clamp(390px, 30vw, 480px);
-}
-
-/* Tighten about padding so content fits without scrolling */
-.about-inner {
-  padding: clamp(80px, 7vw, 110px) clamp(40px, 6vw, 100px) 30px;
-  gap: clamp(30px, 4vw, 60px);
-}
-.about-heading { margin-bottom: 20px; }
-.about-desc    { margin-bottom: 28px; }
-.about-actions { margin-bottom: 28px; }
