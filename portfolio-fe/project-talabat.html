@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Case study: Talabat one-page checkout — collapsing four screens of friction into a single terminal screen for a mobile-first MENA audience.">
+<title>Talabat · Case Study — Jenish Karki</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,700;9..144,800&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   TALABAT CASE STUDY — scoped under .bkvm-page
+   Typography: editorial magazine. Layout: Porsche-style stagger.
+   (Shares the BKVM / AIRA case-study chassis for consistency.)
+   ============================================================ */
+
+.bkvm-page,
+.bkvm-page * {
+  box-sizing: border-box;
+}
+
+.bkvm-page {
+  --bg: #f5f4f0;
+  --bg-2: #ebeae5;
+  --bg-dark: #0a1224;
+  --bg-dark-2: #050a18;
+  --ink: #0a0a0a;
+  --ink-2: #1a1a1a;
+  --ink-mute: #6b6b6b;
+  --ink-faint: #9a9a9a;
+  --rule: rgba(10, 10, 10, 0.12);
+  --rule-strong: rgba(10, 10, 10, 0.32);
+  --gold: #d4a548;
+  --gold-soft: #e8c97e;
+  --navy: #1a3050;
+  --red: #c2362b;
+  --green: #1f7a3d;
+  --serif: 'Fraunces', 'Times New Roman', serif;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+html { scroll-behavior: smooth; }
+
+/* Selection */
+.bkvm-page ::selection { background: var(--gold); color: var(--ink); }
+
+/* ===== Top nav (fixed) ===== */
+.bkvm-nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px max(5vw, 32px);
+  background: linear-gradient(180deg, rgba(245, 244, 240, 0.96), rgba(245, 244, 240, 0));
+  backdrop-filter: saturate(140%) blur(8px);
+  -webkit-backdrop-filter: saturate(140%) blur(8px);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: padding 0.4s var(--ease);
+}
+.bkvm-nav a {
+  color: var(--ink);
+  text-decoration: none;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.2s var(--ease);
+}
+.bkvm-nav a:hover { opacity: 0.5; }
+.bkvm-nav .center {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 14px;
+  color: var(--ink-mute);
+}
+@media (max-width: 720px) {
+  .bkvm-nav { padding: 16px 20px; font-size: 10px; }
+  .bkvm-nav .center { display: none; }
+}
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100svh;
+  padding: clamp(120px, 18vh, 200px) max(5vw, 32px) clamp(48px, 8vh, 96px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.hero .eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--gold);
+  margin-bottom: clamp(28px, 4vh, 56px);
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.hero .eyebrow::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+  display: inline-block;
+}
+
+.hero h1 {
+  font-size: clamp(56px, 11vw, 168px);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  font-weight: 800;
+  margin: 0 0 clamp(28px, 4vh, 48px);
+  max-width: 14ch;
+  font-feature-settings: 'ss01';
+}
+
+.hero .lede {
+  font-size: clamp(20px, 2.4vw, 32px);
+  line-height: 1.32;
+  font-weight: 400;
+  color: var(--ink-2);
+  max-width: 28ch;
+  margin: 0;
+}
+.hero .lede em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.hero-meta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  border-top: 1px solid var(--rule);
+  padding-top: 28px;
+  margin-top: clamp(64px, 10vh, 120px);
+}
+.hero-meta .cell .label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.hero-meta .cell .value {
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.4;
+}
+@media (max-width: 720px) {
+  .hero-meta { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+}
+
+/* ===== Intro lede block (post-hero, like Porsche f03) ===== */
+.intro-block {
+  padding: clamp(80px, 14vh, 180px) max(5vw, 32px) clamp(80px, 14vh, 180px);
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+.intro-block .body {
+  grid-column: 7 / -1;
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.42;
+  font-weight: 400;
+  color: var(--ink);
+  max-width: 32ch;
+}
+.intro-block .body strong {
+  font-weight: 600;
+}
+.intro-block .marker {
+  grid-column: 1 / 7;
+  align-self: end;
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(80px, 14vw, 220px);
+  line-height: 0.85;
+  color: var(--ink);
+  letter-spacing: -0.04em;
+  font-style: italic;
+}
+@media (max-width: 900px) {
+  .intro-block .body { grid-column: 1 / -1; font-size: 22px; }
+  .intro-block .marker { display: none; }
+}
+
+/* ===== Section base ===== */
+.section {
+  padding: clamp(96px, 16vh, 200px) max(5vw, 32px);
+  position: relative;
+}
+.section + .section {
+  border-top: 1px solid var(--rule);
+}
+
+.section-head {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+  margin-bottom: clamp(56px, 8vh, 112px);
+}
+.section-meta {
+  grid-column: 1 / 4;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: sticky;
+  top: 100px;
+  align-self: start;
+}
+.section-meta .num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(36px, 4vw, 64px);
+  line-height: 1;
+  color: var(--gold);
+  letter-spacing: -0.02em;
+}
+.section-meta .label {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink-mute);
+}
+
+.section-title {
+  grid-column: 4 / -1;
+}
+.section-title h2 {
+  font-size: clamp(36px, 5.5vw, 84px);
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+  margin: 0 0 clamp(28px, 4vh, 40px);
+  max-width: 18ch;
+}
+.section-title h2 em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+}
+.section-title .body {
+  font-size: clamp(17px, 1.3vw, 20px);
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 56ch;
+}
+.section-title .body + .body { margin-top: 1.2em; }
+
+@media (max-width: 900px) {
+  .section-head { gap: 16px; }
+  .section-meta { grid-column: 1 / -1; flex-direction: row; align-items: baseline; gap: 16px; position: static; margin-bottom: 12px; }
+  .section-meta .num { font-size: 28px; }
+  .section-title { grid-column: 1 / -1; }
+}
+
+/* ===== Image figures ===== */
+.figure {
+  margin: 0;
+  position: relative;
+}
+.figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.figure figcaption {
+  margin-top: 16px;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 500;
+}
+
+/* Full-bleed (page-wide) image */
+.figure.full {
+  margin-left: calc(-1 * max(5vw, 32px));
+  margin-right: calc(-1 * max(5vw, 32px));
+}
+
+/* Wide hero image (slightly inset) */
+.figure.wide {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Card image (offset / inset) */
+.figure.card img {
+  border-radius: 4px;
+  box-shadow: 0 24px 64px -32px rgba(0, 0, 0, 0.18);
+}
+
+/* ===== Two-column "split" — text + phone mockup ===== */
+.split {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(40px, 6vw, 96px);
+  align-items: center;
+  margin-top: clamp(80px, 12vh, 160px);
+}
+.split.--reverse > .split-text { grid-column: 7 / -1; order: 2; }
+.split.--reverse > .split-image { grid-column: 1 / 7; order: 1; }
+.split-text { grid-column: 1 / 7; }
+.split-text h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(28px, 3.5vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0 0 24px;
+  max-width: 18ch;
+}
+.split-text .body {
+  font-size: clamp(16px, 1.2vw, 19px);
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 48ch;
+}
+.split-text .body + .body { margin-top: 1em; }
+.split-image { grid-column: 7 / -1; }
+.split-image img {
+  display: block;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  height: auto;
+}
+
+@media (max-width: 900px) {
+  .split { grid-template-columns: 1fr; gap: 48px; }
+  .split-text, .split-image,
+  .split.--reverse > .split-text, .split.--reverse > .split-image { grid-column: 1 / -1; order: unset; }
+  .split-image img { max-width: 360px; }
+}
+
+/* ===== Pull-quote / accent ===== */
+.pull {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(28px, 3.6vw, 56px);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  max-width: 22ch;
+  margin: clamp(80px, 12vh, 160px) auto;
+  text-align: center;
+  padding: 0 max(5vw, 24px);
+}
+.pull::before, .pull::after { color: var(--gold); }
+.pull::before { content: '“'; }
+.pull::after  { content: '”'; }
+
+/* ===== Outcomes / stats ===== */
+.outcomes {
+  background: var(--bg-dark);
+  color: #fff;
+  padding: clamp(120px, 18vh, 220px) max(5vw, 32px);
+  margin-top: clamp(96px, 14vh, 160px);
+  position: relative;
+  overflow: hidden;
+}
+.outcomes::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 50% at 80% 0%, rgba(212, 165, 72, 0.16), transparent 70%);
+  pointer-events: none;
+}
+.outcomes .section-head { margin-bottom: clamp(64px, 10vh, 128px); }
+.outcomes .section-meta .num { color: var(--gold); }
+.outcomes .section-meta .label { color: rgba(255, 255, 255, 0.55); }
+.outcomes .section-title h2 { color: #fff; }
+.outcomes .section-title .body { color: rgba(255, 255, 255, 0.72); }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(32px, 4vw, 80px);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  padding-top: clamp(48px, 6vh, 80px);
+  position: relative;
+  z-index: 1;
+}
+.stat .num {
+  display: block;
+  font-size: clamp(56px, 8vw, 128px);
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+  color: var(--gold);
+  margin-bottom: 16px;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+}
+.stat .label {
+  display: block;
+  font-size: 14px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 22ch;
+}
+@media (max-width: 720px) {
+  .stats { grid-template-columns: 1fr; gap: 40px; }
+}
+
+/* ===== Footer / next ===== */
+.bkvm-footer {
+  background: var(--bg-dark-2);
+  color: #fff;
+  padding: clamp(64px, 10vh, 120px) max(5vw, 32px) 48px;
+}
+.bkvm-footer .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  padding-top: 32px;
+}
+.bkvm-footer a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  transition: opacity 0.2s var(--ease);
+}
+.bkvm-footer a:hover { opacity: 0.6; }
+.bkvm-footer .lede {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(28px, 4vw, 56px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 64px;
+  max-width: 22ch;
+  color: rgba(255, 255, 255, 0.92);
+}
+.bkvm-footer .credit {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 500;
+}
+
+/* ===== Prototype embed (interactive Figma) ===== */
+.prototype-section {
+  padding: clamp(96px, 16vh, 200px) max(5vw, 32px);
+  border-top: 1px solid var(--rule);
+  text-align: center;
+}
+.proto-head {
+  max-width: 720px;
+  margin: 0 auto clamp(48px, 7vh, 80px);
+}
+.proto-head .eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--gold);
+  margin-bottom: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.proto-head .eyebrow::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+  display: inline-block;
+}
+.proto-head h2 {
+  font-size: clamp(36px, 5.5vw, 84px);
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+  margin: 0 auto 24px;
+  max-width: 16ch;
+}
+.proto-head h2 em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+}
+.proto-head p {
+  font-size: clamp(17px, 1.3vw, 20px);
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 56ch;
+  margin: 0 auto;
+}
+.proto-head p em { color: var(--ink-mute); font-style: italic; }
+
+.proto-stage {
+  position: relative;
+  margin: 0 auto;
+  max-width: 1100px;
+  background: #15243a;
+  border-radius: 24px;
+  padding: clamp(20px, 3vh, 32px);
+  overflow: hidden;
+  box-shadow: 0 30px 80px -30px rgba(20, 12, 0, 0.4);
+}
+.proto-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 60% at 50% 30%, rgba(212, 165, 72, 0.10), transparent 70%);
+  pointer-events: none;
+}
+.proto-stage iframe {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border: none;
+  border-radius: 14px;
+  display: block;
+  background: #0a1224;
+}
+
+.proto-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: clamp(32px, 5vh, 48px);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.proto-open,
+.proto-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 26px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.3s var(--ease), color 0.3s var(--ease), transform 0.2s var(--ease), border-color 0.3s var(--ease);
+}
+.proto-open {
+  background: var(--ink);
+  color: #fff;
+  border: 1px solid var(--ink);
+}
+.proto-open:hover {
+  background: var(--gold);
+  color: var(--ink);
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
+.proto-open svg { transition: transform 0.3s var(--ease); }
+.proto-open:hover svg { transform: translate(2px, -2px); }
+.proto-hint {
+  background: transparent;
+  color: var(--ink-mute);
+  border: 1px solid var(--rule);
+  cursor: default;
+}
+
+@media (max-width: 720px) {
+  .proto-stage { padding: 8px; border-radius: 16px; }
+  .proto-stage iframe {
+    aspect-ratio: auto;
+    height: 70vh;
+    min-height: 500px;
+    border-radius: 10px;
+  }
+}
+
+/* ===== Scroll reveal animations =====
+   Hidden state ONLY applies when JS adds .js-anim to <html>.
+   If JS fails for any reason, all content stays visible. */
+.js-anim [data-anim] {
+  opacity: 0;
+  transition: opacity 1s var(--ease-out), transform 1s var(--ease-out);
+  will-change: opacity, transform;
+}
+.js-anim [data-anim="up"]     { transform: translate3d(0, 48px, 0); }
+.js-anim [data-anim="left"]   { transform: translate3d(40px, 0, 0); }
+.js-anim [data-anim="fade"]   { transform: none; }
+.js-anim [data-anim="reveal"] {
+  opacity: 0;
+  transform: translate3d(0, 40px, 0);
+  transition: opacity 1.2s var(--ease-out), transform 1.2s var(--ease-out);
+}
+.js-anim [data-anim].in {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 0 0);
+}
+.js-anim [data-anim][data-delay="1"].in { transition-delay: 0.12s; }
+.js-anim [data-anim][data-delay="2"].in { transition-delay: 0.24s; }
+.js-anim [data-anim][data-delay="3"].in { transition-delay: 0.36s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js-anim [data-anim] {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
+/* ===== Numbered list (used in problem section) ===== */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: clamp(56px, 8vh, 96px);
+  padding-top: 32px;
+  border-top: 1px solid var(--rule);
+}
+.fact .key {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.fact .val {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+@media (max-width: 900px) { .facts { grid-template-columns: 1fr; gap: 24px; } }
+
+/* ===== Decision log — annotated UX rationale callouts =====
+   Research-driven: makes design thinking VISIBLE to recruiters
+   who scan portfolios for evidence of reasoning, not just craft. */
+.decisions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(28px, 4vw, 48px);
+  margin-top: clamp(64px, 10vh, 120px);
+  padding-top: clamp(40px, 6vh, 64px);
+  border-top: 1px solid var(--rule);
+}
+.decisions-head {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+.decisions-head .key {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--gold);
+}
+.decisions-head .lede {
+  font-size: 14px;
+  color: var(--ink-mute);
+  font-style: italic;
+  font-family: var(--serif);
+}
+.decision {
+  border-left: 2px solid var(--gold);
+  padding: 4px 0 4px 24px;
+}
+.decision .q {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(20px, 2vw, 26px);
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0 0 14px;
+  letter-spacing: -0.01em;
+}
+.decision .a {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  margin: 0;
+}
+.decision .a strong { color: var(--ink); font-weight: 600; }
+.decision .a em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--ink); }
+@media (max-width: 720px) {
+  .decisions { grid-template-columns: 1fr; gap: 28px; }
+  .decision { padding-left: 18px; }
+  .decisions-head { flex-direction: column; gap: 4px; }
+}
+
+/* ===== Reflection — what I learned / what I'd test next =====
+   Research-driven: junior portfolios that include reflection
+   sections (per Aakriti Chugh model) signal growth mindset
+   and honest self-assessment. Recruiters value this strongly. */
+.reflection {
+  padding: clamp(96px, 14vh, 180px) max(5vw, 32px);
+  background: var(--bg-2);
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+.reflection .meta {
+  grid-column: 1 / 4;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--gold);
+  position: sticky;
+  top: 100px;
+  align-self: start;
+}
+.reflection .body {
+  grid-column: 4 / -1;
+  max-width: 64ch;
+}
+.reflection h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(28px, 4vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 28px;
+  max-width: 22ch;
+  color: var(--ink);
+}
+.reflection p {
+  font-size: clamp(16px, 1.2vw, 19px);
+  line-height: 1.65;
+  color: var(--ink-2);
+  margin: 0 0 1em;
+}
+.reflection p em { font-family: var(--serif); font-style: italic; }
+.reflection p strong { color: var(--ink); font-weight: 600; }
+.reflection ul {
+  list-style: none;
+  padding: 0;
+  margin: 36px 0 0;
+}
+.reflection ul li {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 24px;
+  padding: 16px 0;
+  border-top: 1px solid var(--rule);
+  font-size: 14.5px;
+}
+.reflection ul li:last-child { border-bottom: 1px solid var(--rule); }
+.reflection ul li .k {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink-mute);
+  align-self: center;
+}
+.reflection ul li .v {
+  color: var(--ink);
+  font-weight: 500;
+  line-height: 1.45;
+}
+@media (max-width: 900px) {
+  .reflection { grid-template-columns: 1fr; }
+  .reflection .meta { grid-column: 1; position: static; margin-bottom: 16px; }
+  .reflection .body { grid-column: 1; }
+  .reflection ul li { grid-template-columns: 1fr; gap: 4px; }
+  .reflection ul li .k { font-size: 10px; }
+}
+</style>
+
+</head>
+
+<body class="bkvm-page">
+
+<!-- ===== TOP NAV ===== -->
+<nav class="bkvm-nav" aria-label="Case study navigation">
+  <a href="index.html#projects" aria-label="Back to portfolio">
+    <span aria-hidden="true">←</span> Portfolio
+  </a>
+  <span class="center">Speculative redesign · Talabat</span>
+  <a href="https://www.figma.com/proto/9bxlkm7Xh9QwG8ckOjaZij/initial?node-id=779-239&t=BKINULumNeRMcWP4-1&scaling=scale-down&content-scaling=fixed&page-id=1%3A2&starting-point-node-id=779%3A164&show-proto-sidebar=1" target="_blank" rel="noopener noreferrer" aria-label="Open prototype in new tab">
+    Prototype <span aria-hidden="true">→</span>
+  </a>
+</nav>
+
+<main>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div>
+      <span class="eyebrow" data-anim="up">Speculative redesign · Self-initiated · 2024</span>
+      <h1 id="hero-title" data-anim="up" data-delay="1">Talabat.<br>One-page<br>checkout.</h1>
+      <p class="lede" data-anim="up" data-delay="2">Talabat's checkout has 4 screens. I redesigned it as one. Self-initiated work, not a real client engagement.</p>
+    </div>
+
+    <div class="hero-meta" data-anim="fade" data-delay="3">
+      <div class="cell"><span class="label">Role</span><span class="value">UI/UX Designer</span></div>
+      <div class="cell"><span class="label">Tools</span><span class="value">Figma · FigJam</span></div>
+      <div class="cell"><span class="label">Surface</span><span class="value">Native mobile · MENA</span></div>
+      <div class="cell"><span class="label">Scope</span><span class="value">Cart → confirmation</span></div>
+    </div>
+  </section>
+
+  <!-- ===== INTRO LEDE ===== -->
+  <section class="intro-block" aria-label="Project overview">
+    <div class="marker" data-anim="up" aria-hidden="true">talabat.</div>
+    <p class="body" data-anim="up" data-delay="1">
+      A redesign of the Talabat mobile checkout. The current flow has <strong>4 separate screens</strong>: address, then payment, then review, then confirm. I redesigned it as one screen you scroll through. Three personas helped me test it against tough scenarios. <strong>Talabat did not ask me to do this.</strong> Without a real A/B test, this is a thesis with reasoning behind it, not a proven result.
+    </p>
+  </section>
+
+  <!-- ===== 01 · THE PROBLEM ===== -->
+  <section class="section" aria-labelledby="sec-01">
+    <header class="section-head">
+      <div class="section-meta">
+        <span class="num" data-anim="up">01</span>
+        <span class="label" data-anim="up" data-delay="1">The Problem</span>
+      </div>
+      <div class="section-title">
+        <h2 id="sec-01" data-anim="up">Four screens.<br><em>Four chances to leave.</em></h2>
+        <p class="body" data-anim="up" data-delay="1">
+          Splitting checkout across 4 steps looks organized on paper. In practice, every screen change makes users forget what's in the cart. They have to rebuild it in their head each time. By the time they reach the final review, the order feels far away. Doubt sets in.
+        </p>
+        <p class="body" data-anim="up" data-delay="2">
+          The math is also bad. If 90% of users finish each screen, after 4 screens you're at <em>65%</em>, not 90%. Every screen is a chance to lose someone.
+        </p>
+      </div>
+    </header>
+
+    <figure class="figure full" data-anim="reveal">
+      <img src="./assets/talabat/01-flow-hero.png" alt="The redesigned checkout — one continuous screen replacing four sequential steps." loading="lazy">
+    </figure>
+
+    <div class="facts">
+      <div class="fact" data-anim="up"><span class="key">Before</span><span class="val">Address → Payment → Review → Confirm. 4 screens. 4 loads. 4 chances for the user to forget what they were ordering.</span></div>
+      <div class="fact" data-anim="up" data-delay="1"><span class="key">Context</span><span class="val">Most MENA users order on phones, in small windows of time: a commute, a lunch break, late at night, before iftar. No patience for long forms.</span></div>
+      <div class="fact" data-anim="up" data-delay="2"><span class="key">After</span><span class="val">One scroll. Defaults pre-filled. Total always visible. Edit and Change open as sheets so nothing in the cart resets.</span></div>
+    </div>
+  </section>
+
+  <!-- ===== Pull quote ===== -->
+  <p class="pull" data-anim="up">A 4-step checkout solves the database's problem, not the user's.</p>
+
+  <!-- ===== 02 · APPROACH (PERSONAS + CONVERGENCE) ===== -->
+  <section class="section" aria-labelledby="sec-02">
+    <header class="section-head">
+      <div class="section-meta">
+        <span class="num" data-anim="up">02</span>
+        <span class="label" data-anim="up" data-delay="1">Approach</span>
+      </div>
+      <div class="section-title">
+        <h2 id="sec-02" data-anim="up">Five entry points. <em>One terminal screen.</em></h2>
+        <p class="body" data-anim="up" data-delay="1">
+          Users start checkout from a lot of different places: homepage, search, the restaurant page, talabat mart, vouchers, past orders. They all end up at the same checkout screen. With 5 different ways in, that final screen has to handle every kind of context.
+        </p>
+        <p class="body" data-anim="up" data-delay="2">
+          A stepped flow makes everyone go through the same sub-funnel. A one-page flow lets users scan and decide, no matter how they got there.
+        </p>
+      </div>
+    </header>
+
+    <figure class="figure wide" data-anim="reveal">
+      <img src="./assets/talabat/02-entry-login.png" alt="Talabat login screen — the entry point that funnels every order, regardless of origin, into a single checkout terminus." loading="lazy">
+      <figcaption>Entry · login &amp; identity continuity</figcaption>
+    </figure>
+
+    <div class="split --reverse">
+      <div class="split-text">
+        <h3 data-anim="up">Built for Fatima at 5 PM.</h3>
+        <p class="body" data-anim="up" data-delay="1">
+          I tested the design against three personas: Omar ordering lunch, Rayan ordering at midnight, and Fatima ordering iftar during Ramadan with sunset approaching. Iftar ordering during Ramadan packs a year's worth of stressful checkout situations into 30 days.
+        </p>
+        <p class="body" data-anim="up" data-delay="2">
+          If the checkout works for Fatima at 5 PM during Ramadan, fasting, racing the sunset, paying AED 250 for an order across three restaurants, it should work for everyone else the rest of the year.
+        </p>
+      </div>
+      <figure class="figure split-image" data-anim="up" data-delay="1">
+        <img src="./assets/talabat/05-phone-convergence.png" alt="Mobile checkout viewed in full — order, address, payment, tip, total, CTA on a single scroll." loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== 03 · SOLUTION ===== -->
+  <section class="section" aria-labelledby="sec-03">
+    <header class="section-head">
+      <div class="section-meta">
+        <span class="num" data-anim="up">03</span>
+        <span class="label" data-anim="up" data-delay="1">The Solution</span>
+      </div>
+      <div class="section-title">
+        <h2 id="sec-03" data-anim="up">One scroll. <em>Eight modules.</em></h2>
+        <p class="body" data-anim="up" data-delay="1">
+          The new screen has 8 sections, all on one scroll. A reassurance banner at the top. The order summary with an inline Edit. The delivery address with a one-tap Change. The saved payment method, with the card brand visible. Tip options as preset chips. Cost breakdown grouped as one block. The Confirm button in thumb reach. A small secure-checkout note at the foot.
+        </p>
+      </div>
+    </header>
+
+    <figure class="figure wide" data-anim="reveal">
+      <img src="./assets/talabat/03-checkout-detail.png" alt="The redesigned checkout — items, address, payment, tip, total, and CTA stacked as one continuous decision surface." loading="lazy">
+      <figcaption>Mobile · checkout terminus</figcaption>
+    </figure>
+
+    <div class="split">
+      <div class="split-text">
+        <h3 data-anim="up">Edit without losing the cart.</h3>
+        <p class="body" data-anim="up" data-delay="1">
+          Edit and Change open as sheets that slide up over the screen. They don't take you to a new page. So if Fatima taps Edit to check whether she added the no-onion note for her kid, when she closes the sheet she's right where she was.
+        </p>
+        <p class="body" data-anim="up" data-delay="2">
+          The cart stays. The tip selection stays. The promo code stays. The address stays. The user never has to start over.
+        </p>
+      </div>
+      <figure class="figure split-image" data-anim="up" data-delay="1">
+        <img src="./assets/talabat/06-phone-solution.png" alt="Mobile checkout with order summary, delivery address card, and payment method visible together — defaults pre-selected, every action one tap." loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== 04 · VISUAL DECISIONS ===== -->
+  <section class="section" aria-labelledby="sec-04">
+    <header class="section-head">
+      <div class="section-meta">
+        <span class="num" data-anim="up">04</span>
+        <span class="label" data-anim="up" data-delay="1">Visual Decisions</span>
+      </div>
+      <div class="section-title">
+        <h2 id="sec-04" data-anim="up">Lock icon.<br><em>Not a cart icon.</em></h2>
+        <p class="body" data-anim="up" data-delay="1">
+          Most parts of the screen have a reason behind them. The trust pill is at the top because users want to know their data is safe before they read anything else. The ETA goes above the price because for Ramadan orderers, when the food arrives matters more than how much it costs. The tip says "Goes to rider" because without that label, users assume it's a fee added by the platform.
+        </p>
+        <p class="body" data-anim="up" data-delay="2">
+          The Confirm button has a lock icon, not a cart icon. The user already knows it's a cart. They've been looking at one for 30 seconds. What they need at the moment of tapping is to feel safe.
+        </p>
+      </div>
+    </header>
+
+    <figure class="figure full" data-anim="reveal">
+      <img src="./assets/talabat/04-full-vertical.png" alt="Full vertical view — every visual decision visible on one canvas: header pill, reassurance banner, items, address, payment, tip, breakdown, CTA, secure footer." loading="lazy">
+      <figcaption style="padding: 0 max(5vw, 32px); margin-top: 24px;">Header → Reassurance → Items → Address → Payment → Tip → Total → CTA → Trust</figcaption>
+    </figure>
+
+    <div class="split">
+      <div class="split-text">
+        <h3 data-anim="up">Show everything at once.</h3>
+        <p class="body" data-anim="up" data-delay="1">
+          The usual concern about one-page checkout is that users won't trust something this fast. But trust isn't built by making people slow down. It's built by showing them everything they need at once.
+        </p>
+        <p class="body" data-anim="up" data-delay="2">
+          When users see the full cost breakdown, the secure-checkout note, the masked card, and the address with a small map, all on one screen, they trust the order more than they would after clicking through 4 review pages. The breakdown sits in one peach-colored block so it reads as one piece of information, not 4 separate fees.
+        </p>
+      </div>
+      <figure class="figure split-image" data-anim="up" data-delay="1">
+        <img src="./assets/talabat/07-phone-decisions.png" alt="Mobile checkout — close detail of the cost breakdown block, tip chips, and Confirm &amp; Place Order CTA." loading="lazy">
+      </figure>
+    </div>
+
+    <!-- ===== Decision log ===== -->
+    <div class="decisions">
+      <div class="decisions-head">
+        <span class="key">Decision log</span>
+        <span class="lede">Five calls behind the redesign.</span>
+      </div>
+
+      <div class="decision" data-anim="up">
+        <p class="q">Why one page, not 4 steps?</p>
+        <p class="a">The math kills 4-step flows. Even with 90% completion per screen, you end up at 65% after 4 screens. The reason 4-step exists is because backends like to validate one stage at a time. Users don't think in stages. They have one job: place the order.</p>
+      </div>
+
+      <div class="decision" data-anim="up" data-delay="1">
+        <p class="q">Why a lock icon on the button, not a cart icon?</p>
+        <p class="a">By the time the user reaches the button, they've been looking at the cart for 30 seconds. They don't need a reminder of what it is. What they need at that moment is to feel safe hitting confirm. A lock answers that. A cart answers a question they're not asking.</p>
+      </div>
+
+      <div class="decision" data-anim="up" data-delay="2">
+        <p class="q">Why label the tip "Goes to rider"?</p>
+        <p class="a">Without the label, users think the tip is a fee added by the platform. With the label, they know the money goes to the person delivering the food. Same field, different feeling. I think the rename probably did more for tip rates than any layout change in this redesign.</p>
+      </div>
+
+      <div class="decision" data-anim="up" data-delay="3">
+        <p class="q">Why put the ETA above the price?</p>
+        <p class="a">For Ramadan iftar orders, the user is racing the sunset. They've been fasting all day. They need food at a specific time. Whether the order costs AED 80 or AED 90 matters less than whether it arrives at 6:34 PM or 7:15 PM. So the ETA goes first.</p>
+      </div>
+
+      <div class="decision" data-anim="up" data-delay="3">
+        <p class="q">Why use sheets for Edit, not a separate page?</p>
+        <p class="a">On most checkouts, tapping back wipes everything: tip selection, promo code, address. So a user like Fatima, who just wants to verify "did I add the no-onion note?", might lose the whole cart trying to check one detail. Sheets keep the cart intact while she edits.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== INTERACTIVE PROTOTYPE — live Figma embed ===== -->
+  <section class="prototype-section" aria-labelledby="proto-title">
+    <header class="proto-head">
+      <span class="eyebrow" data-anim="up">Live · Click through</span>
+      <h2 id="proto-title" data-anim="up" data-delay="1">See the <em>collapse</em> yourself.</h2>
+      <p data-anim="up" data-delay="2">
+        The full happy path is wired up — Login → Home → Restaurant → Cart →
+        Checkout → Confirmation. Click through to feel the four-screen flow collapse
+        into one. <em>Best on desktop.</em>
+      </p>
+    </header>
+
+    <div class="proto-stage" data-anim="fade">
+      <iframe
+        src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2F9bxlkm7Xh9QwG8ckOjaZij%2Finitial%3Fnode-id%3D779-239%26t%3DBKINULumNeRMcWP4-1%26scaling%3Dscale-down%26content-scaling%3Dfixed%26page-id%3D1%253A2%26starting-point-node-id%3D779%253A164%26show-proto-sidebar%3D1"
+        title="Talabat one-page checkout — interactive Figma prototype"
+        allowfullscreen
+        loading="lazy">
+      </iframe>
+    </div>
+
+    <div class="proto-actions" data-anim="up" data-delay="1">
+      <a class="proto-open"
+         href="https://www.figma.com/proto/9bxlkm7Xh9QwG8ckOjaZij/initial?node-id=779-239&t=BKINULumNeRMcWP4-1&scaling=scale-down&content-scaling=fixed&page-id=1%3A2&starting-point-node-id=779%3A164&show-proto-sidebar=1"
+         target="_blank" rel="noopener">
+        Open in Figma
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M7 17 L17 7 M9 7 H17 V15"/>
+        </svg>
+      </a>
+      <span class="proto-hint" aria-hidden="true">Tap restaurant card → cart → checkout</span>
+    </div>
+  </section>
+
+  <!-- ===== 05 · OUTCOMES ===== -->
+  <section class="section outcomes" aria-labelledby="sec-05">
+    <header class="section-head">
+      <div class="section-meta">
+        <span class="num" data-anim="up">05</span>
+        <span class="label" data-anim="up" data-delay="1">Outcomes</span>
+      </div>
+      <div class="section-title">
+        <h2 id="sec-05" data-anim="up">Designed around <em>intent</em>, not backend.</h2>
+        <p class="body" data-anim="up" data-delay="1">
+          Multi-step checkouts are usually designed for what the system needs, not what the user is doing. They map to backend stages: validate the address, validate the payment, submit. But the user is doing one thing: placing an order. Aligning the interface with what the user wants, not what the backend wants, is where the conversion lift is.
+        </p>
+      </div>
+    </header>
+
+    <div class="stats">
+      <div class="stat" data-anim="up">
+        <span class="num">4 → 1</span>
+        <span class="label">4 sequential screens collapsed into one scroll. Every choice and every trust signal in the same place.</span>
+      </div>
+      <div class="stat" data-anim="up" data-delay="1">
+        <span class="num">3<span style="color: var(--gold-soft); font-size: 0.5em; vertical-align: 0.4em; letter-spacing: 0.04em;"> personas</span></span>
+        <span class="label">Tested against Omar at lunch, Rayan at midnight, Fatima at iftar during Ramadan. Iftar is the toughest ordering window of the year.</span>
+      </div>
+      <div class="stat" data-anim="up" data-delay="2">
+        <span class="num">6<span style="color: var(--gold-soft); font-size: 0.5em; vertical-align: 0.4em; letter-spacing: 0.04em;"> edge cases</span></span>
+        <span class="label">Payment failure, item out of stock, zone error, expired promo, network drop, accessibility. The cart survives all of them.</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== REFLECTION — research-aligned: especially important for
+     speculative work, which recruiters flag as a portfolio weakness
+     unless explicitly bounded with honest scope. ===== -->
+<section class="reflection" aria-labelledby="reflect-tlb">
+  <span class="meta" data-anim="up">Reflection</span>
+  <div class="body">
+    <h3 id="reflect-tlb" data-anim="up">What this work is, and what it isn't.</h3>
+    <p data-anim="up" data-delay="1">
+      This is a redesign I did on my own. Talabat didn't commission it. They haven't implemented anything from it. I made it to test an idea: that MENA checkout flows could be much shorter without losing trust. The reasoning is real. Whether this would actually convert better in production is a guess I haven't tested.
+    </p>
+    <p data-anim="up" data-delay="2">
+      One thing I didn't expect when I started: the labels mattered more than the layout. Renaming "Tip" to "Goes to rider" changes how the field feels. Renaming "Pay" to "Confirm &amp; Place Order" tells the user what is actually about to happen. I went in thinking the big win was the 4-to-1 collapse. Looking at the final design, I think the bigger win was in the words.
+    </p>
+
+    <ul data-anim="up" data-delay="3">
+      <li><span class="k">Would test</span><span class="v">Completion rate vs the live Talabat checkout. Time to confirm. Drop-off by step. Tip uptake before and after the rider label. Conversion during Ramadan vs normal evenings.</span></li>
+      <li><span class="k">Would redo</span><span class="v">The Arabic RTL version (mocked in English only). Accessibility (touch targets are 48px but I have not run VoiceOver or TalkBack). The promo code expansion behavior.</span></li>
+      <li><span class="k">What's missing</span><span class="v">No live data. No real A/B test. The personas are built from research and intuition, not interviews. So this is a thesis with reasoning behind it, not a result.</span></li>
+      <li><span class="k">Best decision</span><span class="v">Renaming the tip field. Smallest change in the whole redesign. Probably the biggest psychological shift. If anything from this work made it into production first, that would be it.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="bkvm-footer">
+  <p class="lede" data-anim="up">The user already decided what they want. The interface should get out of the way.</p>
+  <div class="row">
+    <a href="index.html#projects"><span aria-hidden="true">←</span> Back to portfolio</a>
+    <a href="https://www.figma.com/proto/9bxlkm7Xh9QwG8ckOjaZij/initial?node-id=779-239&t=BKINULumNeRMcWP4-1&scaling=scale-down&content-scaling=fixed&page-id=1%3A2&starting-point-node-id=779%3A164&show-proto-sidebar=1" target="_blank" rel="noopener noreferrer">View prototype <span aria-hidden="true">→</span></a>
+  </div>
+  <p class="credit" style="margin-top: 32px;">Talabat one-page checkout · MENA native mobile · Cart → confirmation</p>
+</footer>
+
+<script>
+  // ===== Scroll reveal (IntersectionObserver) =====
+  (function () {
+    // Mark JS as active so the hidden CSS state engages
+    document.documentElement.classList.add('js-anim');
+
+    const els = document.querySelectorAll('[data-anim]');
+    if (!('IntersectionObserver' in window) || !els.length) {
+      els.forEach((el) => el.classList.add('in'));
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+    );
+    els.forEach((el) => io.observe(el));
+
+    // Failsafe: anything still hidden after 2.5s gets shown anyway
+    setTimeout(() => {
+      document.querySelectorAll('[data-anim]:not(.in)').forEach((el) => el.classList.add('in'));
+    }, 2500);
+  })();
+
+  // ===== Nav: condense on scroll =====
+  (function () {
+    const nav = document.querySelector('.bkvm-nav');
+    if (!nav) return;
+    let last = 0;
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (y > 80 && y > last) {
+        nav.style.transform = 'translateY(-100%)';
+      } else {
+        nav.style.transform = 'translateY(0)';
+      }
+      nav.style.transition = 'transform 0.4s cubic-bezier(0.4,0,0.2,1)';
+      last = y;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+</script>
+
+</body>
+</html>

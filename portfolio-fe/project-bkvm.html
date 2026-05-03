@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Case study: replacing 40 years of manual admissions at Bal Kalyan Vidya Mandir with a structured digital system.">
+<title>Bal Kalyan Vidya Mandir · Case Study — Jenish Karki</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,700;9..144,800&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   BKVM CASE STUDY — scoped under .bkvm-page
+   Typography: editorial magazine. Layout: Porsche-style stagger.
+   ============================================================ */
+
+.bkvm-page,
+.bkvm-page * {
+  box-sizing: border-box;
+}
+
+.bkvm-page {
+  --bg: #f5f4f0;
+  --bg-2: #ebeae5;
+  --bg-dark: #0a1224;
+  --bg-dark-2: #050a18;
+  --ink: #0a0a0a;
+  --ink-2: #1a1a1a;
+  --ink-mute: #6b6b6b;
+  --ink-faint: #9a9a9a;
+  --rule: rgba(10, 10, 10, 0.12);
+  --rule-strong: rgba(10, 10, 10, 0.32);
+  --gold: #d4a548;
+  --gold-soft: #e8c97e;
+  --navy: #1a3050;
+  --red: #c2362b;
+  --green: #1f7a3d;
+  --serif: 'Fraunces', 'Times New Roman', serif;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+html { scroll-behavior: smooth; }
+
+/* Selection */
+.bkvm-page ::selection { background: var(--gold); color: var(--ink); }
+
+/* ===== Top nav (fixed) ===== */
+.bkvm-nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px max(5vw, 32px);
+  background: linear-gradient(180deg, rgba(245, 244, 240, 0.96), rgba(245, 244, 240, 0));
+  backdrop-filter: saturate(140%) blur(8px);
+  -webkit-backdrop-filter: saturate(140%) blur(8px);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: padding 0.4s var(--ease);
+}
+.bkvm-nav a {
+  color: var(--ink);
+  text-decoration: none;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.2s var(--ease);
+}
+.bkvm-nav a:hover { opacity: 0.5; }
+.bkvm-nav .center {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 14px;
+  color: var(--ink-mute);
+}
+.bkvm-nav .nav-right {
+  display: inline-flex;
+  gap: 28px;
+  align-items: center;
+}
+@media (max-width: 720px) {
+  .bkvm-nav { padding: 16px 20px; font-size: 10px; }
+  .bkvm-nav .center { display: none; }
+  .bkvm-nav .nav-right { gap: 16px; }
+}
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100svh;
+  padding: clamp(120px, 18vh, 200px) max(5vw, 32px) clamp(48px, 8vh, 96px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.hero .eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--gold);
+  margin-bottom: clamp(28px, 4vh, 56px);
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.hero .eyebrow::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+  display: inline-block;
+}
+
+.hero h1 {
+  font-size: clamp(56px, 11vw, 168px);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  font-weight: 800;
+  margin: 0 0 clamp(28px, 4vh, 48px);
+  max-width: 14ch;
+  font-feature-settings: 'ss01';
+}
+
+.hero .lede {
+  font-size: clamp(20px, 2.4vw, 32px);
+  line-height: 1.32;
+  font-weight: 400;
+  color: var(--ink-2);
+  max-width: 28ch;
+  margin: 0;
+}
+.hero .lede em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.hero-meta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  border-top: 1px solid var(--rule);
+  padding-top: 28px;
+  margin-top: clamp(64px, 10vh, 120px);
+}
+.hero-meta .cell .label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.hero-meta .cell .value {
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.4;
+}
+@media (max-width: 720px) {
+  .hero-meta { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+}
+
+/* ===== Intro lede block (post-hero, like Porsche f03) ===== */
+.intro-block {
+  padding: clamp(80px, 14vh, 180px) max(5vw, 32px) clamp(80px, 14vh, 180px);
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+.intro-block .body {
+  grid-column: 7 / -1;
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.42;
+  font-weight: 400;
+  color: var(--ink);
+  max-width: 32ch;
+}
+.intro-block .body strong {
+  font-weight: 600;
+}
+.intro-block .marker {
+  grid-column: 1 / 7;
+  align-self: end;
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(80px, 14vw, 220px);
+  line-height: 0.85;
+  color: var(--ink);
+  letter-spacing: -0.04em;
+  font-style: italic;
+}
+@media (max-width: 900px) {
+  .intro-block .body { grid-column: 1 / -1; font-size: 22px; }
+  .intro-block .marker { display: none; }
+}
+
+/* ===== Section base ===== */
+.section {
+  padding: clamp(96px, 16vh, 200px) max(5vw, 32px);
+  position: relative;
+}
+.section + .section {
+  border-top: 1px solid var(--rule);
+}
+
+.section-head {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+  margin-bottom: clamp(56px, 8vh, 112px);
+}
+.section-meta {
+  grid-column: 1 / 4;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: sticky;
+  top: 100px;
+  align-self: start;
+}
+.section-meta .num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(36px, 4vw, 64px);
+  line-height: 1;
+  color: var(--gold);
+  letter-spacing: -0.02em;
+}
+.section-meta .label {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink-mute);
+}
+
+.section-title {
+  grid-column: 4 / -1;
+}
+.section-title h2 {
+  font-size: clamp(36px, 5.5vw, 84px);
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+  margin: 0 0 clamp(28px, 4vh, 40px);
+  max-width: 18ch;
+}
+.section-title h2 em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+}
+.section-title .body {
+  font-size: clamp(17px, 1.3vw, 20px);
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 56ch;
+}
+.section-title .body + .body { margin-top: 1.2em; }
+
+@media (max-width: 900px) {
+  .section-head { gap: 16px; }
+  .section-meta { grid-column: 1 / -1; flex-direction: row; align-items: baseline; gap: 16px; position: static; margin-bottom: 12px; }
+  .section-meta .num { font-size: 28px; }
+  .section-title { grid-column: 1 / -1; }
+}
+
+/* ===== Image figures ===== */
+.figure {
+  margin: 0;
+  position: relative;
+}
+.figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.figure figcaption {
+  margin-top: 16px;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 500;
+}
+
+/* Full-bleed (page-wide) image */
+.figure.full {
+  margin-left: calc(-1 * max(5vw, 32px));
+  margin-right: calc(-1 * max(5vw, 32px));
+}
+
+/* Wide hero image (slightly inset) */
+.figure.wide {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Card image (offset / inset) */
+.figure.card img {
+  border-radius: 4px;
+  box-shadow: 0 24px 64px -32px rgba(0, 0, 0, 0.18);
+}
+
+/* ===== Two-column "split" — text + phone mockup ===== */
+.split {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(40px, 6vw, 96px);
+  align-items: center;
+  margin-top: clamp(80px, 12vh, 160px);
+}
+.split.--reverse > .split-text { grid-column: 7 / -1; order: 2; }
+.split.--reverse > .split-image { grid-column: 1 / 7; order: 1; }
+.split-text { grid-column: 1 / 7; }
+.split-text h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(28px, 3.5vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0 0 24px;
+  max-width: 18ch;
+}
+.split-text .body {
+  font-size: clamp(16px, 1.2vw, 19px);
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 48ch;
+}
+.split-text .body + .body { margin-top: 1em; }
+.split-image { grid-column: 7 / -1; }
+.split-image img {
+  display: block;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  height: auto;
+}
+
+@media (max-width: 900px) {
+  .split { grid-template-columns: 1fr; gap: 48px; }
+  .split-text, .split-image,
+  .split.--reverse > .split-text, .split.--reverse > .split-image { grid-column: 1 / -1; order: unset; }
+  .split-image img { max-width: 360px; }
+}
+
+/* ===== Pull-quote / accent ===== */
+.pull {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(28px, 3.6vw, 56px);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  max-width: 22ch;
+  margin: clamp(80px, 12vh, 160px) auto;
+  text-align: center;
+  padding: 0 max(5vw, 24px);
+}
+.pull::before, .pull::after { color: var(--gold); }
+.pull::before { content: '“'; }
+.pull::after  { content: '”'; }
+
+/* ===== Outcomes / stats ===== */
+.outcomes {
+  background: var(--bg-dark);
+  color: #fff;
+  padding: clamp(120px, 18vh, 220px) max(5vw, 32px);
+  margin-top: clamp(96px, 14vh, 160px);
+  position: relative;
+  overflow: hidden;
+}
+.outcomes::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 50% at 80% 0%, rgba(212, 165, 72, 0.16), transparent 70%);
+  pointer-events: none;
+}
+.outcomes .section-head { margin-bottom: clamp(64px, 10vh, 128px); }
+.outcomes .section-meta .num { color: var(--gold); }
+.outcomes .section-meta .label { color: rgba(255, 255, 255, 0.55); }
+.outcomes .section-title h2 { color: #fff; }
+.outcomes .section-title .body { color: rgba(255, 255, 255, 0.72); }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(32px, 4vw, 80px);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  padding-top: clamp(48px, 6vh, 80px);
+  position: relative;
+  z-index: 1;
+}
+.stat .num {
+  display: block;
+  font-size: clamp(56px, 8vw, 128px);
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+  color: var(--gold);
+  margin-bottom: 16px;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+}
+.stat .label {
+  display: block;
+  font-size: 14px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 22ch;
+}
+@media (max-width: 720px) {
+  .stats { grid-template-columns: 1fr; gap: 40px; }
+}
+
+/* ===== Footer / next ===== */
+.bkvm-footer {
+  background: var(--bg-dark-2);
+  color: #fff;
+  padding: clamp(64px, 10vh, 120px) max(5vw, 32px) 48px;
+}
+.bkvm-footer .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  padding-top: 32px;
+}
+.bkvm-footer a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  transition: opacity 0.2s var(--ease);
+}
+.bkvm-footer a:hover { opacity: 0.6; }
+.bkvm-footer .lede {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(28px, 4vw, 56px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 64px;
+  max-width: 22ch;
+  color: rgba(255, 255, 255, 0.92);
+}
+.bkvm-footer .credit {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 500;
+}
+
+/* ===== Scroll reveal animations ===== */
+[data-anim] {
+  opacity: 0;
+  transition: opacity 1s var(--ease-out), transform 1s var(--ease-out);
+  will-change: opacity, transform;
+}
+[data-anim="up"]    { transform: translate3d(0, 48px, 0); }
+[data-anim="left"]  { transform: translate3d(40px, 0, 0); }
+[data-anim="fade"]  { transform: none; }
+[data-anim="reveal"] {
+  opacity: 0;
+  transform: translate3d(0, 40px, 0);
+  transition: opacity 1.2s var(--ease-out), transform 1.2s var(--ease-out);
+}
+[data-anim].in {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 0 0);
+}
+[data-anim][data-delay="1"].in { transition-delay: 0.12s; }
+[data-anim][data-delay="2"].in { transition-delay: 0.24s; }
+[data-anim][data-delay="3"].in { transition-delay: 0.36s; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-anim] {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
+/* ===== Numbered list (used in problem section) ===== */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: clamp(56px, 8vh, 96px);
+  padding-top: 32px;
+  border-top: 1px solid var(--rule);
+}
+.fact .key {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.fact .val {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+@media (max-width: 900px) { .facts { grid-template-columns: 1fr; gap: 24px; } }
+
+/* ===== Decision log — annotated UX rationale callouts =====
+   Research-driven: makes design thinking VISIBLE to recruiters
+   who scan portfolios for evidence of reasoning, not just craft. */
+.decisions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(28px, 4vw, 48px);
+  margin-top: clamp(64px, 10vh, 120px);
+  padding-top: clamp(40px, 6vh, 64px);
+  border-top: 1px solid var(--rule);
+}
+.decisions-head {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+.decisions-head .key {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--gold);
+}
+.decisions-head .lede {
+  font-size: 14px;
+  color: var(--ink-mute);
+  font-style: italic;
+  font-family: var(--serif);
+}
+.decision {
+  border-left: 2px solid var(--gold);
+  padding: 4px 0 4px 24px;
+}
+.decision .q {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(20px, 2vw, 26px);
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0 0 14px;
+  letter-spacing: -0.01em;
+}
+.decision .a {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  margin: 0;
+}
+.decision .a strong { color: var(--ink); font-weight: 600; }
+.decision .a em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--ink); }
+@media (max-width: 720px) {
+  .decisions { grid-template-columns: 1fr; gap: 28px; }
+  .decision { padding-left: 18px; }
+  .decisions-head { flex-direction: column; gap: 4px; }
+}
+
+/* ===== Reflection — what I learned / what I'd test next =====
+   Research-driven: junior portfolios that include reflection
+   sections (per Aakriti Chugh model) signal growth mindset
+   and honest self-assessment. Recruiters value this strongly. */
+.reflection {
+  padding: clamp(96px, 14vh, 180px) max(5vw, 32px);
+  background: var(--bg-2);
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+.reflection .meta {
+  grid-column: 1 / 4;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--gold);
+  position: sticky;
+  top: 100px;
+  align-self: start;
+}
+.reflection .body {
+  grid-column: 4 / -1;
+  max-width: 64ch;
+}
+.reflection h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(28px, 4vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 28px;
+  max-width: 22ch;
+  color: var(--ink);
+}
+.reflection p {
+  font-size: clamp(16px, 1.2vw, 19px);
+  line-height: 1.65;
+  color: var(--ink-2);
+  margin: 0 0 1em;
+}
+.reflection p em { font-family: var(--serif); font-style: italic; }
+.reflection p strong { color: var(--ink); font-weight: 600; }
+.reflection ul {
+  list-style: none;
+  padding: 0;
+  margin: 36px 0 0;
+}
+.reflection ul li {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 24px;
+  padding: 16px 0;
+  border-top: 1px solid var(--rule);
+  font-size: 14.5px;
+}
+.reflection ul li:last-child { border-bottom: 1px solid var(--rule); }
+.reflection ul li .k {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink-mute);
+  align-self: center;
+}
+.reflection ul li .v {
+  color: var(--ink);
+  font-weight: 500;
+  line-height: 1.45;
+}
+@media (max-width: 900px) {
+  .reflection { grid-template-columns: 1fr; }
+  .reflection .meta { grid-column: 1; position: static; margin-bottom: 16px; }
+  .reflection .body { grid-column: 1; }
+  .reflection ul li { grid-template-columns: 1fr; gap: 4px; }
+  .reflection ul li .k { font-size: 10px; }
+}
+</style>
+
+</head>
+
+<body class="bkvm-page">
+
+<!-- ===== TOP NAV ===== -->
+<nav class="bkvm-nav" aria-label="Case study navigation">
+  <a href="index.html#projects" aria-label="Back to portfolio">
+    <span aria-hidden="true">←</span> Portfolio
+  </a>
+  <span class="center">Case study · BKVM</span>
+  <span class="nav-right">
+    <a href="https://github.com/Jenish0000/college" target="_blank" rel="noopener noreferrer" aria-label="View source code on GitHub">
+      <span aria-hidden="true">&lt;/&gt;</span> Source
+    </a>
+    <a href="https://college-fe.vercel.app" target="_blank" rel="noopener noreferrer" aria-label="Open live site in new tab">
+      Live site <span aria-hidden="true">→</span>
+    </a>
+  </span>
+</nav>
+
+<main>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div>
+      <span class="eyebrow" data-anim="up">Case study · 2023–2025</span>
+      <h1 id="hero-title" data-anim="up" data-delay="1">Bal Kalyan<br>Vidya Mandir.</h1>
+      <p class="lede" data-anim="up" data-delay="2">First website for a 40-year-old school. Replaced phone calls and paper forms with one online registration. Live for 24 months.</p>
+    </div>
+
+    <div class="hero-meta" data-anim="fade" data-delay="3">
+      <div class="cell"><span class="label">Role</span><span class="value">UI/UX + Frontend</span></div>
+      <div class="cell"><span class="label">Timeline</span><span class="value">12 weeks design + build</span></div>
+      <div class="cell"><span class="label">Stack</span><span class="value">React · Vite · Tailwind</span></div>
+      <div class="cell"><span class="label">Live</span><span class="value">~24 months in production</span></div>
+    </div>
+  </section>
+
+  <!-- ===== INTRO LEDE ===== -->
+  <section class="intro-block" aria-label="Project overview">
+    <div class="marker" data-anim="up" aria-hidden="true">B.K.V.M</div>
+    <p class="body" data-anim="up" data-delay="1">
+      A <strong>40-year-old school</strong> in Biratnagar, Nepal. 3,285 students enrolled. The admissions problem had been the same for decades. Parents had to call, email, walk in, or read paper notices on the school gate. Information was everywhere and nowhere. The brief was simple: build one place where everything lives.
+    </p>
+  </section>
+
+  <!-- ===== 01 · THE PROBLEM ===== -->
+  <section class="section" aria-labelledby="sec-01">
+    <header class="section-head">
+      <div class="section-meta">
+        <span class="num" data-anim="up">01</span>
+        <span class="label" data-anim="up" data-delay="1">The Problem</span>
+      </div>
+      <div class="section-title">
+        <h2 id="sec-01" data-anim="up">Six channels.<br><em>No single source of truth.</em></h2>
+        <p class="body" data-anim="up" data-delay="1">
+          For 40 years, parents had 6 ways to reach BKVM: phone calls, email, in-person visits, paper notices on the school gate, staff memory, and word of mouth. None of it was indexed. None was searchable. None worked after office hours.
+        </p>
+        <p class="body" data-anim="up" data-delay="2">
+          Parents from outside Biratnagar were basically excluded. Working parents couldn't get information after 5 PM. Most of the school's real admissions knowledge lived in the staff's heads. So the first job wasn't to design a website. It was to take 6 scattered channels and put them into one structure.
+        </p>
+      </div>
+    </header>
+
+    <figure class="figure full" data-anim="reveal">
+      <img src="./assets/bkvm/01-ia-diagram.png" alt="Information architecture: six fragmented manual channels collapsed into one structured navigation tree." loading="lazy">
+    </figure>
+
+    <div class="facts">
+      <div class="fact" data-anim="up"><span class="key">Before</span><span class="val">6 channels. No single place to find anything. Most of it lived in staff memory or on paper.</span></div>
+      <div class="fact" data-anim="up" data-delay="1"><span class="key">Context</span><span class="val">Out-of-district parents were excluded. Working parents had no way to apply after office hours.</span></div>
+      <div class="fact" data-anim="up" data-delay="2"><span class="key">After</span><span class="val">One structured site. Available 24/7. The school can now reach applicants from anywhere.</span></div>
+    </div>
+  </section>
+
+  <!-- ===== Pull quote ===== -->
+  <p class="pull" data-anim="up">Before designing anything, I had to figure out where everything goes.</p>
+
+  <!-- ===== 02 · LANDING ===== -->
+  <section class="section" aria-labelledby="sec-02">
+    <header class="section-head">
+      <div class="section-meta">
+        <span class="num" data-anim="up">02</span>
+        <span class="label" data-anim="up" data-delay="1">Landing Experience</span>
+      </div>
+      <div class="section-title">
+        <h2 id="sec-02" data-anim="up">One identity. <em>One CTA.</em></h2>
+        <p class="body" data-anim="up" data-delay="1">
+          The new homepage does three things. Establishes the school's identity. Surfaces the action parents come for (Register Now). Shows proof points (class range, total students) above the fold. No carousel. No hero video. Just the things parents need to see first.
+        </p>
+      </div>
+    </header>
+
+    <figure class="figure wide" data-anim="reveal">
+      <img src="./assets/bkvm/03-desktop-homepage.jpg" alt="Desktop homepage hero with the headline 'We give our students wings and a platform to fly high' and stat pills." loading="lazy">
+      <figcaption>Desktop · 1440 viewport</figcaption>
+    </figure>
+
+    <div class="split">
+      <div class="split-text">
+        <h3 data-anim="up">Most parents are on phones.</h3>
+        <p class="body" data-anim="up" data-delay="1">
+          Over 80% of admissions traffic on the site comes from phones. So the mobile layout reorders the hero. The headline comes first. Stat pills come second. The school intro panel comes third. It reads top to bottom, not the way the desktop layout reflows.
+        </p>
+        <p class="body" data-anim="up" data-delay="2">
+          Register Now sits at the top of the viewport on every page. Everything else is collapsed into the hamburger menu. One screen at a time, one thing to decide.
+        </p>
+      </div>
+      <figure class="figure split-image" data-anim="up" data-delay="1">
+        <img src="./assets/bkvm/05-phone-homepage.jpg" alt="Mobile homepage with vertically reordered hero." loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== 03 · FACILITIES ===== -->
+  <section class="section" aria-labelledby="sec-03">
+    <header class="section-head">
+      <div class="section-meta">
+        <span class="num" data-anim="up">03</span>
+        <span class="label" data-anim="up" data-delay="1">Facilities</span>
+      </div>
+      <div class="section-title">
+        <h2 id="sec-03" data-anim="up">Information, <em>not decoration.</em></h2>
+        <p class="body" data-anim="up" data-delay="1">
+          The old site put hostel, transport, and extra-curricular info inside dense red boxes that all fought for attention. The brand red couldn't go (40 years of recognition, the school wasn't going to drop it). What I did was keep the red, give each card more space, and let the information breathe.
+        </p>
+      </div>
+    </header>
+
+    <figure class="figure wide" data-anim="reveal">
+      <img src="./assets/bkvm/02-desktop-facilities.jpg" alt="Desktop facilities page with image card and hostel/transport panels." loading="lazy">
+      <figcaption>Desktop · facilities page</figcaption>
+    </figure>
+
+    <div class="split --reverse">
+      <div class="split-text">
+        <h3 data-anim="up">Asking parents to read, not skim.</h3>
+        <p class="body" data-anim="up" data-delay="1">
+          On mobile, each facility becomes its own panel: a full-width image, then a single paragraph. The paragraph starts with a drop cap, like a magazine. The drop cap is a visual cue that says read this carefully, this is information you need, not a brochure.
+        </p>
+      </div>
+      <figure class="figure split-image" data-anim="up" data-delay="1">
+        <img src="./assets/bkvm/07-phone-facilities.jpg" alt="Mobile facilities page with full-width image and drop-cap paragraph." loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== 04 · FORM ===== -->
+  <section class="section" aria-labelledby="sec-04">
+    <header class="section-head">
+      <div class="section-meta">
+        <span class="num" data-anim="up">04</span>
+        <span class="label" data-anim="up" data-delay="1">Registration</span>
+      </div>
+      <div class="section-title">
+        <h2 id="sec-04" data-anim="up">Inline validation.<br><em>Plain-language errors.</em></h2>
+        <p class="body" data-anim="up" data-delay="1">
+          This was the hardest screen in the product. It takes a 17-field paper form and makes it not feel like a 17-field paper form. The form has three states: empty, error, and success. Each state speaks differently to the user.
+        </p>
+        <p class="body" data-anim="up" data-delay="2">
+          No "Field invalid" errors. The error names what's actually missing: "First name is required." No surprise modals when the user hits submit. Success confirms inline and moves on.
+        </p>
+      </div>
+    </header>
+
+    <figure class="figure full" data-anim="reveal">
+      <img src="./assets/bkvm/04-form-states.jpg" alt="Three states of the registration form: empty, validation error, success." loading="lazy">
+      <figcaption style="padding: 0 max(5vw, 32px); margin-top: 24px;">Empty → Validation → Submit</figcaption>
+    </figure>
+
+    <div class="split">
+      <div class="split-text">
+        <h3 data-anim="up">One field, one job.</h3>
+        <p class="body" data-anim="up" data-delay="1">
+          Every field has one responsibility. Required-field markers are visible from the start, not revealed only when you tap into the field. The date input uses the native picker so it works on every Android version parents are likely to be using.
+        </p>
+        <p class="body" data-anim="up" data-delay="2">
+          The form has a Go Back button instead of relying on the browser's back. So a parent on a mid-tier phone can step out of any screen without losing the data they've typed in.
+        </p>
+      </div>
+      <figure class="figure split-image" data-anim="up" data-delay="1">
+        <img src="./assets/bkvm/06-phone-registration.jpg" alt="Mobile registration form, empty state with full field set." loading="lazy">
+      </figure>
+    </div>
+
+    <!-- ===== Decision log ===== -->
+    <div class="decisions">
+      <div class="decisions-head">
+        <span class="key">Decision log</span>
+        <span class="lede">Four calls behind a system that's been live 24 months without a rebuild.</span>
+      </div>
+
+      <div class="decision" data-anim="up">
+        <p class="q">Why one CTA on the homepage, not three?</p>
+        <p class="a">Parents come to BKVM with one job: enroll a child. Three CTAs (Apply, Learn, Tour) split that goal and add a decision the parent didn't come to make. One CTA matches what they came for. Everything else is one tap away in the menu if they want it.</p>
+      </div>
+
+      <div class="decision" data-anim="up" data-delay="1">
+        <p class="q">Why drop caps on the facility pages?</p>
+        <p class="a">A drop cap signals "read this slowly," like a magazine. A standard paragraph signals "skim this." Parents read facility info carefully before enrolling. Hostel rules, transport routes, fee structure - none of that should be skimmed. The drop cap quietly tells them to slow down.</p>
+      </div>
+
+      <div class="decision" data-anim="up" data-delay="2">
+        <p class="q">Why "First name is required" instead of "Field invalid"?</p>
+        <p class="a">Errors should name what went wrong, not just flag that something did. "Field invalid" makes the user hunt for the problem. "First name is required" tells them what to fix. I also kept required-field markers visible from first paint, not revealed only when the field gets focus.</p>
+      </div>
+
+      <div class="decision" data-anim="up" data-delay="3">
+        <p class="q">Why keep the brand red, not modernize the palette?</p>
+        <p class="a">The school's red has 40 years of recognition. Changing it would have severed the school from its own identity. The design problem wasn't the color. It was the density. Old site had dense red boxes everywhere. New site keeps the red, gives each block more space, lets the information breathe.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 05 · OUTCOMES ===== -->
+  <section class="section outcomes" aria-labelledby="sec-05">
+    <header class="section-head">
+      <div class="section-meta">
+        <span class="num" data-anim="up">05</span>
+        <span class="label" data-anim="up" data-delay="1">Outcomes</span>
+      </div>
+      <div class="section-title">
+        <h2 id="sec-05" data-anim="up">From paper forms to a site that's been live 24 months.</h2>
+        <p class="body" data-anim="up" data-delay="1">
+          The site has been live for about 24 months. Within the first month, the school stopped getting admissions calls outside office hours. Out-of-district applications started coming in regularly. First time that's happened in the school's 40 year history.
+        </p>
+      </div>
+    </header>
+
+    <div class="stats">
+      <div class="stat" data-anim="up">
+        <span class="num">3,285<span style="color: var(--gold-soft);">+</span></span>
+        <span class="label">Students currently enrolled. Shown on the homepage as live proof, not a brochure number.</span>
+      </div>
+      <div class="stat" data-anim="up" data-delay="1">
+        <span class="num">24/7</span>
+        <span class="label">Self-serve admissions access. Information is no longer trapped behind office hours.</span>
+      </div>
+      <div class="stat" data-anim="up" data-delay="2">
+        <span class="num">~24<span style="color: var(--gold-soft); font-size: 0.5em; vertical-align: 0.4em; letter-spacing: 0.04em;"> mo</span></span>
+        <span class="label">Months in production. No rebuild. Day-to-day maintenance is handled by the school's own team.</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== REFLECTION — what 24 months in production has taught,
+     and what I'd revisit now with that hindsight. ===== -->
+<section class="reflection" aria-labelledby="reflect-bkvm">
+  <span class="meta" data-anim="up">Reflection</span>
+  <div class="body">
+    <h3 id="reflect-bkvm" data-anim="up">24 months in production. What I would revisit.</h3>
+    <p data-anim="up" data-delay="1">
+      The site has been live for about 2 years. No rebuild. That's the strongest thing I can say about this work, and the most honest measurement I have. Longevity is a real outcome. The school's internal team kept using the form admin without retraining, which I think means the plain-language errors and visible required markers did more for them than I expected when I designed it.
+    </p>
+    <p data-anim="up" data-delay="2">
+      One thing I noticed after the site had been live for a while: parents talked about the CTA differently than I named it. I called it "Register Now." They called it "the apply form" in conversations. That gap between what the system says and what the user actually thinks they're doing is something you can't catch in design. You catch it months later, watching how people actually talk about the product. That's the kind of thing I'd try to test out of the system if I revisited it.
+    </p>
+
+    <ul data-anim="up" data-delay="3">
+      <li><span class="k">Would test</span><span class="v">CTA wording: "Register Now" vs "Apply for 2025" vs "Start your application." Stat pill prominence on homepage. Whether drop caps work on mobile or just feel weird.</span></li>
+      <li><span class="k">Would redo</span><span class="v">Add Nepali language support (primary), with English secondary. Build an admissions dashboard for staff. WhatsApp handoff for parents who still want to talk to a human.</span></li>
+      <li><span class="k">What worked</span><span class="v">24/7 access changed the school's reach. Applications from outside Biratnagar became routine. First time in 40 years.</span></li>
+      <li><span class="k">Best decision</span><span class="v">Single CTA on the homepage. Held up across 2 years of real traffic. The first call I would defend.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="bkvm-footer">
+  <p class="lede" data-anim="up">A school that's been around for 40 years should have a website that lasts.</p>
+  <div class="row">
+    <a href="index.html#projects"><span aria-hidden="true">←</span> Back to portfolio</a>
+    <a href="https://github.com/Jenish0000/college" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">&lt;/&gt;</span> Source code</a>
+    <a href="https://college-fe.vercel.app" target="_blank" rel="noopener noreferrer">View live site <span aria-hidden="true">→</span></a>
+  </div>
+  <p class="credit" style="margin-top: 32px;">Bal Kalyan Vidya Mandir · Biratnagar-11, Morang · bkvm.edu.np</p>
+</footer>
+
+<script>
+  // ===== Scroll reveal (IntersectionObserver) =====
+  (function () {
+    const els = document.querySelectorAll('[data-anim]');
+    if (!('IntersectionObserver' in window) || !els.length) {
+      els.forEach((el) => el.classList.add('in'));
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+    );
+    els.forEach((el) => io.observe(el));
+  })();
+
+  // ===== Nav: condense on scroll =====
+  (function () {
+    const nav = document.querySelector('.bkvm-nav');
+    if (!nav) return;
+    let last = 0;
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (y > 80 && y > last) {
+        nav.style.transform = 'translateY(-100%)';
+      } else {
+        nav.style.transform = 'translateY(0)';
+      }
+      nav.style.transition = 'transform 0.4s cubic-bezier(0.4,0,0.2,1)';
+      last = y;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+</script>
+
+</body>
+</html>

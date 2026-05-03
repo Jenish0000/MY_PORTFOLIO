@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Selected work: Orion Space — brand identity and shipped digital home for Nepal's first pico-satellite company.">
+<title>Orion Space · Selected Work — Jenish Karki</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,700;9..144,800&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   ORION SPACE — selected work entry
+   Shares the BKVM / AIRA / TALABAT case-study chassis.
+   Lighter content depth — 3 sections, image-forward.
+   ============================================================ */
+
+.bkvm-page,
+.bkvm-page * {
+  box-sizing: border-box;
+}
+
+.bkvm-page {
+  --bg: #f5f4f0;
+  --bg-2: #ebeae5;
+  --bg-dark: #0a1224;
+  --bg-dark-2: #050a18;
+  --ink: #0a0a0a;
+  --ink-2: #1a1a1a;
+  --ink-mute: #6b6b6b;
+  --ink-faint: #9a9a9a;
+  --rule: rgba(10, 10, 10, 0.12);
+  --rule-strong: rgba(10, 10, 10, 0.32);
+  --gold: #d4a548;
+  --gold-soft: #e8c97e;
+  --navy: #1a3050;
+  --red: #c2362b;
+  --green: #1f7a3d;
+  --serif: 'Fraunces', 'Times New Roman', serif;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+html { scroll-behavior: smooth; }
+
+.bkvm-page ::selection { background: var(--gold); color: var(--ink); }
+
+/* ===== Top nav (fixed) ===== */
+.bkvm-nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px max(5vw, 32px);
+  background: linear-gradient(180deg, rgba(245, 244, 240, 0.96), rgba(245, 244, 240, 0));
+  backdrop-filter: saturate(140%) blur(8px);
+  -webkit-backdrop-filter: saturate(140%) blur(8px);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: padding 0.4s var(--ease);
+}
+.bkvm-nav a {
+  color: var(--ink);
+  text-decoration: none;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.2s var(--ease);
+}
+.bkvm-nav a:hover { opacity: 0.5; }
+.bkvm-nav .center {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 14px;
+  color: var(--ink-mute);
+}
+.bkvm-nav .nav-right {
+  display: inline-flex;
+  gap: 28px;
+  align-items: center;
+}
+@media (max-width: 720px) {
+  .bkvm-nav { padding: 16px 20px; font-size: 10px; }
+  .bkvm-nav .center { display: none; }
+  .bkvm-nav .nav-right { gap: 16px; }
+}
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100svh;
+  padding: clamp(120px, 18vh, 200px) max(5vw, 32px) clamp(48px, 8vh, 96px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.hero .eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--gold);
+  margin-bottom: clamp(28px, 4vh, 56px);
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.hero .eyebrow::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+  display: inline-block;
+}
+
+.hero h1 {
+  font-size: clamp(56px, 11vw, 168px);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  font-weight: 800;
+  margin: 0 0 clamp(28px, 4vh, 48px);
+  max-width: 14ch;
+  font-feature-settings: 'ss01';
+}
+
+.hero .lede {
+  font-size: clamp(20px, 2.4vw, 32px);
+  line-height: 1.32;
+  font-weight: 400;
+  color: var(--ink-2);
+  max-width: 28ch;
+  margin: 0;
+}
+.hero .lede em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.hero-meta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  border-top: 1px solid var(--rule);
+  padding-top: 28px;
+  margin-top: clamp(64px, 10vh, 120px);
+}
+.hero-meta .cell .label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.hero-meta .cell .value {
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.4;
+}
+@media (max-width: 720px) {
+  .hero-meta { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+}
+
+/* ===== Intro lede block ===== */
+.intro-block {
+  padding: clamp(80px, 14vh, 180px) max(5vw, 32px) clamp(80px, 14vh, 180px);
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+.intro-block .body {
+  grid-column: 7 / -1;
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.42;
+  font-weight: 400;
+  color: var(--ink);
+  max-width: 32ch;
+}
+.intro-block .body strong { font-weight: 600; }
+.intro-block .marker {
+  grid-column: 1 / 7;
+  align-self: end;
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(80px, 14vw, 220px);
+  line-height: 0.85;
+  color: var(--ink);
+  letter-spacing: -0.04em;
+  font-style: italic;
+}
+@media (max-width: 900px) {
+  .intro-block .body { grid-column: 1 / -1; font-size: 22px; }
+  .intro-block .marker { display: none; }
+}
+
+/* ===== Section base ===== */
+.section {
+  padding: clamp(96px, 16vh, 200px) max(5vw, 32px);
+  position: relative;
+}
+.section + .section {
+  border-top: 1px solid var(--rule);
+}
+
+.section-head {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+  margin-bottom: clamp(56px, 8vh, 112px);
+}
+.section-meta {
+  grid-column: 1 / 4;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: sticky;
+  top: 100px;
+  align-self: start;
+}
+.section-meta .num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(36px, 4vw, 64px);
+  line-height: 1;
+  color: var(--gold);
+  letter-spacing: -0.02em;
+}
+.section-meta .label {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink-mute);
+}
+
+.section-title {
+  grid-column: 4 / -1;
+}
+.section-title h2 {
+  font-size: clamp(36px, 5.5vw, 84px);
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+  margin: 0 0 clamp(28px, 4vh, 40px);
+  max-width: 18ch;
+}
+.section-title h2 em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+}
+.section-title .body {
+  font-size: clamp(17px, 1.3vw, 20px);
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 56ch;
+}
+.section-title .body + .body { margin-top: 1.2em; }
+
+@media (max-width: 900px) {
+  .section-head { gap: 16px; }
+  .section-meta { grid-column: 1 / -1; flex-direction: row; align-items: baseline; gap: 16px; position: static; margin-bottom: 12px; }
+  .section-meta .num { font-size: 28px; }
+  .section-title { grid-column: 1 / -1; }
+}
+
+/* ===== Image figures ===== */
+.figure {
+  margin: 0;
+  position: relative;
+}
+.figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.figure figcaption {
+  margin-top: 16px;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 500;
+}
+
+.figure.full {
+  margin-left: calc(-1 * max(5vw, 32px));
+  margin-right: calc(-1 * max(5vw, 32px));
+}
+
+.figure.wide {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ===== Two-column "split" ===== */
+.split {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(40px, 6vw, 96px);
+  align-items: center;
+  margin-top: clamp(80px, 12vh, 160px);
+}
+.split.--reverse > .split-text { grid-column: 7 / -1; order: 2; }
+.split.--reverse > .split-image { grid-column: 1 / 7; order: 1; }
+.split-text { grid-column: 1 / 7; }
+.split-text h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(28px, 3.5vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0 0 24px;
+  max-width: 18ch;
+}
+.split-text .body {
+  font-size: clamp(16px, 1.2vw, 19px);
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 48ch;
+}
+.split-text .body + .body { margin-top: 1em; }
+.split-image { grid-column: 7 / -1; }
+.split-image img {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  height: auto;
+}
+
+@media (max-width: 900px) {
+  .split { grid-template-columns: 1fr; gap: 48px; }
+  .split-text, .split-image,
+  .split.--reverse > .split-text, .split.--reverse > .split-image { grid-column: 1 / -1; order: unset; }
+  .split-image img { max-width: 460px; }
+}
+
+/* ===== Pull-quote / accent ===== */
+.pull {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(28px, 3.6vw, 56px);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  max-width: 24ch;
+  margin: clamp(80px, 12vh, 160px) auto;
+  text-align: center;
+  padding: 0 max(5vw, 24px);
+}
+.pull::before, .pull::after { color: var(--gold); }
+.pull::before { content: '“'; }
+.pull::after  { content: '”'; }
+
+/* ===== Outcomes / stats ===== */
+.outcomes {
+  background: var(--bg-dark);
+  color: #fff;
+  padding: clamp(120px, 18vh, 220px) max(5vw, 32px);
+  margin-top: clamp(96px, 14vh, 160px);
+  position: relative;
+  overflow: hidden;
+}
+.outcomes::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 50% at 80% 0%, rgba(212, 165, 72, 0.16), transparent 70%);
+  pointer-events: none;
+}
+.outcomes .section-head { margin-bottom: clamp(64px, 10vh, 128px); }
+.outcomes .section-meta .num { color: var(--gold); }
+.outcomes .section-meta .label { color: rgba(255, 255, 255, 0.55); }
+.outcomes .section-title h2 { color: #fff; }
+.outcomes .section-title .body { color: rgba(255, 255, 255, 0.72); }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(32px, 4vw, 80px);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  padding-top: clamp(48px, 6vh, 80px);
+  position: relative;
+  z-index: 1;
+}
+.stat .num {
+  display: block;
+  font-size: clamp(56px, 8vw, 128px);
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+  color: var(--gold);
+  margin-bottom: 16px;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+}
+.stat .label {
+  display: block;
+  font-size: 14px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 22ch;
+}
+@media (max-width: 720px) {
+  .stats { grid-template-columns: 1fr; gap: 40px; }
+}
+
+/* ===== Footer ===== */
+.bkvm-footer {
+  background: var(--bg-dark-2);
+  color: #fff;
+  padding: clamp(64px, 10vh, 120px) max(5vw, 32px) 48px;
+}
+.bkvm-footer .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  padding-top: 32px;
+}
+.bkvm-footer a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  transition: opacity 0.2s var(--ease);
+}
+.bkvm-footer a:hover { opacity: 0.6; }
+.bkvm-footer .lede {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(28px, 4vw, 56px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 64px;
+  max-width: 22ch;
+  color: rgba(255, 255, 255, 0.92);
+}
+.bkvm-footer .credit {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 500;
+}
+
+/* ===== Scroll reveal — gated by .js-anim on <html> ===== */
+.js-anim [data-anim] {
+  opacity: 0;
+  transition: opacity 1s var(--ease-out), transform 1s var(--ease-out);
+  will-change: opacity, transform;
+}
+.js-anim [data-anim="up"]     { transform: translate3d(0, 48px, 0); }
+.js-anim [data-anim="left"]   { transform: translate3d(40px, 0, 0); }
+.js-anim [data-anim="fade"]   { transform: none; }
+.js-anim [data-anim="reveal"] {
+  opacity: 0;
+  transform: translate3d(0, 40px, 0);
+  transition: opacity 1.2s var(--ease-out), transform 1.2s var(--ease-out);
+}
+.js-anim [data-anim].in {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 0 0);
+}
+.js-anim [data-anim][data-delay="1"].in { transition-delay: 0.12s; }
+.js-anim [data-anim][data-delay="2"].in { transition-delay: 0.24s; }
+.js-anim [data-anim][data-delay="3"].in { transition-delay: 0.36s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js-anim [data-anim] {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
+/* ===== Facts row (used in section 01) ===== */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: clamp(56px, 8vh, 96px);
+  padding-top: 32px;
+  border-top: 1px solid var(--rule);
+}
+.fact .key {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.fact .val {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+@media (max-width: 900px) { .facts { grid-template-columns: 1fr; gap: 24px; } }
+
+/* ===== Brand chips (used to show palette + type pairing) ===== */
+.brand-chips {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: clamp(40px, 6vh, 64px);
+}
+.chip {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.chip .chip-key {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink-mute);
+}
+.chip .chip-swatch {
+  width: 100%;
+  height: 56px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #c64d76 0%, #8a6296 50%, #4ea4b3 100%);
+}
+.chip .chip-display {
+  font-family: var(--sans);
+  font-weight: 800;
+  font-size: 32px;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--ink);
+}
+.chip .chip-display em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.chip .chip-meta {
+  font-size: 12px;
+  color: var(--ink-mute);
+  line-height: 1.5;
+}
+@media (max-width: 720px) { .brand-chips { grid-template-columns: 1fr; } }
+
+/* ===== Decision log — annotated UX rationale callouts =====
+   Research-driven: makes design thinking VISIBLE to recruiters
+   who scan portfolios for evidence of reasoning, not just craft. */
+.decisions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(28px, 4vw, 48px);
+  margin-top: clamp(64px, 10vh, 120px);
+  padding-top: clamp(40px, 6vh, 64px);
+  border-top: 1px solid var(--rule);
+}
+.decisions-head {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+.decisions-head .key {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--gold);
+}
+.decisions-head .lede {
+  font-size: 14px;
+  color: var(--ink-mute);
+  font-style: italic;
+  font-family: var(--serif);
+}
+.decision {
+  border-left: 2px solid var(--gold);
+  padding: 4px 0 4px 24px;
+}
+.decision .q {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(20px, 2vw, 26px);
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0 0 14px;
+  letter-spacing: -0.01em;
+}
+.decision .a {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  margin: 0;
+}
+.decision .a strong { color: var(--ink); font-weight: 600; }
+.decision .a em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--ink); }
+@media (max-width: 720px) {
+  .decisions { grid-template-columns: 1fr; gap: 28px; }
+  .decision { padding-left: 18px; }
+  .decisions-head { flex-direction: column; gap: 4px; }
+}
+
+/* ===== Reflection — what I learned / what I'd test next ===== */
+.reflection {
+  padding: clamp(96px, 14vh, 180px) max(5vw, 32px);
+  background: var(--bg-2);
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+.reflection .meta {
+  grid-column: 1 / 4;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--gold);
+  position: sticky;
+  top: 100px;
+  align-self: start;
+}
+.reflection .body { grid-column: 4 / -1; max-width: 64ch; }
+.reflection h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(28px, 4vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 28px;
+  max-width: 22ch;
+  color: var(--ink);
+}
+.reflection p {
+  font-size: clamp(16px, 1.2vw, 19px);
+  line-height: 1.65;
+  color: var(--ink-2);
+  margin: 0 0 1em;
+}
+.reflection p em { font-family: var(--serif); font-style: italic; }
+.reflection p strong { color: var(--ink); font-weight: 600; }
+.reflection ul { list-style: none; padding: 0; margin: 36px 0 0; }
+.reflection ul li {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 24px;
+  padding: 16px 0;
+  border-top: 1px solid var(--rule);
+  font-size: 14.5px;
+}
+.reflection ul li:last-child { border-bottom: 1px solid var(--rule); }
+.reflection ul li .k {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink-mute);
+  align-self: center;
+}
+.reflection ul li .v {
+  color: var(--ink);
+  font-weight: 500;
+  line-height: 1.45;
+}
+@media (max-width: 900px) {
+  .reflection { grid-template-columns: 1fr; }
+  .reflection .meta { grid-column: 1; position: static; margin-bottom: 16px; }
+  .reflection .body { grid-column: 1; }
+  .reflection ul li { grid-template-columns: 1fr; gap: 4px; }
+  .reflection ul li .k { font-size: 10px; }
+}
+</style>
+</head>
+
+<body class="bkvm-page">
+
+<!-- ===== TOP NAV ===== -->
+<nav class="bkvm-nav" aria-label="Selected work navigation">
+  <a href="index.html#projects" aria-label="Back to portfolio">
+    <span aria-hidden="true">←</span> Portfolio
+  </a>
+  <span class="center">Selected work · Orion Space</span>
+  <span class="nav-right">
+    <a href="https://github.com/Jenish0000/orion-space" target="_blank" rel="noopener noreferrer" aria-label="View source code on GitHub">
+      <span aria-hidden="true">&lt;/&gt;</span> Source
+    </a>
+    <a href="https://orion-space.vercel.app" target="_blank" rel="noopener noreferrer" aria-label="Open live staging in new tab">
+      Live staging <span aria-hidden="true">→</span>
+    </a>
+  </span>
+</nav>
+
+<main>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div>
+      <span class="eyebrow" data-anim="up">Selected work · 2024</span>
+      <h1 id="hero-title" data-anim="up" data-delay="1">Orion<br>Space.</h1>
+      <p class="lede" data-anim="up" data-delay="2">Brand and website for Nepal's first satellite company. 5 weeks. Designed it and built it myself.</p>
+    </div>
+
+    <div class="hero-meta" data-anim="fade" data-delay="3">
+      <div class="cell"><span class="label">Role</span><span class="value">Lead Designer · Build</span></div>
+      <div class="cell"><span class="label">Timeline</span><span class="value">5 weeks</span></div>
+      <div class="cell"><span class="label">Stack</span><span class="value">Figma · React · Vercel</span></div>
+      <div class="cell"><span class="label">Status</span><span class="value">Shipped to staging</span></div>
+    </div>
+  </section>
+
+  <!-- ===== INTRO LEDE ===== -->
+  <section class="intro-block" aria-label="Project overview">
+    <div class="marker" data-anim="up" aria-hidden="true">orion.</div>
+    <p class="body" data-anim="up" data-delay="1">
+      A <strong>brand identity and website</strong> for the team behind <em>SanoSat-1</em>, Nepal's first pico-satellite, which launched on a SpaceX rocket in 2021. Real orbital wins. No place online to tell that story. I designed the brand, the information architecture, the full screen set, the component library, and built the React site myself. Shipped it to Vercel staging.
+    </p>
+  </section>
+
+  <!-- ===== 01 · THE BRIEF ===== -->
+  <section class="section" aria-labelledby="sec-01">
+    <header class="section-head">
+      <div class="section-meta">
+        <span class="num" data-anim="up">01</span>
+        <span class="label" data-anim="up" data-delay="1">The brief</span>
+      </div>
+      <div class="section-title">
+        <h2 id="sec-01" data-anim="up">A category leader. <em>With a hobbyist storefront.</em></h2>
+        <p class="body" data-anim="up" data-delay="1">
+          Their whole online presence was a single Tindie marketplace listing. Product photos, specs, customer reviews. No story. No founders. No mission. A company that put Nepal in orbit was being discovered the same way you'd find a hobbyist Arduino board.
+        </p>
+        <p class="body" data-anim="up" data-delay="2">
+          I wrote my own brief. Move Orion Space from "Nepal-based satellite kit seller" to "the company defining Nepal's pico-satellite category." That meant brand identity, a real website, and two separate funnels: hobbyists keep going to Tindie to buy a kit, institutions get a new contact path for partnerships and quotes.
+        </p>
+      </div>
+    </header>
+
+    <figure class="figure full" data-anim="reveal">
+      <img src="./assets/orion/01-hero-laptop.png" alt="Hero — 'pioneering orbital discovery' display headline overlaid on a desaturated satellite image, magenta-to-teal gradient surface, Say hello CTA pill." loading="lazy">
+    </figure>
+
+    <div class="facts">
+      <div class="fact" data-anim="up"><span class="key">Before</span><span class="val">Just a Tindie listing. Product photos, specs, customer reviews. No story. No founders. No mission. No B2B path.</span></div>
+      <div class="fact" data-anim="up" data-delay="1"><span class="key">Context</span><span class="val">Tindie's checkout already worked. The job was to build a layer above it, not replace it.</span></div>
+      <div class="fact" data-anim="up" data-delay="2"><span class="key">After</span><span class="val">Their own domain. A brand system. Two missions in the top nav. Editorial framing across every page.</span></div>
+    </div>
+  </section>
+
+  <!-- ===== Pull quote ===== -->
+  <p class="pull" data-anim="up">I almost rebuilt their checkout. Glad I didn't.</p>
+
+  <!-- ===== 02 · THE SYSTEM ===== -->
+  <section class="section" aria-labelledby="sec-02">
+    <header class="section-head">
+      <div class="section-meta">
+        <span class="num" data-anim="up">02</span>
+        <span class="label" data-anim="up" data-delay="1">The system</span>
+      </div>
+      <div class="section-title">
+        <h2 id="sec-02" data-anim="up">Magenta to teal. <em>Sans plus serif.</em></h2>
+        <p class="body" data-anim="up" data-delay="1">
+          Almost every space-tech brand uses the same dark cosmos aesthetic. Black background, blue stars, white sans-serif. Orion goes the other way. Warm magenta-to-teal gradient, editorial typography. A heavy geometric sans for big display headlines. A high-contrast serif for brand voice and section headers. Confident on the surface, considered in the details.
+        </p>
+      </div>
+    </header>
+
+    <div class="brand-chips" data-anim="up">
+      <div class="chip">
+        <span class="chip-key">Surface</span>
+        <span class="chip-swatch"></span>
+        <span class="chip-meta">Magenta → muted purple → teal. Warm, distinct, functionally flexible.</span>
+      </div>
+      <div class="chip">
+        <span class="chip-key">Display</span>
+        <span class="chip-display">pioneering</span>
+        <span class="chip-meta">Heavy geometric sans. Tight tracking. Full-width on hero.</span>
+      </div>
+      <div class="chip">
+        <span class="chip-key">Editorial</span>
+        <span class="chip-display"><em>orbital ingenuity</em></span>
+        <span class="chip-meta">High-contrast serif. Slows the read. Signals editorial gravitas.</span>
+      </div>
+    </div>
+
+    <figure class="figure wide" data-anim="reveal" style="margin-top: clamp(64px, 10vh, 120px);">
+      <img src="./assets/orion/03-laptop-angle.png" alt="Desktop hero in context — angled laptop view showing the gradient surface, display headline, and Say hello CTA." loading="lazy">
+      <figcaption>Desktop · hero in context</figcaption>
+    </figure>
+
+    <div class="split --reverse">
+      <div class="split-text">
+        <h3 data-anim="up">Works on every screen.</h3>
+        <p class="body" data-anim="up" data-delay="1">
+          The component library moves to mobile without losing anything. The display headline shrinks but stays full-width. The gradient still holds. The two CTAs collapse into one primary action with a hamburger drawer for everything else. Editorial cards stack into a single column.
+        </p>
+        <p class="body" data-anim="up" data-delay="2">
+          Same surface. Same voice. Same components. Just reflowed for thumbs instead of cursors.
+        </p>
+      </div>
+      <figure class="figure split-image" data-anim="up" data-delay="1">
+        <img src="./assets/orion/05-phones-trio.png" alt="Three mobile screens — hero, contact, and SanoSat insight — showing the design system holding across breakpoints." loading="lazy">
+      </figure>
+    </div>
+
+    <!-- ===== Decision log ===== -->
+    <div class="decisions">
+      <div class="decisions-head">
+        <span class="key">Decision log</span>
+        <span class="lede">Four strategic calls in a 5-week project.</span>
+      </div>
+
+      <div class="decision" data-anim="up">
+        <p class="q">Why magenta and teal, not the standard dark space aesthetic?</p>
+        <p class="a">Every space-tech brand looks the same. Black background, blue stars, white text. For a small Nepal-based company trying to be approachable to both hobbyists and institutional buyers, that aesthetic feels cold and unwelcoming. Warm colors on the surface make the site feel like a place you can talk to. The serious typography keeps the credibility.</p>
+      </div>
+
+      <div class="decision" data-anim="up" data-delay="1">
+        <p class="q">Why keep Tindie checkout instead of rebuilding commerce?</p>
+        <p class="a">Their Tindie listing already worked. Hobbyists were already buying through it. Rebuilding the checkout would have taken 4 weeks and added nothing real. The brand site needed to do something Tindie can't: tell the story, show the founders, surface the mission. So I built that layer and let the existing checkout finish the sale. Best decision in the project, honestly.</p>
+      </div>
+
+      <div class="decision" data-anim="up" data-delay="2">
+        <p class="q">Why two funnels, not one path?</p>
+        <p class="a">Two audiences, two different jobs. Hobbyists want to buy a kit. Institutions want to start a conversation about a partnership or a research project. Forcing both into "buy now" loses the institutional lead. Forcing both into "contact us" loses the hobbyist who would have just bought. So the site has two paths, both visible from the top nav.</p>
+      </div>
+
+      <div class="decision" data-anim="up" data-delay="3">
+        <p class="q">Why two typefaces, not one?</p>
+        <p class="a">A single typeface reads safe. Orion needed something with confidence to match the orbital wins. But heavy geometric sans alone reads loud. Pairing it with a high-contrast serif lets the brand switch register: confident on the hero, considered when you read the details.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 03 · OUTCOMES (honest framing) ===== -->
+  <section class="section outcomes" aria-labelledby="sec-03">
+    <header class="section-head">
+      <div class="section-meta">
+        <span class="num" data-anim="up">03</span>
+        <span class="label" data-anim="up" data-delay="1">Honest outcome</span>
+      </div>
+      <div class="section-title">
+        <h2 id="sec-03" data-anim="up">Designed it, built it, shipped it.</h2>
+        <p class="body" data-anim="up" data-delay="1">
+          5-week scope, delivered on time. Brand identity, information architecture, full screen set, component library, deployed React build, all live on Vercel staging. The commercial conversation stalled before they pushed it to production. So I'm not claiming traffic numbers or conversion lift. I don't have those.
+        </p>
+        <p class="body" data-anim="up" data-delay="2">
+          What I do have is the design work itself, viewable at the staging URL. The decision to keep Tindie checkout instead of rebuilding it saved 4 weeks. That let the brand site focus on what it could uniquely do: positioning, story, editorial framing.
+        </p>
+      </div>
+    </header>
+
+    <div class="stats">
+      <div class="stat" data-anim="up">
+        <span class="num">5<span style="color: var(--gold-soft); font-size: 0.5em; vertical-align: 0.4em; letter-spacing: 0.04em;"> wks</span></span>
+        <span class="label">Brand to IA to screens to component library to React build to Vercel deploy. All by me.</span>
+      </div>
+      <div class="stat" data-anim="up" data-delay="1">
+        <span class="num">2<span style="color: var(--gold-soft); font-size: 0.5em; vertical-align: 0.4em; letter-spacing: 0.04em;"> funnels</span></span>
+        <span class="label">Hobbyists go to Tindie to buy. Institutions get a new contact path. Two different jobs, never collapsed into one.</span>
+      </div>
+      <div class="stat" data-anim="up" data-delay="2">
+        <span class="num">Live</span>
+        <span class="label">Shipped to <a href="https://orion-space.vercel.app" target="_blank" rel="noopener noreferrer" style="color:#fff;border-bottom:1px solid var(--gold);">orion-space.vercel.app</a>. Anyone can audit it.</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== REFLECTION — what I'd measure if production migration happens. ===== -->
+<section class="reflection" aria-labelledby="reflect-orion">
+  <span class="meta" data-anim="up">Reflection</span>
+  <div class="body">
+    <h3 id="reflect-orion" data-anim="up">What I would measure if this went live for real.</h3>
+    <p data-anim="up" data-delay="1">
+      Shipped to staging. Brand identity, IA, the full screen set, the component library, and the React build are all there and live at the staging URL. The commercial side stalled before they migrated to production, so I can't claim traffic numbers or conversion lift. What I can claim is the design work itself. It's on a live URL. Anyone reviewing this can audit it.
+    </p>
+    <p data-anim="up" data-delay="2">
+      The thing I learned from this project: the highest-leverage decision I made was a refusal. I almost rebuilt their checkout. I caught myself. Kept Tindie, built only the brand site, let the existing funnel finish the sale. 5 weeks instead of 9. Tighter scope, cleaner product. Knowing what NOT to redesign matters more than the redesign itself. That's the thing I'll bring to any future role.
+    </p>
+
+    <ul data-anim="up" data-delay="3">
+      <li><span class="k">Would measure</span><span class="v">Funnel split: how many institutional inquiries vs hobbyist clicks to Tindie. Brand recognition: direct traffic vs search traffic over time. Time on the SanoSat mission page.</span></li>
+      <li><span class="k">Would redo</span><span class="v">The institutional inquiry form (currently just an email link, should be a proper intake form). Case study pages for past missions. Founder bios with more depth.</span></li>
+      <li><span class="k">What worked</span><span class="v">5-week scope held. Brand to IA to screens to React build to Vercel without slipping. Doing the whole thing alone was what made the velocity work.</span></li>
+      <li><span class="k">Best decision</span><span class="v">Not rebuilding Tindie. Saved 4 weeks. The first call I'd defend if anyone asked.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="bkvm-footer">
+  <p class="lede" data-anim="up">The build was just the medium. The actual work was the design.</p>
+  <div class="row">
+    <a href="index.html#projects"><span aria-hidden="true">←</span> Back to portfolio</a>
+    <a href="https://github.com/Jenish0000/orion-space" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">&lt;/&gt;</span> Source code</a>
+    <a href="https://orion-space.vercel.app" target="_blank" rel="noopener noreferrer">View live staging <span aria-hidden="true">→</span></a>
+  </div>
+  <p class="credit" style="margin-top: 32px;">Orion Space · Bhaktapur, Nepal · Brand identity + shipped React build</p>
+</footer>
+
+<script>
+  // ===== Scroll reveal =====
+  (function () {
+    document.documentElement.classList.add('js-anim');
+
+    const els = document.querySelectorAll('[data-anim]');
+    if (!('IntersectionObserver' in window) || !els.length) {
+      els.forEach((el) => el.classList.add('in'));
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+    );
+    els.forEach((el) => io.observe(el));
+
+    setTimeout(() => {
+      document.querySelectorAll('[data-anim]:not(.in)').forEach((el) => el.classList.add('in'));
+    }, 2500);
+  })();
+
+  // ===== Nav: condense on scroll =====
+  (function () {
+    const nav = document.querySelector('.bkvm-nav');
+    if (!nav) return;
+    let last = 0;
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (y > 80 && y > last) {
+        nav.style.transform = 'translateY(-100%)';
+      } else {
+        nav.style.transform = 'translateY(0)';
+      }
+      nav.style.transition = 'transform 0.4s cubic-bezier(0.4,0,0.2,1)';
+      last = y;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+</script>
+
+</body>
+</html>

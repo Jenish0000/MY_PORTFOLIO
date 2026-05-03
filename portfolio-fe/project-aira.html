@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Case study: ARIA — a trust-first real estate platform for Dubai, replacing aggressive lead capture with user-controlled engagement.">
+<title>ARIA · Case Study — Jenish Karki</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,700;9..144,800&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   ARIA CASE STUDY — scoped under .bkvm-page
+   Typography: editorial magazine. Layout: Porsche-style stagger.
+   (Shares the BKVM case-study chassis for visual consistency.)
+   ============================================================ */
+
+.bkvm-page,
+.bkvm-page * {
+  box-sizing: border-box;
+}
+
+.bkvm-page {
+  --bg: #f5f4f0;
+  --bg-2: #ebeae5;
+  --bg-dark: #0a1224;
+  --bg-dark-2: #050a18;
+  --ink: #0a0a0a;
+  --ink-2: #1a1a1a;
+  --ink-mute: #6b6b6b;
+  --ink-faint: #9a9a9a;
+  --rule: rgba(10, 10, 10, 0.12);
+  --rule-strong: rgba(10, 10, 10, 0.32);
+  --gold: #d4a548;
+  --gold-soft: #e8c97e;
+  --navy: #1a3050;
+  --red: #c2362b;
+  --green: #1f7a3d;
+  --serif: 'Fraunces', 'Times New Roman', serif;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+html { scroll-behavior: smooth; }
+
+/* Selection */
+.bkvm-page ::selection { background: var(--gold); color: var(--ink); }
+
+/* ===== Top nav (fixed) ===== */
+.bkvm-nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px max(5vw, 32px);
+  background: linear-gradient(180deg, rgba(245, 244, 240, 0.96), rgba(245, 244, 240, 0));
+  backdrop-filter: saturate(140%) blur(8px);
+  -webkit-backdrop-filter: saturate(140%) blur(8px);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: padding 0.4s var(--ease);
+}
+.bkvm-nav a {
+  color: var(--ink);
+  text-decoration: none;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.2s var(--ease);
+}
+.bkvm-nav a:hover { opacity: 0.5; }
+.bkvm-nav .center {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 14px;
+  color: var(--ink-mute);
+}
+@media (max-width: 720px) {
+  .bkvm-nav { padding: 16px 20px; font-size: 10px; }
+  .bkvm-nav .center { display: none; }
+}
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100svh;
+  padding: clamp(120px, 18vh, 200px) max(5vw, 32px) clamp(48px, 8vh, 96px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.hero .eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--gold);
+  margin-bottom: clamp(28px, 4vh, 56px);
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.hero .eyebrow::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+  display: inline-block;
+}
+
+.hero h1 {
+  font-size: clamp(56px, 11vw, 168px);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  font-weight: 800;
+  margin: 0 0 clamp(28px, 4vh, 48px);
+  max-width: 14ch;
+  font-feature-settings: 'ss01';
+}
+
+.hero .lede {
+  font-size: clamp(20px, 2.4vw, 32px);
+  line-height: 1.32;
+  font-weight: 400;
+  color: var(--ink-2);
+  max-width: 28ch;
+  margin: 0;
+}
+.hero .lede em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.hero-meta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  border-top: 1px solid var(--rule);
+  padding-top: 28px;
+  margin-top: clamp(64px, 10vh, 120px);
+}
+.hero-meta .cell .label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.hero-meta .cell .value {
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.4;
+}
+@media (max-width: 720px) {
+  .hero-meta { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+}
+
+/* ===== Intro lede block (post-hero, like Porsche f03) ===== */
+.intro-block {
+  padding: clamp(80px, 14vh, 180px) max(5vw, 32px) clamp(80px, 14vh, 180px);
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+.intro-block .body {
+  grid-column: 7 / -1;
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.42;
+  font-weight: 400;
+  color: var(--ink);
+  max-width: 32ch;
+}
+.intro-block .body strong {
+  font-weight: 600;
+}
+.intro-block .marker {
+  grid-column: 1 / 7;
+  align-self: end;
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(80px, 14vw, 220px);
+  line-height: 0.85;
+  color: var(--ink);
+  letter-spacing: -0.04em;
+  font-style: italic;
+}
+@media (max-width: 900px) {
+  .intro-block .body { grid-column: 1 / -1; font-size: 22px; }
+  .intro-block .marker { display: none; }
+}
+
+/* ===== Section base ===== */
+.section {
+  padding: clamp(96px, 16vh, 200px) max(5vw, 32px);
+  position: relative;
+}
+.section + .section {
+  border-top: 1px solid var(--rule);
+}
+
+.section-head {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+  margin-bottom: clamp(56px, 8vh, 112px);
+}
+.section-meta {
+  grid-column: 1 / 4;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: sticky;
+  top: 100px;
+  align-self: start;
+}
+.section-meta .num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(36px, 4vw, 64px);
+  line-height: 1;
+  color: var(--gold);
+  letter-spacing: -0.02em;
+}
+.section-meta .label {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink-mute);
+}
+
+.section-title {
+  grid-column: 4 / -1;
+}
+.section-title h2 {
+  font-size: clamp(36px, 5.5vw, 84px);
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+  margin: 0 0 clamp(28px, 4vh, 40px);
+  max-width: 18ch;
+}
+.section-title h2 em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+}
+.section-title .body {
+  font-size: clamp(17px, 1.3vw, 20px);
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 56ch;
+}
+.section-title .body + .body { margin-top: 1.2em; }
+
+@media (max-width: 900px) {
+  .section-head { gap: 16px; }
+  .section-meta { grid-column: 1 / -1; flex-direction: row; align-items: baseline; gap: 16px; position: static; margin-bottom: 12px; }
+  .section-meta .num { font-size: 28px; }
+  .section-title { grid-column: 1 / -1; }
+}
+
+/* ===== Image figures ===== */
+.figure {
+  margin: 0;
+  position: relative;
+}
+.figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.figure figcaption {
+  margin-top: 16px;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 500;
+}
+
+/* Full-bleed (page-wide) image */
+.figure.full {
+  margin-left: calc(-1 * max(5vw, 32px));
+  margin-right: calc(-1 * max(5vw, 32px));
+}
+
+/* Wide hero image (slightly inset) */
+.figure.wide {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Card image (offset / inset) */
+.figure.card img {
+  border-radius: 4px;
+  box-shadow: 0 24px 64px -32px rgba(0, 0, 0, 0.18);
+}
+
+/* ===== Two-column "split" — text + phone mockup ===== */
+.split {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(40px, 6vw, 96px);
+  align-items: center;
+  margin-top: clamp(80px, 12vh, 160px);
+}
+.split.--reverse > .split-text { grid-column: 7 / -1; order: 2; }
+.split.--reverse > .split-image { grid-column: 1 / 7; order: 1; }
+.split-text { grid-column: 1 / 7; }
+.split-text h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(28px, 3.5vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0 0 24px;
+  max-width: 18ch;
+}
+.split-text .body {
+  font-size: clamp(16px, 1.2vw, 19px);
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 48ch;
+}
+.split-text .body + .body { margin-top: 1em; }
+.split-image { grid-column: 7 / -1; }
+.split-image img {
+  display: block;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  height: auto;
+}
+
+@media (max-width: 900px) {
+  .split { grid-template-columns: 1fr; gap: 48px; }
+  .split-text, .split-image,
+  .split.--reverse > .split-text, .split.--reverse > .split-image { grid-column: 1 / -1; order: unset; }
+  .split-image img { max-width: 360px; }
+}
+
+/* ===== Pull-quote / accent ===== */
+.pull {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(28px, 3.6vw, 56px);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  max-width: 22ch;
+  margin: clamp(80px, 12vh, 160px) auto;
+  text-align: center;
+  padding: 0 max(5vw, 24px);
+}
+.pull::before, .pull::after { color: var(--gold); }
+.pull::before { content: '“'; }
+.pull::after  { content: '”'; }
+
+/* ===== Outcomes / stats ===== */
+.outcomes {
+  background: var(--bg-dark);
+  color: #fff;
+  padding: clamp(120px, 18vh, 220px) max(5vw, 32px);
+  margin-top: clamp(96px, 14vh, 160px);
+  position: relative;
+  overflow: hidden;
+}
+.outcomes::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 50% at 80% 0%, rgba(212, 165, 72, 0.16), transparent 70%);
+  pointer-events: none;
+}
+.outcomes .section-head { margin-bottom: clamp(64px, 10vh, 128px); }
+.outcomes .section-meta .num { color: var(--gold); }
+.outcomes .section-meta .label { color: rgba(255, 255, 255, 0.55); }
+.outcomes .section-title h2 { color: #fff; }
+.outcomes .section-title .body { color: rgba(255, 255, 255, 0.72); }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(32px, 4vw, 80px);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  padding-top: clamp(48px, 6vh, 80px);
+  position: relative;
+  z-index: 1;
+}
+.stat .num {
+  display: block;
+  font-size: clamp(56px, 8vw, 128px);
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+  color: var(--gold);
+  margin-bottom: 16px;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+}
+.stat .label {
+  display: block;
+  font-size: 14px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 22ch;
+}
+@media (max-width: 720px) {
+  .stats { grid-template-columns: 1fr; gap: 40px; }
+}
+
+/* ===== Footer / next ===== */
+.bkvm-footer {
+  background: var(--bg-dark-2);
+  color: #fff;
+  padding: clamp(64px, 10vh, 120px) max(5vw, 32px) 48px;
+}
+.bkvm-footer .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  padding-top: 32px;
+}
+.bkvm-footer a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  transition: opacity 0.2s var(--ease);
+}
+.bkvm-footer a:hover { opacity: 0.6; }
+.bkvm-footer .lede {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(28px, 4vw, 56px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 64px;
+  max-width: 22ch;
+  color: rgba(255, 255, 255, 0.92);
+}
+.bkvm-footer .credit {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 500;
+}
+
+/* ===== Scroll reveal animations =====
+   Hidden state ONLY applies when JS adds .js-anim to <html>.
+   If JS fails for any reason, all content stays visible. */
+.js-anim [data-anim] {
+  opacity: 0;
+  transition: opacity 1s var(--ease-out), transform 1s var(--ease-out);
+  will-change: opacity, transform;
+}
+.js-anim [data-anim="up"]     { transform: translate3d(0, 48px, 0); }
+.js-anim [data-anim="left"]   { transform: translate3d(40px, 0, 0); }
+.js-anim [data-anim="fade"]   { transform: none; }
+.js-anim [data-anim="reveal"] {
+  opacity: 0;
+  transform: translate3d(0, 40px, 0);
+  transition: opacity 1.2s var(--ease-out), transform 1.2s var(--ease-out);
+}
+.js-anim [data-anim].in {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 0 0);
+}
+.js-anim [data-anim][data-delay="1"].in { transition-delay: 0.12s; }
+.js-anim [data-anim][data-delay="2"].in { transition-delay: 0.24s; }
+.js-anim [data-anim][data-delay="3"].in { transition-delay: 0.36s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js-anim [data-anim] {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
+/* ===== Numbered list (used in problem section) ===== */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: clamp(56px, 8vh, 96px);
+  padding-top: 32px;
+  border-top: 1px solid var(--rule);
+}
+.fact .key {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.fact .val {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+@media (max-width: 900px) { .facts { grid-template-columns: 1fr; gap: 24px; } }
+
+/* ===== Decision log — annotated UX rationale callouts =====
+   Research-driven: makes design thinking VISIBLE to recruiters
+   who scan portfolios for evidence of reasoning, not just craft. */
+.decisions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(28px, 4vw, 48px);
+  margin-top: clamp(64px, 10vh, 120px);
+  padding-top: clamp(40px, 6vh, 64px);
+  border-top: 1px solid var(--rule);
+}
+.decisions-head {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+.decisions-head .key {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--gold);
+}
+.decisions-head .lede {
+  font-size: 14px;
+  color: var(--ink-mute);
+  font-style: italic;
+  font-family: var(--serif);
+}
+.decision {
+  border-left: 2px solid var(--gold);
+  padding: 4px 0 4px 24px;
+}
+.decision .q {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(20px, 2vw, 26px);
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0 0 14px;
+  letter-spacing: -0.01em;
+}
+.decision .a {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  margin: 0;
+}
+.decision .a strong { color: var(--ink); font-weight: 600; }
+.decision .a em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--ink); }
+@media (max-width: 720px) {
+  .decisions { grid-template-columns: 1fr; gap: 28px; }
+  .decision { padding-left: 18px; }
+  .decisions-head { flex-direction: column; gap: 4px; }
+}
+
+/* ===== Reflection — what I learned / what I'd test next =====
+   Research-driven: junior portfolios that include reflection
+   sections (per Aakriti Chugh model) signal growth mindset
+   and honest self-assessment. Recruiters value this strongly. */
+.reflection {
+  padding: clamp(96px, 14vh, 180px) max(5vw, 32px);
+  background: var(--bg-2);
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+.reflection .meta {
+  grid-column: 1 / 4;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--gold);
+  position: sticky;
+  top: 100px;
+  align-self: start;
+}
+.reflection .body {
+  grid-column: 4 / -1;
+  max-width: 64ch;
+}
+.reflection h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(28px, 4vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 28px;
+  max-width: 22ch;
+  color: var(--ink);
+}
+.reflection p {
+  font-size: clamp(16px, 1.2vw, 19px);
+  line-height: 1.65;
+  color: var(--ink-2);
+  margin: 0 0 1em;
+}
+.reflection p em { font-family: var(--serif); font-style: italic; }
+.reflection p strong { color: var(--ink); font-weight: 600; }
+.reflection ul {
+  list-style: none;
+  padding: 0;
+  margin: 36px 0 0;
+}
+.reflection ul li {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 24px;
+  padding: 16px 0;
+  border-top: 1px solid var(--rule);
+  font-size: 14.5px;
+}
+.reflection ul li:last-child { border-bottom: 1px solid var(--rule); }
+.reflection ul li .k {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink-mute);
+  align-self: center;
+}
+.reflection ul li .v {
+  color: var(--ink);
+  font-weight: 500;
+  line-height: 1.45;
+}
+@media (max-width: 900px) {
+  .reflection { grid-template-columns: 1fr; }
+  .reflection .meta { grid-column: 1; position: static; margin-bottom: 16px; }
+  .reflection .body { grid-column: 1; }
+  .reflection ul li { grid-template-columns: 1fr; gap: 4px; }
+  .reflection ul li .k { font-size: 10px; }
+}
+</style>
+</head>
+
+<body class="bkvm-page">
+
+<!-- ===== TOP NAV ===== -->
+<nav class="bkvm-nav" aria-label="Case study navigation">
+  <a href="index.html#projects" aria-label="Back to portfolio">
+    <span aria-hidden="true">←</span> Portfolio
+  </a>
+  <span class="center">Case study · AIRA</span>
+  <span class="nav-right">
+    <a href="https://github.com/Jenish0000/aira-real-estate" target="_blank" rel="noopener noreferrer" aria-label="View source code on GitHub">
+      <span aria-hidden="true">&lt;/&gt;</span> Source
+    </a>
+    <a href="https://aira-real-estate.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open live site in new tab">
+      Live site <span aria-hidden="true">→</span>
+    </a>
+  </span>
+</nav>
+
+<main>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div>
+      <span class="eyebrow" data-anim="up">Self-initiated case study · 2024</span>
+      <h1 id="hero-title" data-anim="up" data-delay="1">AIRA.<br>Trust-first<br>real estate.</h1>
+      <p class="lede" data-anim="up" data-delay="2">A redesign of how Dubai property platforms ask for your details. Less ambush. More choice. Self-initiated, not commissioned.</p>
+    </div>
+
+    <div class="hero-meta" data-anim="fade" data-delay="3">
+      <div class="cell"><span class="label">Role</span><span class="value">UI/UX + Frontend</span></div>
+      <div class="cell"><span class="label">Stack</span><span class="value">MERN · Figma</span></div>
+      <div class="cell"><span class="label">Surface</span><span class="value">Responsive · 4 breakpoints</span></div>
+      <div class="cell"><span class="label">Market</span><span class="value">Dubai · GCC luxury</span></div>
+    </div>
+  </section>
+
+  <!-- ===== INTRO LEDE ===== -->
+  <section class="intro-block" aria-label="Project overview">
+    <div class="marker" data-anim="up" aria-hidden="true">A.R.I.A</div>
+    <p class="body" data-anim="up" data-delay="1">
+      A redesign of a Dubai property platform built on <strong>4 breakpoints</strong> (1317 / 1004 / 835 / mobile). I designed it in Figma and built the front-end on the MERN stack. The goal wasn't to make a nicer homepage. It was to flip how property sites treat people, from chasing them to respecting them. <strong>Self-initiated.</strong> No commercial client. Built against what I see Dubai property sites doing.
+    </p>
+  </section>
+
+  <!-- ===== 01 · THE PROBLEM ===== -->
+  <section class="section" aria-labelledby="sec-01">
+    <header class="section-head">
+      <div class="section-meta">
+        <span class="num" data-anim="up">01</span>
+        <span class="label" data-anim="up" data-delay="1">The Problem</span>
+      </div>
+      <div class="section-title">
+        <h2 id="sec-01" data-anim="up">Four trust failures.<br><em>Built for the agent, not the buyer.</em></h2>
+        <p class="body" data-anim="up" data-delay="1">
+          Most Dubai real-estate sites do the same thing. A popup blocks the screen within 5 seconds. Listings stay marked "Available" after they've sold. Click on one and an agent calls in 30 seconds, often pitching a different property than the one you opened.
+        </p>
+        <p class="body" data-anim="up" data-delay="2">
+          What this does: users stop trusting the platform, then the agent, then the listing itself. Conversion drops. But the bigger issue is <em>retention</em>. Users don't come back to a site that ambushed them the first time.
+        </p>
+      </div>
+    </header>
+
+    <figure class="figure full" data-anim="reveal">
+      <img src="./assets/aira/01-system-stacked.png" alt="Responsive system shown across two laptop breakpoints — the property platform engineered as one design system, not patched per device." loading="lazy">
+    </figure>
+
+    <div class="facts">
+      <div class="fact" data-anim="up"><span class="key">Before</span><span class="val">5-second popups. Fake "Available" labels on sold listings. Silent lead capture on hover. Urgency banners on AED 25M villas.</span></div>
+      <div class="fact" data-anim="up" data-delay="1"><span class="key">Context</span><span class="val">Luxury inventory shown in a UI built for classifieds. Users learn to flinch on every property site they visit.</span></div>
+      <div class="fact" data-anim="up" data-delay="2"><span class="key">After</span><span class="val">Verified + Available shown together on every card. Registration only when the user asks. Sold Out shown openly, not hidden.</span></div>
+    </div>
+  </section>
+
+  <!-- ===== Pull quote ===== -->
+  <p class="pull" data-anim="up">For an AED 18M decision, trust is the whole product.</p>
+
+  <!-- ===== 02 · LANDING ===== -->
+  <section class="section" aria-labelledby="sec-02">
+    <header class="section-head">
+      <div class="section-meta">
+        <span class="num" data-anim="up">02</span>
+        <span class="label" data-anim="up" data-delay="1">Landing Experience</span>
+      </div>
+      <div class="section-title">
+        <h2 id="sec-02" data-anim="up">No popup. <em>We waited until you asked.</em></h2>
+        <p class="body" data-anim="up" data-delay="1">
+          The homepage does not block the user. There's a hero ("Discover Your Perfect Dubai Residence"), one search row, three trust labels (Verified Listings, Transparent Pricing, Licensed Agents), and the Featured Properties grid. That's it. The user can browse without being asked for anything.
+        </p>
+      </div>
+    </header>
+
+    <figure class="figure wide" data-anim="reveal">
+      <img src="./assets/aira/03-desktop-homepage.png" alt="Desktop homepage — clean entry, no popup, hero image and serif headline with verification micro-signals below the fold." loading="lazy">
+      <figcaption>Desktop · 1317 viewport</figcaption>
+    </figure>
+
+    <div class="split">
+      <div class="split-text">
+        <h3 data-anim="up">Most users are on phones.</h3>
+        <p class="body" data-anim="up" data-delay="1">
+          Dubai property browsing mostly happens on phones, often during commutes or after work. So the mobile layout reorders the hero. The property image comes first. Then the headline. Then the search row. It reads top to bottom, not the way the desktop layout reflows.
+        </p>
+        <p class="body" data-anim="up" data-delay="2">
+          The Verified and Available badges sit on every card above the fold. The user sees the trust signal before they have to look for it.
+        </p>
+      </div>
+      <figure class="figure split-image" data-anim="up" data-delay="1">
+        <img src="./assets/aira/05-phone-homepage.png" alt="Mobile homepage with vertically reordered hero and Featured Properties grid showing trust badges on every card." loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== 03 · TRUST SYSTEM ===== -->
+  <section class="section" aria-labelledby="sec-03">
+    <header class="section-head">
+      <div class="section-meta">
+        <span class="num" data-anim="up">03</span>
+        <span class="label" data-anim="up" data-delay="1">Trust System</span>
+      </div>
+      <div class="section-title">
+        <h2 id="sec-03" data-anim="up">Verified. <em>Available.</em> Sold Out.</h2>
+        <p class="body" data-anim="up" data-delay="1">
+          Every listing card carries two badges next to each other. <em>Verified</em> means the property is checked against RERA and the broker license. <em>Available</em> means the listing is still for sale as of the last data sync. When a property sells, the card stays on the site with a Sold Out badge instead. Showing Sold Out openly tells the user the platform isn't lying. That does more for trust than 100 "Available" labels.
+        </p>
+      </div>
+    </header>
+
+    <figure class="figure wide" data-anim="reveal">
+      <img src="./assets/aira/02-desktop-trust.png" alt="Desktop property detail page with Verified + Available badge pairing, price history link, 360° interior viewer, and licensed agent panel." loading="lazy">
+      <figcaption>Desktop · property detail page</figcaption>
+    </figure>
+
+    <div class="split --reverse">
+      <div class="split-text">
+        <h3 data-anim="up">Showing Sold Out is the point.</h3>
+        <p class="body" data-anim="up" data-delay="1">
+          Most platforms remove sold listings the moment they sell. AIRA keeps them on the site with a Sold Out tag. A user who sees Sold Out learns the platform doesn't hide things. The next listing they see marked Available is now believable.
+        </p>
+        <p class="body" data-anim="up" data-delay="2">
+          It also blocks the agent's bait-and-switch. "That one just sold, but I have something similar" doesn't work if the user already knows which listings are sold and which aren't.
+        </p>
+      </div>
+      <figure class="figure split-image" data-anim="up" data-delay="1">
+        <img src="./assets/aira/06-phone-trust.png" alt="Mobile property detail with the verified-pricing block highlighted — title, location, description, price, and price history link grouped as one trust unit." loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== 04 · ENGAGEMENT ===== -->
+  <section class="section" aria-labelledby="sec-04">
+    <header class="section-head">
+      <div class="section-meta">
+        <span class="num" data-anim="up">04</span>
+        <span class="label" data-anim="up" data-delay="1">Engagement</span>
+      </div>
+      <div class="section-title">
+        <h2 id="sec-04" data-anim="up">Lead capture as response.<br><em>Not ambush.</em></h2>
+        <p class="body" data-anim="up" data-delay="1">
+          The registration modal only opens when the user clicks something that asks for it, like Schedule a viewing or Request a callback. It never opens on a timer. Choice of contact mode sits at the top of the form as a radio toggle. A user who picks video call is showing they're ready. A user who picks callback is showing they're still exploring. The form treats them differently because they want different things.
+        </p>
+        <p class="body" data-anim="up" data-delay="2">
+          The project and unit type are pre-filled based on the property the user was just looking at. The phone code defaults to +971 but is editable, since a lot of Dubai luxury buyers are international. News-and-offers is opt-in, not a pre-checked box.
+        </p>
+      </div>
+    </header>
+
+    <figure class="figure full" data-anim="reveal">
+      <img src="./assets/aira/04-mobile-full.png" alt="Full mobile flow — homepage hero, Featured Properties grid, property detail with agent card and Schedule a viewing CTA, filter row at the foot." loading="lazy">
+      <figcaption style="padding: 0 max(5vw, 32px); margin-top: 24px;">Browse → Trust → Engage — one continuous flow, no interruption</figcaption>
+    </figure>
+
+    <div class="split">
+      <div class="split-text">
+        <h3 data-anim="up">Pre-fill what you already know.</h3>
+        <p class="body" data-anim="up" data-delay="1">
+          When the registration modal opens, the property the user was looking at is already attached to the form. Unit type, project name, and source page are filled in silently. The user only types two things: their name and their number. Then picks how they want to be contacted.
+        </p>
+        <p class="body" data-anim="up" data-delay="2">
+          The friction in real-estate forms isn't the form. It's the interruption. Removing the interruption removes the friction without removing the lead capture.
+        </p>
+      </div>
+      <figure class="figure split-image" data-anim="up" data-delay="1">
+        <img src="./assets/aira/07-phone-engagement.png" alt="Mobile property detail with Schedule a viewing and Contact Agent CTAs, licensed agent card showing response time and success rate." loading="lazy">
+      </figure>
+    </div>
+
+    <!-- ===== Decision log ===== -->
+    <div class="decisions">
+      <div class="decisions-head">
+        <span class="key">Decision log</span>
+        <span class="lede">Four calls behind the redesign.</span>
+      </div>
+
+      <div class="decision" data-anim="up">
+        <p class="q">Why show Verified and Available together, not just one?</p>
+        <p class="a">A single badge is easy to fake. "Verified" by itself doesn't tell you if the listing is still for sale. Two badges next to each other commit the platform to two things at once: the listing is real AND it hasn't sold yet. Either being wrong gets noticed by users. That risk is what makes the pair credible.</p>
+      </div>
+
+      <div class="decision" data-anim="up" data-delay="1">
+        <p class="q">Why keep Sold Out cards on the site, not delete them?</p>
+        <p class="a">Most platforms delete sold listings within seconds. AIRA keeps them, marked Sold Out. When a user sees Sold Out, they learn the platform isn't hiding things. The next listing marked Available now means something. Deleting is faster but it costs the user the only signal they had that the data was honest.</p>
+      </div>
+
+      <div class="decision" data-anim="up" data-delay="2">
+        <p class="q">Why click-triggered registration, not exit-intent or a 5-second popup?</p>
+        <p class="a">Exit-intent punishes you for trying to leave. Timed popups punish you for being slow. Both treat the user like a target. Click-triggered means the form only shows up when the user asked for it. The friction in real-estate forms was never the form. It was the interruption.</p>
+      </div>
+
+      <div class="decision" data-anim="up" data-delay="3">
+        <p class="q">Why default to +971 but keep it editable?</p>
+        <p class="a">Most traffic on Dubai property sites is local, so +971 makes sense as the default. But about 30% of luxury inquiries come from outside the UAE. Forcing a UAE phone code would push those users out. Default to what fits most, but stay open to the lead worth the most.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 05 · OUTCOMES ===== -->
+  <section class="section outcomes" aria-labelledby="sec-05">
+    <header class="section-head">
+      <div class="section-meta">
+        <span class="num" data-anim="up">05</span>
+        <span class="label" data-anim="up" data-delay="1">Outcomes</span>
+      </div>
+      <div class="section-title">
+        <h2 id="sec-05" data-anim="up">Designed and built it myself.</h2>
+        <p class="body" data-anim="up" data-delay="1">
+          I designed this in Figma, then built the front-end in MERN. Every design decision had to survive the build. Lazy-loading on the property grid. Filter state. Form validation with proper error messages. The simple decisions held up. The fancy ones got dropped during the build, which is exactly when fancy decisions get dropped.
+        </p>
+      </div>
+    </header>
+
+    <div class="stats">
+      <div class="stat" data-anim="up">
+        <span class="num">4<span style="color: var(--gold-soft); font-size: 0.5em; vertical-align: 0.4em; letter-spacing: 0.04em;"> bp</span></span>
+        <span class="label">Breakpoints: desktop 1317, large tablet 1004, small tablet 835, mobile. One design system, no per-device hacks.</span>
+      </div>
+      <div class="stat" data-anim="up" data-delay="1">
+        <span class="num">0</span>
+        <span class="label">Entry-time popups. The form only opens when the user clicks something that asks for it.</span>
+      </div>
+      <div class="stat" data-anim="up" data-delay="2">
+        <span class="num">MERN</span>
+        <span class="label">MongoDB, Express, React, Node. I designed the whole thing and built the front-end. Not just a Figma file.</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== REFLECTION — research-aligned: junior portfolios that show
+     reasoning + self-assessment outperform polished ones without it. ===== -->
+<section class="reflection" aria-labelledby="reflect-aria">
+  <span class="meta" data-anim="up">Reflection</span>
+  <div class="body">
+    <h3 id="reflect-aria" data-anim="up">What I would test before this goes commercial.</h3>
+    <p data-anim="up" data-delay="1">
+      Self-initiated work shows a thesis. It doesn't prove the thesis works. The trust-first posture makes sense to me, based on watching how Dubai property sites currently behave and reading on friction patterns. I have not put this in front of real Dubai users. Before any brokerage shipped this, the calls above would need data behind them.
+    </p>
+    <p data-anim="up" data-delay="2">
+      Going in, I thought I would add a lot of trust signals. Badges. Seals. Verifications. The usual stack. Most of the work ended up being removal. Removing the popup. Removing the urgency banners on AED 25M villas. Removing the auto-callback. Less of those things does more for trust than adding more verification badges. I did not expect that going in.
+    </p>
+
+    <ul data-anim="up" data-delay="3">
+      <li><span class="k">Would test</span><span class="v">Verified + Available paired vs a single badge. Whether keeping Sold Out visible affects how often users come back. Click-triggered registration conversion vs the timed-popup baseline.</span></li>
+      <li><span class="k">Would redo</span><span class="v">The price history link (I assumed users want it, I have no data on this). The 360° viewer placement. Arabic RTL and localized errors, which I haven't built yet.</span></li>
+      <li><span class="k">What's missing</span><span class="v">No user testing. The trust thesis is built on watching the category, not from interviews. Treat this as a thesis with reasoning, not a verdict.</span></li>
+      <li><span class="k">Best decision</span><span class="v">Keeping Sold Out visible. Counter to what every other property site does. The first call I would defend if a hiring manager pushed back on it.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="bkvm-footer">
+  <p class="lede" data-anim="up">An AED 18M decision is a big deal. The interface should treat it that way.</p>
+ <div class="row">
+    <a href="index.html#projects"><span aria-hidden="true">←</span> Back to portfolio</a>
+    <a href="https://github.com/Jenish0000/aira-real-estate" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">&lt;/&gt;</span> Source code</a>
+    <a href="https://aira-real-estate.vercel.app/" target="_blank" rel="noopener noreferrer">View live site <span aria-hidden="true">→</span></a>
+  </div>
+  <p class="credit" style="margin-top: 32px;">AIRA · Self-initiated case study · Designed and built end-to-end against Dubai market context</p>
+</footer>
+
+<script>
+  // ===== Scroll reveal (IntersectionObserver) =====
+  (function () {
+    // Mark JS as active so the hidden CSS state engages
+    document.documentElement.classList.add('js-anim');
+
+    const els = document.querySelectorAll('[data-anim]');
+    if (!('IntersectionObserver' in window) || !els.length) {
+      els.forEach((el) => el.classList.add('in'));
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+    );
+    els.forEach((el) => io.observe(el));
+
+    // Failsafe: anything still hidden after 2.5s gets shown anyway
+    setTimeout(() => {
+      document.querySelectorAll('[data-anim]:not(.in)').forEach((el) => el.classList.add('in'));
+    }, 2500);
+  })();
+
+  // ===== Nav: condense on scroll =====
+  (function () {
+    const nav = document.querySelector('.bkvm-nav');
+    if (!nav) return;
+    let last = 0;
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (y > 80 && y > last) {
+        nav.style.transform = 'translateY(-100%)';
+      } else {
+        nav.style.transform = 'translateY(0)';
+      }
+      nav.style.transition = 'transform 0.4s cubic-bezier(0.4,0,0.2,1)';
+      last = y;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+</script>
+
+</body>
+</html>

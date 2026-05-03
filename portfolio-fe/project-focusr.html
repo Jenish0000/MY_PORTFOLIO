@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Concept exploration: Focusr — a single-task productivity app built around loss-aversion gamification.">
+<title>Focusr · Concept Exploration — Jenish Karki</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,700;9..144,800&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   FOCUSR — concept exploration
+   Same case-study chassis as the rest of the portfolio.
+   Lightest content load: 2 substantive sections, no dark
+   outcomes block, status footer instead.
+   ============================================================ */
+
+.bkvm-page,
+.bkvm-page * { box-sizing: border-box; }
+
+.bkvm-page {
+  --bg: #f5f4f0;
+  --bg-2: #ebeae5;
+  --bg-mobile: #fafaf6;
+  --bg-dark: #0a1224;
+  --bg-dark-2: #050a18;
+  --ink: #0a0a0a;
+  --ink-2: #1a1a1a;
+  --ink-mute: #6b6b6b;
+  --ink-faint: #9a9a9a;
+  --rule: rgba(10, 10, 10, 0.12);
+  --rule-strong: rgba(10, 10, 10, 0.32);
+  --gold: #d4a548;
+  --gold-soft: #e8c97e;
+  --navy: #1a3050;
+
+  /* Focusr's own brand colors — used for chips/marks within the case study */
+  --focusr-red: #b34a3a;
+  --focusr-orange: #e26b46;
+  --focusr-yellow: #f4cc6a;
+  --focusr-green: #4a9856;
+
+  --serif: 'Fraunces', 'Times New Roman', serif;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+html { scroll-behavior: smooth; }
+.bkvm-page ::selection { background: var(--gold); color: var(--ink); }
+
+/* ===== Top nav ===== */
+.bkvm-nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px max(5vw, 32px);
+  background: linear-gradient(180deg, rgba(245, 244, 240, 0.96), rgba(245, 244, 240, 0));
+  backdrop-filter: saturate(140%) blur(8px);
+  -webkit-backdrop-filter: saturate(140%) blur(8px);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: padding 0.4s var(--ease);
+}
+.bkvm-nav a {
+  color: var(--ink);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.2s var(--ease);
+}
+.bkvm-nav a:hover { opacity: 0.5; }
+.bkvm-nav .center {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 14px;
+  color: var(--ink-mute);
+}
+.bkvm-nav .right {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  font-weight: 500;
+  color: var(--ink-mute);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.bkvm-nav .right .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: inline-block;
+}
+@media (max-width: 720px) {
+  .bkvm-nav { padding: 16px 20px; font-size: 10px; }
+  .bkvm-nav .center { display: none; }
+}
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100svh;
+  padding: clamp(120px, 18vh, 200px) max(5vw, 32px) clamp(48px, 8vh, 96px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hero .eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--gold);
+  margin-bottom: clamp(28px, 4vh, 56px);
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.hero .eyebrow::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+  display: inline-block;
+}
+
+.hero h1 {
+  font-size: clamp(56px, 11vw, 168px);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  font-weight: 800;
+  margin: 0 0 clamp(28px, 4vh, 48px);
+  max-width: 14ch;
+  font-feature-settings: 'ss01';
+}
+
+.hero .lede {
+  font-size: clamp(20px, 2.4vw, 32px);
+  line-height: 1.32;
+  font-weight: 400;
+  color: var(--ink-2);
+  max-width: 30ch;
+  margin: 0;
+}
+.hero .lede em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.hero-meta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  border-top: 1px solid var(--rule);
+  padding-top: 28px;
+  margin-top: clamp(64px, 10vh, 120px);
+}
+.hero-meta .cell .label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.hero-meta .cell .value {
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.4;
+}
+@media (max-width: 720px) {
+  .hero-meta { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+}
+
+/* ===== Intro lede block ===== */
+.intro-block {
+  padding: clamp(80px, 14vh, 180px) max(5vw, 32px) clamp(80px, 14vh, 180px);
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+.intro-block .body {
+  grid-column: 7 / -1;
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.42;
+  font-weight: 400;
+  color: var(--ink);
+  max-width: 34ch;
+}
+.intro-block .body strong { font-weight: 600; }
+.intro-block .marker {
+  grid-column: 1 / 7;
+  align-self: end;
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(80px, 14vw, 220px);
+  line-height: 0.85;
+  color: var(--ink);
+  letter-spacing: -0.04em;
+  font-style: italic;
+}
+@media (max-width: 900px) {
+  .intro-block .body { grid-column: 1 / -1; font-size: 22px; }
+  .intro-block .marker { display: none; }
+}
+
+/* ===== Section base ===== */
+.section {
+  padding: clamp(96px, 16vh, 200px) max(5vw, 32px);
+  position: relative;
+}
+.section + .section { border-top: 1px solid var(--rule); }
+
+.section-head {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+  margin-bottom: clamp(56px, 8vh, 112px);
+}
+.section-meta {
+  grid-column: 1 / 4;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: sticky;
+  top: 100px;
+  align-self: start;
+}
+.section-meta .num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(36px, 4vw, 64px);
+  line-height: 1;
+  color: var(--gold);
+  letter-spacing: -0.02em;
+}
+.section-meta .label {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink-mute);
+}
+
+.section-title { grid-column: 4 / -1; }
+.section-title h2 {
+  font-size: clamp(36px, 5.5vw, 84px);
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+  margin: 0 0 clamp(28px, 4vh, 40px);
+  max-width: 18ch;
+}
+.section-title h2 em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+}
+.section-title .body {
+  font-size: clamp(17px, 1.3vw, 20px);
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 56ch;
+}
+.section-title .body + .body { margin-top: 1.2em; }
+
+@media (max-width: 900px) {
+  .section-head { gap: 16px; }
+  .section-meta { grid-column: 1 / -1; flex-direction: row; align-items: baseline; gap: 16px; position: static; margin-bottom: 12px; }
+  .section-meta .num { font-size: 28px; }
+  .section-title { grid-column: 1 / -1; }
+}
+
+/* ===== Mockup hero — full-bleed iPhone render with dark surround ===== */
+.mockup-hero {
+  margin: clamp(48px, 8vh, 96px) calc(-1 * max(5vw, 32px)) 0;
+  background: #15243a;
+  padding: clamp(40px, 8vh, 96px) max(5vw, 32px);
+  display: flex;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.mockup-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 50% at 50% 30%, rgba(212, 165, 72, 0.10), transparent 70%);
+  pointer-events: none;
+}
+.mockup-hero img {
+  display: block;
+  max-width: min(420px, 70vw);
+  width: 100%;
+  height: auto;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.4));
+}
+.mockup-hero figcaption {
+  position: absolute;
+  bottom: clamp(20px, 3vh, 32px);
+  left: max(5vw, 32px);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 500;
+  z-index: 2;
+}
+
+/* Two-up mockup row */
+.mockup-pair {
+  margin: clamp(48px, 8vh, 96px) calc(-1 * max(5vw, 32px)) 0;
+  background: #0d1828;
+  padding: clamp(40px, 8vh, 96px) max(5vw, 32px);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(24px, 4vw, 80px);
+  align-items: center;
+  justify-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.mockup-pair::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(50% 60% at 80% 50%, rgba(212, 165, 72, 0.08), transparent 70%);
+  pointer-events: none;
+}
+.mockup-pair img {
+  display: block;
+  max-width: min(380px, 90%);
+  width: 100%;
+  height: auto;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.4));
+}
+@media (max-width: 760px) {
+  .mockup-pair { grid-template-columns: 1fr; gap: 48px; }
+}
+
+/* Angled / floating mockup for the status block */
+.mockup-aside {
+  display: block;
+  max-width: 280px;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 24px 48px rgba(20, 12, 0, 0.18));
+  margin-left: auto;
+}
+
+/* ===== Loop row — small cards using raw Figma exports
+   for the steps that don't have iPhone mockups available.
+   ============================================================ */
+.phone-card {
+  background: var(--bg-mobile);
+  border: 1px solid var(--rule);
+  border-radius: 28px;
+  padding: 10px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 18px 36px -18px rgba(20, 12, 0, 0.18),
+    0 4px 12px -4px rgba(20, 12, 0, 0.08);
+  width: 100%;
+}
+.phone-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+}
+
+/* ===== Pull quote ===== */
+.pull {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(28px, 3.6vw, 56px);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  max-width: 26ch;
+  margin: clamp(80px, 12vh, 160px) auto;
+  text-align: center;
+  padding: 0 max(5vw, 24px);
+}
+.pull::before, .pull::after { color: var(--gold); }
+.pull::before { content: '"'; }
+.pull::after  { content: '"'; }
+
+/* ===== Priority chip row (visualizes the traffic-light system) ===== */
+.priority-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: clamp(40px, 6vh, 64px);
+}
+.p-chip {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.p-chip::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: var(--p-color);
+}
+.p-chip .p-dot {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--p-color);
+  display: inline-block;
+}
+.p-chip .p-key {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink-mute);
+  margin-bottom: 2px;
+}
+.p-chip .p-name {
+  font-family: var(--sans);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.p-chip .p-cost {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-mute);
+}
+.p-chip .p-cost strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+@media (max-width: 720px) { .priority-row { grid-template-columns: 1fr; } }
+
+/* ===== Loop row — 3 steps before the mockup payoff ===== */
+.loop-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2.5vw, 32px);
+  margin-top: clamp(40px, 6vh, 80px);
+}
+.loop-step {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.loop-step .step-num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--gold);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.loop-step .step-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.loop-step .step-desc {
+  font-size: 13px;
+  color: var(--ink-mute);
+  line-height: 1.5;
+}
+.loop-step .phone-card {
+  max-width: 100%;
+  padding: 8px;
+  border-radius: 22px;
+}
+.loop-step .phone-card img { border-radius: 14px; }
+
+@media (max-width: 900px) {
+  .loop-row { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+}
+@media (max-width: 480px) {
+  .loop-row { grid-template-columns: 1fr; }
+}
+
+/* ===== Status block (instead of big dark outcomes) ===== */
+.status-block {
+  padding: clamp(80px, 14vh, 160px) max(5vw, 32px);
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+.status-block .label {
+  grid-column: 1 / 4;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--gold);
+  position: sticky;
+  top: 100px;
+  align-self: start;
+}
+.status-block .body {
+  grid-column: 4 / 9;
+}
+.status-block .status-aside {
+  grid-column: 9 / -1;
+  align-self: start;
+}
+.status-block .status-aside img {
+  width: 100%;
+  max-width: 240px;
+  margin-left: auto;
+  display: block;
+  filter: drop-shadow(0 24px 48px rgba(20, 12, 0, 0.18));
+}
+.status-block h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(28px, 3.5vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 24px;
+  max-width: 22ch;
+  color: var(--ink);
+}
+.status-block p {
+  font-size: clamp(16px, 1.2vw, 19px);
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 56ch;
+  margin: 0 0 1em;
+}
+.status-block ul {
+  list-style: none;
+  padding: 0;
+  margin: 32px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.status-block ul li {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 24px;
+  padding: 14px 0;
+  border-top: 1px solid var(--rule);
+  font-size: 14.5px;
+}
+.status-block ul li:last-child { border-bottom: 1px solid var(--rule); }
+.status-block ul li .k {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink-mute);
+  align-self: center;
+}
+.status-block ul li .v {
+  color: var(--ink);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+  .status-block .label,
+  .status-block .body,
+  .status-block .status-aside { grid-column: 1 / -1; position: static; }
+  .status-block .label { margin-bottom: 16px; }
+  .status-block ul li { grid-template-columns: 1fr; gap: 4px; }
+  .status-block ul li .k { font-size: 10px; }
+  .status-block .status-aside { margin-top: 48px; }
+  .status-block .status-aside img { max-width: 280px; margin: 0 auto; }
+}
+
+/* ===== Footer ===== */
+.bkvm-footer {
+  background: var(--bg-dark-2);
+  color: #fff;
+  padding: clamp(64px, 10vh, 120px) max(5vw, 32px) 48px;
+}
+.bkvm-footer .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  padding-top: 32px;
+}
+.bkvm-footer a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  transition: opacity 0.2s var(--ease);
+}
+.bkvm-footer a:hover { opacity: 0.6; }
+.bkvm-footer .lede {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(28px, 4vw, 56px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 64px;
+  max-width: 22ch;
+  color: rgba(255, 255, 255, 0.92);
+}
+.bkvm-footer .credit {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 500;
+}
+
+/* ===== Prototype embed (interactive Figma) ===== */
+.prototype-section {
+  padding: clamp(96px, 16vh, 200px) max(5vw, 32px);
+  border-top: 1px solid var(--rule);
+  text-align: center;
+}
+.proto-head {
+  max-width: 720px;
+  margin: 0 auto clamp(48px, 7vh, 80px);
+}
+.proto-head .eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--gold);
+  margin-bottom: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.proto-head .eyebrow::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+  display: inline-block;
+}
+.proto-head h2 {
+  font-size: clamp(36px, 5.5vw, 84px);
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+  margin: 0 auto 24px;
+  max-width: 16ch;
+}
+.proto-head h2 em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+}
+.proto-head p {
+  font-size: clamp(17px, 1.3vw, 20px);
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 56ch;
+  margin: 0 auto;
+}
+.proto-head p em { color: var(--ink-mute); font-style: italic; }
+
+.proto-stage {
+  position: relative;
+  margin: 0 auto;
+  max-width: 1100px;
+  background: #15243a;
+  border-radius: 24px;
+  padding: clamp(20px, 3vh, 32px);
+  overflow: hidden;
+  box-shadow: 0 30px 80px -30px rgba(20, 12, 0, 0.4);
+}
+.proto-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 60% at 50% 30%, rgba(212, 165, 72, 0.10), transparent 70%);
+  pointer-events: none;
+}
+.proto-stage iframe {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border: none;
+  border-radius: 14px;
+  display: block;
+  background: #0a1224;
+}
+
+.proto-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: clamp(32px, 5vh, 48px);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.proto-open,
+.proto-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 26px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.3s var(--ease), color 0.3s var(--ease), transform 0.2s var(--ease), border-color 0.3s var(--ease);
+}
+.proto-open {
+  background: var(--ink);
+  color: #fff;
+  border: 1px solid var(--ink);
+}
+.proto-open:hover {
+  background: var(--gold);
+  color: var(--ink);
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
+.proto-open svg { transition: transform 0.3s var(--ease); }
+.proto-open:hover svg { transform: translate(2px, -2px); }
+.proto-hint {
+  background: transparent;
+  color: var(--ink-mute);
+  border: 1px solid var(--rule);
+  cursor: default;
+}
+
+@media (max-width: 720px) {
+  .proto-stage { padding: 8px; border-radius: 16px; }
+  .proto-stage iframe {
+    aspect-ratio: auto;
+    height: 70vh;
+    min-height: 500px;
+    border-radius: 10px;
+  }
+}
+
+/* ===== Scroll reveal — gated by .js-anim ===== */
+.js-anim [data-anim] {
+  opacity: 0;
+  transition: opacity 1s var(--ease-out), transform 1s var(--ease-out);
+  will-change: opacity, transform;
+}
+.js-anim [data-anim="up"]   { transform: translate3d(0, 48px, 0); }
+.js-anim [data-anim="left"] { transform: translate3d(40px, 0, 0); }
+.js-anim [data-anim="fade"] { transform: none; }
+.js-anim [data-anim].in {
+  opacity: 1;
+  transform: none;
+}
+.js-anim [data-anim][data-delay="1"].in { transition-delay: 0.10s; }
+.js-anim [data-anim][data-delay="2"].in { transition-delay: 0.20s; }
+.js-anim [data-anim][data-delay="3"].in { transition-delay: 0.30s; }
+.js-anim [data-anim][data-delay="4"].in { transition-delay: 0.40s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js-anim [data-anim] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
+/* ===== Decision log — annotated UX rationale callouts =====
+   Research-driven: makes design thinking VISIBLE to recruiters
+   who scan portfolios for evidence of reasoning, not just craft. */
+.decisions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(28px, 4vw, 48px);
+  margin-top: clamp(64px, 10vh, 120px);
+  padding-top: clamp(40px, 6vh, 64px);
+  border-top: 1px solid var(--rule);
+}
+.decisions-head {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+.decisions-head .key {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--gold);
+}
+.decisions-head .lede {
+  font-size: 14px;
+  color: var(--ink-mute);
+  font-style: italic;
+  font-family: var(--serif);
+}
+.decision {
+  border-left: 2px solid var(--gold);
+  padding: 4px 0 4px 24px;
+}
+.decision .q {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(20px, 2vw, 26px);
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0 0 14px;
+  letter-spacing: -0.01em;
+}
+.decision .a {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  margin: 0;
+}
+.decision .a strong { color: var(--ink); font-weight: 600; }
+.decision .a em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--ink); }
+@media (max-width: 720px) {
+  .decisions { grid-template-columns: 1fr; gap: 28px; }
+  .decision { padding-left: 18px; }
+  .decisions-head { flex-direction: column; gap: 4px; }
+}
+</style>
+</head>
+
+<body class="bkvm-page">
+
+<!-- ===== TOP NAV ===== -->
+<nav class="bkvm-nav" aria-label="Concept exploration navigation">
+  <a href="index.html#projects" aria-label="Back to portfolio">
+    <span aria-hidden="true">←</span> Portfolio
+  </a>
+  <span class="center">Concept exploration · Focusr</span>
+  <span class="right"><span class="dot" aria-hidden="true"></span> Figma · Not shipped</span>
+</nav>
+
+<main>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div>
+      <span class="eyebrow" data-anim="up">Concept exploration · 2024</span>
+      <h1 id="hero-title" data-anim="up" data-delay="1">Focusr.</h1>
+      <p class="lede" data-anim="up" data-delay="2">A mobile productivity concept. The idea: show one task. Most apps show twenty.</p>
+    </div>
+
+    <div class="hero-meta" data-anim="fade" data-delay="3">
+      <div class="cell"><span class="label">Role</span><span class="value">Solo · Concept design</span></div>
+      <div class="cell"><span class="label">Type</span><span class="value">Mobile · iOS-native</span></div>
+      <div class="cell"><span class="label">Tools</span><span class="value">Figma</span></div>
+      <div class="cell"><span class="label">Status</span><span class="value">Concept · 11 screens</span></div>
+    </div>
+  </section>
+
+  <!-- ===== INTRO LEDE ===== -->
+  <section class="intro-block" aria-label="Project overview">
+    <div class="marker" data-anim="up" aria-hidden="true">focusr.</div>
+    <p class="body" data-anim="up" data-delay="1">
+      Most productivity apps try to <strong>show you everything at once</strong>. Every list, every project, every backlog item, all on the home screen. Focusr does the opposite. Show one task. Make missing it cost the user something. A mobile concept built around single-task focus and loss-aversion as the motivator.
+    </p>
+  </section>
+
+  <!-- ===== 01 · THE THESIS ===== -->
+  <section class="section" aria-labelledby="sec-01">
+    <header class="section-head">
+      <div class="section-meta">
+        <span class="num" data-anim="up">01</span>
+        <span class="label" data-anim="up" data-delay="1">The thesis</span>
+      </div>
+      <div class="section-title">
+        <h2 id="sec-01" data-anim="up">Too many tasks <em>kills productivity.</em></h2>
+        <p class="body" data-anim="up" data-delay="1">
+          The app says this on the loader screen because it's the whole product idea. Open Todoist or Things and you see 20 things at once. Open Focusr and you see one. That isn't a styling decision. It's the hypothesis. Decision fatigue is the actual problem most productivity apps make worse, not better.
+        </p>
+        <p class="body" data-anim="up" data-delay="2">
+          Below the current task is a small legend explaining the priority colors, and one button: Add new task. That's it. Other tasks, settings, progress are all one tap away. Never on the home screen.
+        </p>
+      </div>
+    </header>
+
+    <!-- iPhone mockup hero — the home screen showing single-task focus -->
+    <figure class="mockup-hero" data-anim="fade">
+      <img src="./assets/focusr/mockup-home.png" alt="iPhone mockup of the Focusr home screen — 'Good morning, Ahmed', a single Current task (Study for maths exam, High priority), the Tasks importance legend, and one primary 'Add new task' CTA.">
+      <figcaption>Home — one current task, one primary action</figcaption>
+    </figure>
+
+    <!-- Priority chips — visualize the cost system -->
+    <div class="priority-row" data-anim="up" style="margin-top: clamp(80px, 12vh, 140px);">
+      <div class="p-chip" style="--p-color: var(--focusr-red);">
+        <span class="p-dot"></span>
+        <div>
+          <span class="p-key">Important</span>
+          <span class="p-name">High priority</span>
+        </div>
+        <span class="p-cost">Miss it and you lose <strong>the most points.</strong> The streak is at risk.</span>
+      </div>
+      <div class="p-chip" style="--p-color: var(--focusr-yellow);">
+        <span class="p-dot"></span>
+        <div>
+          <span class="p-key">Moderate</span>
+          <span class="p-name">After the red</span>
+        </div>
+        <span class="p-cost">Lower cost on miss. Designed to be done <strong>after the high-priority slot clears.</strong></span>
+      </div>
+      <div class="p-chip" style="--p-color: var(--focusr-green);">
+        <span class="p-dot"></span>
+        <div>
+          <span class="p-key">Chill</span>
+          <span class="p-name">Low priority</span>
+        </div>
+        <span class="p-cost">Smallest point penalty. Hobbies, optional reading, <strong>maintenance work.</strong></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Pull quote ===== -->
+  <p class="pull" data-anim="up">Show one task. Make missing it cost something.</p>
+
+  <!-- ===== 02 · THE LOOP ===== -->
+  <section class="section" aria-labelledby="sec-02">
+    <header class="section-head">
+      <div class="section-meta">
+        <span class="num" data-anim="up">02</span>
+        <span class="label" data-anim="up" data-delay="1">The loop</span>
+      </div>
+      <div class="section-title">
+        <h2 id="sec-02" data-anim="up">Add. Focus. <em>Win or lose points.</em></h2>
+        <p class="body" data-anim="up" data-delay="1">
+          The whole daily cycle is 4 screens. Add a task and pick its priority. Set a focus timer. Run the session. Mark it complete, or skip it and watch the streak counter drop. Every screen has one primary action. No tab bar, no nav drawer, no dashboard.
+        </p>
+      </div>
+    </header>
+
+    <!-- The 3 steps before the gamification payoff: Add → Set → Run -->
+    <div class="loop-row">
+      <div class="loop-step" data-anim="up">
+        <span class="step-num">01.</span>
+        <span class="step-name">Add a task</span>
+        <span class="step-desc">Name it. Pick a date. Tag it Low / Medium / High.</span>
+        <div class="phone-card">
+          <img src="./assets/focusr/03-add-task-priority.png" alt="Add new task screen with task name, due date, and three colored priority chips: Low (green), Medium (yellow), High (red)." loading="lazy">
+        </div>
+      </div>
+
+      <div class="loop-step" data-anim="up" data-delay="1">
+        <span class="step-num">02.</span>
+        <span class="step-name">Set the timer</span>
+        <span class="step-desc">Commit to a focus duration. The screen has nothing else on it on purpose.</span>
+        <div class="phone-card">
+          <img src="./assets/focusr/04-set-timer.png" alt="Set timer screen showing 00:00 in a large card with a single Start timer CTA." loading="lazy">
+        </div>
+      </div>
+
+      <div class="loop-step" data-anim="up" data-delay="2">
+        <span class="step-num">03.</span>
+        <span class="step-name">Run the session</span>
+        <span class="step-desc">Active task name and priority sit above the timer. Mark Complete is the only action.</span>
+        <div class="phone-card">
+          <img src="./assets/focusr/05-active-timer.png" alt="Active timer screen showing 'Study for maths exam — High priority', a 20:00 countdown, and a single Mark Complete button." loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    <!-- The payoff: weekly progress + streak — shown on the actual device -->
+    <figure class="mockup-pair" data-anim="fade">
+      <img src="./assets/focusr/mockup-progress.png" alt="iPhone mockup of the Progress screen — bar chart of weekly task completion, 12 Tasks Completed, 5 Days, and Completed / Pending / Streaks (120 days) summary rows.">
+      <img src="./assets/focusr/08-streaks.png" alt="Congrats screen showing 'Streaks for 120 days, Great Sprit, Keep Going' with a fire emoji — the return mechanism." loading="lazy" style="max-width: min(320px, 80%); border-radius: 28px; background: var(--bg-mobile); padding: 10px;">
+    </figure>
+
+    <!-- ===== Decision log ===== -->
+    <div class="decisions">
+      <div class="decisions-head">
+        <span class="key">Decision log</span>
+        <span class="lede">Four product decisions behind the design.</span>
+      </div>
+
+      <div class="decision" data-anim="up">
+        <p class="q">Why show one task, not a list?</p>
+        <p class="a">Decision fatigue is the actual bottleneck. Open Todoist, see 20 things, choose nothing. Open Focusr, see one thing, do it. The job of the app is to take the choice away, not give the user another decision to make.</p>
+      </div>
+
+      <div class="decision" data-anim="up" data-delay="1">
+        <p class="q">Why penalize missing a task, not just reward completing one?</p>
+        <p class="a">Loss aversion is about 2x stronger than the equivalent gain (Kahneman and Tversky). Once you've built a streak, the threat of losing it motivates you in a way pure rewards don't. The risk: that motivation can turn into anxiety for some users. That's the diary study question I'd need to answer before shipping.</p>
+      </div>
+
+      <div class="decision" data-anim="up" data-delay="2">
+        <p class="q">Why three priorities, not five or seven?</p>
+        <p class="a">Five-tier priority systems usually collapse to "high vs everything else" in real use. Three forces the user to actually rank: this is the most important thing today. The traffic-light metaphor (red, yellow, green) is also instantly readable. No legend needed.</p>
+      </div>
+
+      <div class="decision" data-anim="up" data-delay="3">
+        <p class="q">Why hide the streak counter on the home screen?</p>
+        <p class="a">A streak counter that's always visible becomes an anxiety trigger. Every time the user opens the app, they're reminded of what they could lose. Showing the streak only after the day's task is done makes it a reward, not a stress signal.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== INTERACTIVE PROTOTYPE — live Figma embed ===== -->
+  <section class="prototype-section" aria-labelledby="proto-title">
+    <header class="proto-head">
+      <span class="eyebrow" data-anim="up">Live · Click through</span>
+      <h2 id="proto-title" data-anim="up" data-delay="1">Try the <em>flow</em> yourself.</h2>
+      <p data-anim="up" data-delay="2">
+        The full screen flow is wired up in Figma. Step through Add a task →
+        Set the timer → Run a session → Win or lose points. <em>Best on desktop.</em>
+      </p>
+    </header>
+
+    <div class="proto-stage" data-anim="fade">
+      <iframe
+        src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2F6YoTbp1LGDYAhrKZXFAVdS%2FProductivity-app%3Fnode-id%3D4-4%26t%3DkOpxXY5VkEUC7hqI-1"
+        title="Focusr — interactive Figma prototype"
+        allowfullscreen
+        loading="lazy">
+      </iframe>
+    </div>
+
+    <div class="proto-actions" data-anim="up" data-delay="1">
+      <a class="proto-open"
+         href="https://www.figma.com/proto/6YoTbp1LGDYAhrKZXFAVdS/Productivity-app?node-id=4-4&t=kOpxXY5VkEUC7hqI-1"
+         target="_blank" rel="noopener">
+        Open in Figma
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M7 17 L17 7 M9 7 H17 V15"/>
+        </svg>
+      </a>
+      <span class="proto-hint" aria-hidden="true">Use ← → to navigate</span>
+    </div>
+  </section>
+
+  <!-- ===== HONEST STATUS (no big dark outcomes block) ===== -->
+  <section class="status-block" aria-labelledby="status-title">
+    <span class="label" data-anim="up">Honest status</span>
+    <div class="body">
+      <h3 id="status-title" data-anim="up">A concept I would want to test before shipping.</h3>
+      <p data-anim="up" data-delay="1">
+        Loss aversion is well-supported in research as a motivator. But whether it works as a product mechanic depends on the user. Streak loss motivates some people. It produces anxiety and quiet abandonment in others. Before I handed this to engineering, I would want a small prototype and a diary study to see whether the streak feature lands as commitment or as pressure.
+      </p>
+      <p data-anim="up" data-delay="2">
+        I'm showing this as a <em>concept exploration</em>, not a case study. The thinking is real. The design system is consistent. The hypothesis holds up to research. But the validation work hasn't been done.
+      </p>
+
+      <ul data-anim="up" data-delay="3">
+        <li><span class="k">Type</span><span class="v">Personal exploration</span></li>
+        <li><span class="k">Tools</span><span class="v">Figma</span></li>
+        <li><span class="k">Deliverable</span><span class="v">11 screens, component library, priority and streak system</span></li>
+        <li><span class="k">Status</span><span class="v">Concept. Not shipped. No user testing yet.</span></li>
+        <li><span class="k">Next step</span><span class="v">Run a diary study before any production scope</span></li>
+      </ul>
+    </div>
+    <div class="status-aside" data-anim="left" data-delay="2">
+      <img class="mockup-aside" src="./assets/focusr/mockup-settings.png" alt="iPhone mockup of the Settings screen, photographed at an angle — Notifications toggle, Appearance / Reset progress controls, and a Reset all CTA at the bottom.">
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="bkvm-footer">
+  <p class="lede" data-anim="up">Concept work. Honestly framed. What's in the portfolio is the thinking, not the polish.</p>
+  <div class="row">
+    <a href="index.html#projects"><span aria-hidden="true">←</span> Back to portfolio</a>
+    <a href="mailto:hello@example.com">Talk about the design <span aria-hidden="true">→</span></a>
+  </div>
+  <p class="credit" style="margin-top: 32px;">Focusr · Concept exploration · Solo design work</p>
+</footer>
+
+<script>
+  // ===== Scroll reveal =====
+  (function () {
+    document.documentElement.classList.add('js-anim');
+    const els = document.querySelectorAll('[data-anim]');
+    if (!('IntersectionObserver' in window) || !els.length) {
+      els.forEach((el) => el.classList.add('in'));
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+    );
+    els.forEach((el) => io.observe(el));
+    setTimeout(() => {
+      document.querySelectorAll('[data-anim]:not(.in)').forEach((el) => el.classList.add('in'));
+    }, 2500);
+  })();
+
+  // ===== Nav: hide on scroll-down, show on scroll-up =====
+  (function () {
+    const nav = document.querySelector('.bkvm-nav');
+    if (!nav) return;
+    let last = 0;
+    const onScroll = () => {
+      const y = window.scrollY;
+      nav.style.transform = (y > 80 && y > last) ? 'translateY(-100%)' : 'translateY(0)';
+      nav.style.transition = 'transform 0.4s cubic-bezier(0.4,0,0.2,1)';
+      last = y;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+</script>
+
+</body>
+</html>
