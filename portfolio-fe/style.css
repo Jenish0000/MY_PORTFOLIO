@@ -86,7 +86,6 @@ body.theme-light .grid-glow {
   display: flex; align-items: center; justify-content: center;
   gap: 40px; z-index: 50; background: var(--bg);
   transform-origin: center center;
-  z-index:9999;
 }
 .letter {
   font-family: 'Kalnia', serif;
@@ -120,7 +119,7 @@ body.theme-light .grid-glow {
   text-decoration: none;
   opacity: 0;
 }
-.logo-j, .logo-k { font-size: 58px; line-height: 1; letter-spacing: -0.01em; z-index:9999;}
+.logo-j, .logo-k { font-size: 58px; line-height: 1; letter-spacing: -0.01em;}
 .logo-emblem {
   width: 68px; height: auto;
   filter: drop-shadow(0 0 12px rgba(255,255,255,0.08));
@@ -492,15 +491,30 @@ body.theme-light .grid-glow {
 
 /* NAV OVERLAY */
 .nav-overlay {
-  position: fixed; inset: 0;
-  background: #f5f4f0;
+  position: fixed;
+  inset: 0;
   z-index: 100;
-  transform: translateY(-100%);
-  transition: transform 0.75s cubic-bezier(0.77, 0, 0.175, 1);
+
+  background: #f5f4f0;
+
+  /* HARD HIDE (important fix) */
+  opacity: 0;
+  visibility: hidden;
   pointer-events: none;
+
+  transform: translateY(-100%);
+  transition:
+    transform 0.75s cubic-bezier(0.77, 0, 0.175, 1),
+    opacity 0.3s ease,
+    visibility 0.3s ease;
 }
 body.theme-light .nav-overlay { background: #1a1a1a; }
-.nav-overlay.open { transform: translateY(0); pointer-events: auto; }
+.nav-overlay.open {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
 .nav-inner {
   width: 100%; height: 100%;
   padding: 48px 80px;
