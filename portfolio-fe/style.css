@@ -408,6 +408,16 @@ body.theme-light .grid-glow {
   justify-content: center;
   align-items: center;
 }
+.about-right {
+  display: none !important;
+}
+.about-inner {
+  grid-template-columns: 1fr !important;
+}
+.about-left {
+  max-width: 720px;
+  margin: 0 auto;
+}
 .about-right img {
   width: 100%;
   max-width: 460px;
@@ -1645,9 +1655,11 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
   html { overflow-x: hidden; }
   body { overflow-x: hidden; max-width: 100vw; }
 
-  /* 2. Logo: force visible. Loader morph math is unreliable
-        at narrow viewports — bypass it. */
-  .logo { opacity: 1 !important; }
+  /* 2. Logo: hide during loader, reveal after. The loader has
+        its own giant J-emblem-K; the header logo must not show
+        until the loader is gone, otherwise they overlap. */
+  body.loading .logo { opacity: 0 !important; }
+  body:not(.loading) .logo { opacity: 1 !important; }
   body:not(.loading) .loader { display: none !important; }
 
   /* 3. Floating photo: kill it. */
