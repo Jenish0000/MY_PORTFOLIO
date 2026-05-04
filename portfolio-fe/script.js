@@ -105,17 +105,33 @@ window.addEventListener('load', () => {
   // ============================================================
   // ORIGINAL LOADER PATH (no hash)
   // ============================================================
-  function getLogoTransform() {
+function getLogoTransform() {
     const t = logoTarget.getBoundingClientRect();
     const s = loader.getBoundingClientRect();
-    const scale = (t.width / s.width) * 1.6;
+
+    // Scale to the actual visual content (J left edge → K right edge),
+    // not the full-viewport loader box. The old (t.width / s.width) * 1.6
+    // worked on desktop where content fills ~67% of viewport but
+    // overshoots on mobile (content fills ~100%), leaving the loader
+    // too big at top-left and snapping smaller when body.loading is
+    // removed and the real logo takes over.
+    const jRect = letterJ.getBoundingClientRect();
+    const kRect = letterK.getBoundingClientRect();
+    const contentWidth = kRect.right - jRect.left;
+
+    // 1.15 keeps the final logo a touch larger than the bare letters —
+    // medium size, matches the real logo, no post-arrival snap.
+    // Exact size match — when body.loading flips and the CSS swaps the
+    // loader for the real logo, both occupy the same pixel footprint
+    // so there's no visible snap.
+    const scale = t.width / contentWidth;
+
     return {
       x: (t.left + t.width/2) - (s.left + s.width/2),
       y: (t.top + t.height/2) - (s.top + s.height/2),
       scale: scale
     };
   }
-
   /* ===== LOADER ===== */
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
@@ -149,25 +165,14 @@ window.addEventListener('load', () => {
   // Fade background to transparent during the move
   tl.to(loader, { backgroundColor: 'rgba(0,0,0,0)', duration: 0.5 }, '-=1.0');
 
-  tl.add(() => {
-    gsap.set(logoTarget, { opacity: 0 });
+tl.add(() => {
     loader.style.zIndex = '30';
     loader.style.pointerEvents = 'none';
-    gsap.set(sharedPhoto, { xPercent: -50, yPercent: -50, x: 0, y: 50, rotation: 0, scale: 1, opacity: 0 });
-    gsap.set(sideLeft,  { y: 50, opacity: 0 });
-    gsap.set(sideRight, { y: 50, opacity: 0 });
-    gsap.set(workText,   { yPercent: -50, x: window.innerWidth, opacity: 0 });
-    gsap.set(skillsText, { yPercent: -50, x: 0, opacity: 0 });
-    gsap.set('#serviceCard',  { yPercent: -50, y: window.innerHeight * 1.5, opacity: 1 });
-    gsap.set('#serviceCard2', { yPercent: -50, y: window.innerHeight * 1.5, opacity: 1 });
-    gsap.set('#serviceCard3', { yPercent: -50, y: window.innerHeight * 1.5, opacity: 1 });
-    gsap.set('#serviceCard4', { yPercent: -50, y: window.innerHeight * 1.5, opacity: 1 });
-    gsap.set('#serviceCard5', { yPercent: -50, y: window.innerHeight * 1.5, opacity: 1 });
-  });
+  }, '-=0.5');
 
   tl.to([sharedPhoto, sideLeft, sideRight], {
     y: 0, opacity: 1, duration: 1.2, ease: 'power3.out'
-  });
+  }, '<');
   tl.to(topRight, { opacity: 1, duration: 0.8 }, '<+0.3');
 
   tl.add(() => {
@@ -328,7 +333,7 @@ window.addEventListener('load', () => {
     // ===== About curtain =====
     ScrollTrigger.create({
       trigger: '#aboutTrigger',
-      start: 'top center',
+      start: 'top bottom',
       onEnter:     () => document.getElementById('about').classList.add('open'),
       onLeaveBack: () => document.getElementById('about').classList.remove('open')
     });
@@ -395,9 +400,19 @@ window.addEventListener('load', () => {
         const isInNav = link.closest('.nav-list, .nav-contact');
         if (isInNav) closeNav();
 
-        const delay = isInNav ? 700 : 0;
+      const delay = isInNav ? 700 : 0;
         setTimeout(() => {
-          const targetY = target.getBoundingClientRect().top + window.scrollY;
+          let targetY = target.getBoundingClientRect().top + window.scrollY;
+
+          // On mobile, #services is a 1500vh scroll container — its
+          // top lands the user at progress 0 where card 1 is still
+          // offscreen below. Push ~200vh deeper so card 1 is centered
+          // and visible (sits in its stable window between progress
+          // ~0.13 and ~0.18).
+          if (href === '#services' && window.innerWidth <= 1024) {
+            targetY += window.innerHeight * 2;
+          }
+
           smoothScrollTo(targetY, 1800);
         }, delay);
       });
