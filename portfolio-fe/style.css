@@ -1627,8 +1627,8 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
   html { overflow-x: hidden; }
   body { overflow-x: hidden; max-width: 100vw; }
 
-  body:not(.loading) .logo { opacity: 1 !important; }
-  body:not(.loading) .loader { display: none !important; }
+  /* body:not(.loading) .logo { opacity: 1 !important; }
+  body:not(.loading) .loader { display: none !important; } */
 
   .shared-photo { display: none !important; }
   .photo-spacer {
@@ -1961,6 +1961,8 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
   body.mobile-anim-active #serviceCard4 { z-index: 17 !important; }
   body.mobile-anim-active #serviceCard5 { z-index: 18 !important; }
 }
+
+
 @media (max-width: 1024px) {
   .about-right {
     display: none;
