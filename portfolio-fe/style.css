@@ -593,7 +593,7 @@ body.theme-light .nav-contact a::after { background: #f5f4f0; }
   transform: scaleX(1); transform-origin: left;
 }
 
-/* Site-header z-110, nav-overlay z-100 â†’ header above overlay */
+/* Site-header z-110, nav-overlay z-100 → header above overlay */
 body:has(.nav-overlay.open) .logo {
   visibility: hidden;
   pointer-events: none;
@@ -1025,7 +1025,7 @@ body.theme-light .emblem {
 }
 
 /* ============================================================
-   PROJECTS â€” HOOK SECTION
+   PROJECTS — HOOK SECTION
    ============================================================ */
 .projects-stage {
   position: relative;
@@ -1394,7 +1394,7 @@ body.theme-light .projects-stage::after {
   border-radius: 4px;
 }
 .talabat-final::after {
-  content: 'âœ“';
+  content: '✓';
   position: absolute;
   bottom: 14px; left: 50%;
   transform: translateX(-50%);
@@ -1409,7 +1409,7 @@ body.theme-light .projects-stage::after {
   90%, 100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
 }
 
-/* SECONDARY ROW â€” Orion + Focusr */
+/* SECONDARY ROW — Orion + Focusr */
 .projects-also { margin-top: 16px; }
 .projects-also-label {
   font-family: 'Caveat', cursive;
@@ -1562,7 +1562,7 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
 }
 
 /* ============================================================
-   RESPONSIVE â€” base mobile/tablet (â‰¤1024px)
+   RESPONSIVE — base mobile/tablet (≤1024px)
    ============================================================ */
 @media (max-width: 1024px) {
   .quote { padding: 0 30px; }
@@ -1620,28 +1620,16 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
 
 
 /* ============================================================
-   MOBILE COMPREHENSIVE FIX (â‰¤1024px)
-   Neutralize GSAP visual side-effects on mobile by forcing
-   elements in-flow with !important. Timeline still scrubs.
-
-   IMPORTANT: rules that GSAP needs to override at mobile sizes
-   (transforms / opacity on hero text and skills/work text) are
-   now wrapped in `body:not(.mobile-anim-active)` â€” when the
-   mobile choreography is active, those !important rules step
-   aside and GSAP takes control.
+   MOBILE COMPREHENSIVE FIX (≤1024px)
    ============================================================ */
 @media (max-width: 1024px) {
 
-  /* 1. Root-level overflow guard */
   html { overflow-x: hidden; }
   body { overflow-x: hidden; max-width: 100vw; }
 
-  /* 2. Logo: force visible. Loader morph math is unreliable
-        at narrow viewports â€” bypass it. */
-  .logo { opacity: 1 !important; }
+  body:not(.loading) .logo { opacity: 1 !important; }
   body:not(.loading) .loader { display: none !important; }
 
-  /* 3. Floating photo: kill it. */
   .shared-photo { display: none !important; }
   .photo-spacer {
     background-image: url('assets/photo.png');
@@ -1655,8 +1643,6 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
     box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
   }
 
-  /* 4. Hero: neutralize horizontal exit translates on names.
-        Only when mobile choreography is NOT active. */
   body:not(.mobile-anim-active) .hero { min-height: 100vh; overflow: hidden; }
   body:not(.mobile-anim-active) .hero-content {
     position: relative;
@@ -1670,8 +1656,6 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
     opacity: 1 !important;
   }
 
-  /* 5. Skills & Work: pull text out of position:fixed into flow.
-        Only when mobile choreography is NOT active. */
   body:not(.mobile-anim-active) .skills,
   body:not(.mobile-anim-active) .work {
     min-height: auto !important;
@@ -1692,23 +1676,25 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
     pointer-events: auto;
   }
 
-  /* 5b. Skills/Work paragraphs centered horizontally */
   body:not(.mobile-anim-active) .skills-desc,
   body:not(.mobile-anim-active) .work-desc {
     margin-left: auto !important;
     margin-right: auto !important;
   }
 
-  /* 6. Services: stack all 5 cards vertically. */
-  .services {
+  body:not(.mobile-anim-active) .services {
     min-height: auto !important;
     padding: 30px 16px 50px;
     display: flex;
     flex-direction: column;
     gap: 20px;
   }
-  .service-card,
-  #serviceCard, #serviceCard2, #serviceCard3, #serviceCard4, #serviceCard5 {
+  body:not(.mobile-anim-active) .service-card,
+  body:not(.mobile-anim-active) #serviceCard,
+  body:not(.mobile-anim-active) #serviceCard2,
+  body:not(.mobile-anim-active) #serviceCard3,
+  body:not(.mobile-anim-active) #serviceCard4,
+  body:not(.mobile-anim-active) #serviceCard5 {
     position: relative !important;
     top: auto !important;
     left: auto !important;
@@ -1722,7 +1708,6 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
   }
 
-  /* 7. ABOUT ME: center everything. */
   .about-left {
     padding-left: 0;
     text-align: center;
@@ -1744,7 +1729,6 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
 
   .quote-text { overflow-wrap: break-word; }
 
-  /* 8. Long words break gracefully across all headings */
   .name,
   .skills-heading, .work-heading,
   .service-title,
@@ -1759,8 +1743,7 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
 }
 
 /* ============================================================
-   MOBILE CENTERING FIX (â‰¤1024px)
-   Centers Projects, Career, Quote, Footer.
+   MOBILE CENTERING FIX (≤1024px)
    ============================================================ */
 @media (max-width: 1024px) {
 
@@ -1806,35 +1789,30 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
 }
 
 /* ============================================================
-   PHONE TWEAKS (â‰¤600px)
+   PHONE TWEAKS (≤600px)
    ============================================================ */
 @media (max-width: 600px) {
 
-  /* Loader */
   .letter { font-size: 100px; }
   .emblem { width: 130px; }
   .loader { gap: 24px; }
 
-  /* Logo tighter */
   .logo-j, .logo-k { font-size: 30px; }
   .logo-emblem { width: 34px; }
   .site-header { padding: 18px 20px; }
 
-  /* Headings â€” slightly smaller for phones */
   .name { font-size: 50px; }
   .skills-heading, .work-heading { font-size: 32px; }
   .projects-heading, .career-heading { font-size: 32px; }
   .contact-heading { font-size: 32px; }
   .about-heading { font-size: 30px; }
 
-  /* Photo */
   .photo-spacer { width: 220px; height: 330px; }
   .shared-photo { width: 220px; height: 330px; }
 
-  /* Section padding tighter (only when no animation) */
   body:not(.mobile-anim-active) .skills,
   body:not(.mobile-anim-active) .work { padding: 40px 0; }
-  .services { padding: 20px 14px 40px; }
+  body:not(.mobile-anim-active) .services { padding: 20px 14px 40px; }
   .about-inner { padding: 80px 20px 24px; }
   .projects-inner { padding: 50px 20px 32px; }
   .career-inner { padding: 50px 20px 32px; }
@@ -1844,36 +1822,31 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
 }
 
 /* ============================================================
-   SMALL PHONE (â‰¤380px) â€” iPhone SE etc.
+   SMALL PHONE (≤380px)
    ============================================================ */
 @media (max-width: 380px) {
 
-  /* Loader */
   .letter { font-size: 80px; }
   .emblem { width: 100px; }
   .loader { gap: 18px; }
 
-  /* Logo */
   .logo-j, .logo-k { font-size: 26px; }
   .logo-emblem { width: 30px; }
   .site-header { padding: 14px 16px; }
 
-  /* Headings smaller still */
   .name { font-size: 40px; }
   .skills-heading, .work-heading { font-size: 28px; }
   .projects-heading, .career-heading { font-size: 28px; }
   .contact-heading { font-size: 26px; }
   .about-heading { font-size: 24px; }
 
-  /* Photo */
   .photo-spacer { width: 200px; height: 300px; }
   .shared-photo { width: 200px; height: 300px; }
 
-  /* Tighter padding (only when no animation) */
   body:not(.mobile-anim-active) .hero-content { padding: 60px 18px 40px; }
   body:not(.mobile-anim-active) .skills-text,
   body:not(.mobile-anim-active) .work-text { padding: 0 18px !important; }
-  .services { padding: 16px 12px 36px; }
+  body:not(.mobile-anim-active) .services { padding: 16px 12px 36px; }
   .about-inner { padding: 70px 16px 20px; }
   .projects-inner { padding: 40px 16px 28px; }
   .career-inner { padding: 40px 16px 28px; }
@@ -1885,7 +1858,7 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
 }
 
 /* ============================================================
-   MOBILE LOGO HIDE-ON-SCROLL (â‰¤1024px)
+   MOBILE LOGO HIDE-ON-SCROLL (≤1024px)
    ============================================================ */
 @media (max-width: 1024px) {
   .logo {
@@ -1898,23 +1871,15 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
 }
 
 /* ============================================================
-   MOBILE GSAP CHOREOGRAPHY (â‰¤1024px)
-   When body has .mobile-anim-active class (added by
-   script-mobile.js), restructure hero/skills/work for the
-   vertical scroll-jacking timeline. Hero pins for 200vh,
-   side-left/right fade, photo translates Y, skills/work texts
-   become fixed overlays animated by GSAP.
+   MOBILE GSAP CHOREOGRAPHY — HERO/SKILLS/WORK (≤1024px)
    ============================================================ */
 @media (max-width: 1024px) {
 
-  /* Hero: allow content to overflow while pinned */
   body.mobile-anim-active .hero {
     min-height: 100vh;
     overflow: visible !important;
   }
 
-  /* Hero-content lays out the stacked grid (Jenish / photo / Karki).
-     ScrollTrigger pins this element for the timeline duration. */
   body.mobile-anim-active .hero-content {
     position: relative;
     height: 100vh;
@@ -1923,8 +1888,6 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
     overflow: visible;
   }
 
-  /* Skills/work sections collapse â€” their text becomes a fixed
-     overlay during the pin. */
   body.mobile-anim-active .skills,
   body.mobile-anim-active .work {
     height: 0;
@@ -1933,9 +1896,6 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
     overflow: hidden;
   }
 
-  /* Skills/work text become full-width fixed overlays.
-     Position is at top:0 (top of viewport); GSAP controls the
-     vertical translate to slide them in/out. */
   body.mobile-anim-active .skills-text,
   body.mobile-anim-active .work-text {
     position: fixed !important;
@@ -1949,7 +1909,6 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
     text-align: center;
     z-index: 16;
     pointer-events: none;
-    /* opacity & transform controlled by GSAP */
   }
 
   body.mobile-anim-active .skills-desc,
@@ -1957,4 +1916,48 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
     max-width: 480px !important;
     margin: 0 auto !important;
   }
+}
+
+/* ============================================================
+   MOBILE SERVICES — CARD STACK (≤1024px)
+   1500vh tall container = 1400vh of scroll runway = 280vh per
+   card phase. Combined with scrub: 0.05 in JS, the timeline
+   tracks scroll tightly even with mobile momentum velocity, so
+   all 5 cards complete their entry before about-curtain fires
+   and reverse-scroll lands on card 5 (not card 4).
+   ============================================================ */
+@media (max-width: 1024px) {
+
+  body.mobile-anim-active .services {
+    height: 1500vh !important;
+    min-height: 1500vh !important;
+    padding: 0 !important;
+    display: block !important;
+    position: relative !important;
+    overflow: visible !important;
+  }
+
+  body.mobile-anim-active .service-card,
+  body.mobile-anim-active #serviceCard,
+  body.mobile-anim-active #serviceCard2,
+  body.mobile-anim-active #serviceCard3,
+  body.mobile-anim-active #serviceCard4,
+  body.mobile-anim-active #serviceCard5 {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: 90% !important;
+    max-width: 480px !important;
+    margin: 0 !important;
+    padding: 32px 28px !important;
+    pointer-events: none !important;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  /* Layered z-index so later cards stack above earlier ones. */
+  body.mobile-anim-active #serviceCard  { z-index: 14 !important; }
+  body.mobile-anim-active #serviceCard2 { z-index: 15 !important; }
+  body.mobile-anim-active #serviceCard3 { z-index: 16 !important; }
+  body.mobile-anim-active #serviceCard4 { z-index: 17 !important; }
+  body.mobile-anim-active #serviceCard5 { z-index: 18 !important; }
 }
