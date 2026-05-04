@@ -1,45 +1,32 @@
 /* ============================================================
    script-mobile.js
    ----------------------------------------------------------------
-   Mobile-only (≤1024px) vertical scroll-jacking choreography for
-   the hero → skills → work transition.
+   Mobile-only (≤1024px) GSAP choreography.
 
-   Three states, two transitions, all driven by scroll position:
+   Two scroll-driven timelines:
+   1. Hero pin (200vh) — Jenish/photo/Karki → skills → work
+   2. Services (1100vh container, no pin) — 5-card stack
 
-   State A (Hero):     [Jenish text / Photo / Karki text]
-   State B (Skills):   [Skills text at top   /  Photo at bottom]
-   State C (Work):     [Photo at top         /  Work text at bottom]
-
-   This file does NOT touch script.js. It waits for the desktop
-   master timeline to be created, then kills it (its trigger is
-   document.body), clears any inline transforms it left behind,
-   adds body.mobile-anim-active (which flips a set of CSS rules
-   in style.css), and builds its own pinned timeline.
-
-   Auxiliary triggers from script.js (about/quote curtains,
-   projects/career in-view) are NOT killed — they have different
-   triggers and continue to work.
+   Services container is 1100vh tall (CSS), giving 1000vh of
+   scroll runway. With scrub: 0.1 (was 0.3) the timeline keeps
+   tight pace with scroll — all 5 card phases complete before
+   about-curtain fires. Reverses on scroll up: about → 5 → 4 →
+   3 → 2 → 1 → work text.
    ============================================================ */
 
 (function () {
   'use strict';
 
-  // Bail if GSAP not present
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
     return;
   }
 
-  // Bail if not on mobile/tablet at load time
   if (window.innerWidth > 1024) return;
 
   let mobileTimeline = null;
+  let servicesTimeline = null;
   let isReady = false;
 
-  // ============================================================
-  // Wait for the desktop master timeline to be created.
-  // It uses trigger: 'body'. Built either at end of loader anim
-  // (~5s) or immediately on hash navigation. Poll until found.
-  // ============================================================
   function waitForMaster() {
     const start = Date.now();
 
@@ -49,12 +36,10 @@
       });
 
       if (masterExists) {
-        // Give it one extra tick to settle
         setTimeout(init, 50);
       } else if (Date.now() - start < 8000) {
         setTimeout(check, 100);
       } else {
-        // Timeout — desktop master never appeared. Init anyway.
         init();
       }
     }
@@ -62,23 +47,28 @@
     check();
   }
 
-  // ============================================================
-  // INIT — kill desktop master, clear transforms, build mobile TL
-  // ============================================================
   function init() {
     if (isReady) return;
     isReady = true;
 
-    // Kill the desktop master timeline (trigger === body).
-    // .kill(true) reverts its tween effects on elements.
+    // Kill the desktop master (trigger === body) AND the auxiliary
+    // triggers for about/quote curtains. These were created by
+    // script.js against the desktop layout — their start positions
+    // reflect a much shorter services section. We must kill and
+    // recreate them so they recompute against the new mobile layout
+    // where services is 1500vh tall and #aboutTrigger sits much
+    // further down the document.
     ScrollTrigger.getAll().forEach(function (st) {
-      if (st.trigger === document.body) {
+      const triggerId = st.trigger && st.trigger.id;
+      if (
+        st.trigger === document.body ||
+        triggerId === 'aboutTrigger' ||
+        triggerId === 'quoteTrigger'
+      ) {
         st.kill(true);
       }
     });
 
-    // Clear inline transforms/opacity left behind by desktop GSAP
-    // on hero text, skills/work text, photo, and service cards.
     gsap.set([
       '#sideLeft', '#sideRight',
       '#skillsText', '#workText',
@@ -89,22 +79,58 @@
       clearProps: 'transform,opacity,filter,willChange'
     });
 
-    // Activate the mobile-anim CSS rules in style.css
     document.body.classList.add('mobile-anim-active');
 
-    // Two RAFs to let layout settle, then build timeline
     requestAnimationFrame(function () {
       requestAnimationFrame(function () {
         buildTimeline();
+        buildServicesTimeline();
+
+        // Recreate about + quote triggers AGAINST the new mobile
+        // layout. Now that services is 1500vh and the document is
+        // restructured, their start positions ('top bottom' /
+        // 'top center') will compute correctly from the live DOM.
+        // Without this, about-curtain fires at the old desktop
+        // scroll position — which corresponds to the middle of
+        // services in mobile, NOT the end.
+        buildAuxiliaryTriggers();
+
         ScrollTrigger.refresh();
       });
     });
   }
 
   // ============================================================
-  // BUILD MOBILE TIMELINE
-  // Pin .hero-content for 200vh of scroll. Inside that pin, run
-  // the three-state choreography via a scrubbed timeline.
+  // AUXILIARY TRIGGERS — about + quote curtains
+  // Mirrors the logic from script.js's buildMasterTimeline(), but
+  // run AFTER mobile-anim-active CSS is applied so positions are
+  // calculated against the new layout (services 1500vh tall).
+  // ============================================================
+  function buildAuxiliaryTriggers() {
+    const aboutEl = document.getElementById('about');
+    const quoteEl = document.getElementById('quote');
+
+    if (document.getElementById('aboutTrigger') && aboutEl) {
+      ScrollTrigger.create({
+        trigger: '#aboutTrigger',
+        start: 'top bottom',
+        onEnter:     function () { aboutEl.classList.add('open'); },
+        onLeaveBack: function () { aboutEl.classList.remove('open'); }
+      });
+    }
+
+    if (document.getElementById('quoteTrigger') && quoteEl) {
+      ScrollTrigger.create({
+        trigger: '#quoteTrigger',
+        start: 'top center',
+        onEnter:     function () { quoteEl.classList.add('open'); },
+        onLeaveBack: function () { quoteEl.classList.remove('open'); }
+      });
+    }
+  }
+
+  // ============================================================
+  // HERO/SKILLS/WORK TIMELINE — pin .hero-content for 200vh
   // ============================================================
   function buildTimeline() {
     const hero        = document.getElementById('hero');
@@ -116,15 +142,10 @@
     const workText    = document.getElementById('workText');
 
     if (!hero || !heroContent || !photo || !skillsText || !workText) {
-      console.warn('[script-mobile] missing elements, aborting');
+      console.warn('[script-mobile] missing hero elements');
       return;
     }
 
-    // ===== Initial states (State A: Hero) =====
-    // sideLeft/sideRight: visible at natural position
-    // photo: at center of hero-content (its natural grid position)
-    // skillsText: hidden, offscreen below
-    // workText:   hidden, offscreen above
     gsap.set([sideLeft, sideRight], { y: 0, opacity: 1 });
     gsap.set(photo, { y: 0 });
     gsap.set(skillsText, { y: '100vh', opacity: 0 });
@@ -134,84 +155,132 @@
       scrollTrigger: {
         trigger: hero,
         start: 'top top',
-        end: '+=200%',          // 2 viewports of scroll runway
-        pin: heroContent,       // pin the hero stack
+        end: '+=200%',
+        pin: heroContent,
         pinSpacing: true,
-        scrub: 0.8,             // small lag for buttery feel
+        scrub: 0.8,
         invalidateOnRefresh: true,
         anticipatePin: 1
       }
     });
 
-    // ============================================================
-    // PHASE 1 — Hero → Skills    (timeline 0 to ~0.45)
-    //   Jenish slides up & fades.
-    //   Karki  slides down & fades.
-    //   Photo  translates DOWN ~25vh (now in lower portion).
-    //   Skills text rises from below into upper portion.
-    // ============================================================
+    // PHASE 1 — Hero → Skills
     mobileTimeline
-      .to(sideLeft, {
-        y: -120, opacity: 0,
-        duration: 0.3, ease: 'power2.in'
-      }, 0)
-      .to(sideRight, {
-        y: 120, opacity: 0,
-        duration: 0.3, ease: 'power2.in'
-      }, 0)
-      .to(photo, {
-        y: '25vh',
-        duration: 0.45, ease: 'power2.inOut'
-      }, 0)
+      .to(sideLeft,  { y: -120, opacity: 0, duration: 0.3, ease: 'power2.in'    }, 0)
+      .to(sideRight, { y:  120, opacity: 0, duration: 0.3, ease: 'power2.in'    }, 0)
+      .to(photo,     { y: '25vh',           duration: 0.45, ease: 'power2.inOut' }, 0)
       .fromTo(skillsText,
         { y: '100vh', opacity: 0 },
         { y: '15vh',  opacity: 1, duration: 0.4, ease: 'power2.out' },
         0.05
       );
 
-    // ============================================================
-    // (Hold ~0.45 → 0.55) — State B is fully visible here.
-    // No new tweens. With scrub, this gives the user a stable
-    // "skills" frame as they scroll through this range.
-    // ============================================================
-
-    // ============================================================
-    // PHASE 2 — Skills → Work    (timeline 0.55 to ~0.9)
-    //   Skills text exits UP and offscreen.
-    //   Photo translates UP ~50vh (from +25vh down to -25vh up).
-    //   Work text descends from above into lower portion.
-    // ============================================================
+    // PHASE 2 — Skills → Work
     mobileTimeline
-      .to(skillsText, {
-        y: '-100vh', opacity: 0,
-        duration: 0.3, ease: 'power2.in'
-      }, 0.55)
-      .to(photo, {
-        y: '-25vh',
-        duration: 0.4, ease: 'power2.inOut'
-      }, 0.55)
+      .to(skillsText, { y: '-100vh', opacity: 0, duration: 0.3, ease: 'power2.in'  }, 0.55)
+      .to(photo,      { y: '-25vh',              duration: 0.4, ease: 'power2.inOut' }, 0.55)
       .fromTo(workText,
         { y: '-100vh', opacity: 0 },
         { y: '55vh',   opacity: 1, duration: 0.35, ease: 'power2.out' },
         0.6
       );
 
-    // ============================================================
-    // TAIL (timeline 0.95 → 1.0)
-    // Fade out the work-text + photo so they don't bleed into
-    // services after the pin ends. Without this, both stay
-    // position:fixed and overlay the next sections.
-    // ============================================================
-    mobileTimeline.to([workText, photo], {
-      opacity: 0,
-      duration: 0.05,
-      ease: 'power1.in'
-    }, 0.95);
+    // TAIL — fade work-text + photo so they don't bleed into services
+    mobileTimeline.to([workText, photo], { opacity: 0, duration: 0.05, ease: 'power1.in' }, 0.95);
   }
 
   // ============================================================
-  // Boot
+  // SERVICES CARD-STACK TIMELINE
+  //
+  // Container is 1100vh tall (CSS). Cards are position:fixed at
+  // viewport center. Timeline scrubs from services.top hitting
+  // viewport.top to services.bottom hitting viewport.bottom —
+  // 1000vh of scroll runway. 5 cards × 200vh per phase.
+  //
+  // scrub: 0.1 (very low lag) so timeline tracks scroll tightly
+  // and reaches progress 0.95+ by the time about-curtain fires.
   // ============================================================
+  function buildServicesTimeline() {
+    const services = document.getElementById('services');
+    if (!services) {
+      console.warn('[script-mobile] no #services');
+      return;
+    }
+
+    const cardIds = [
+      'serviceCard', 'serviceCard2', 'serviceCard3',
+      'serviceCard4', 'serviceCard5'
+    ];
+    const cards = cardIds
+      .map(function (id) { return document.getElementById(id); })
+      .filter(Boolean);
+
+    if (cards.length === 0) return;
+
+    // Initial state — all cards centered, shifted offscreen below
+    gsap.set(cards, {
+      xPercent: -50,
+      yPercent: -50,
+      x: 0,
+      y: '100vh',
+      rotation: 0,
+      scale: 1,
+      opacity: 1,
+      filter: 'blur(0px)',
+      willChange: 'transform, opacity, filter'
+    });
+
+    // Pack all 5 card phases into the first 90% of the timeline. The
+    // last 10% becomes a natural "hold zone" where card 5 stays at y:0
+    // — exactly matching script.js desktop hold logic at progress 0.84:
+    //   master.to('#serviceCard5', { y: 0, duration: 0.16 }, 0.84);
+    // This buffer means about-curtain doesn't fire the moment card 5
+    // arrives — user scrolls past card 5 into the hold zone first, and
+    // reverse-scroll from about-me lands on card 5 (not card 4).
+    const cardSpan = 0.9;
+    const phaseLen = cardSpan / cards.length;  // 0.18 each card
+
+    servicesTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: services,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 0.05,                   // ← KEY CHANGE: was 0.1, now 0.05 for tightest tracking
+        invalidateOnRefresh: true
+      }
+    });
+
+    cards.forEach(function (card, i) {
+      const enterAt = i * phaseLen;
+
+      // Card slides up from below to centered.
+      servicesTimeline.to(card, {
+        y: 0,
+        ease: 'power3.out',
+        duration: phaseLen * 0.7
+      }, enterAt);
+
+      // Previous card pushed up, dimmed, blurred, scaled — stacked-behind effect.
+      if (i > 0) {
+        servicesTimeline.to(cards[i - 1], {
+          y: '-8vh',
+          opacity: 0.5,
+          scale: 0.92,
+          filter: 'blur(6px)',
+          ease: 'power2.inOut',
+          duration: phaseLen * 0.7
+        }, enterAt);
+      }
+    });
+
+    // No tail fade — card 5 stays fully visible during the hold zone
+    // (progress 0.846 to 1.0). When about-curtain opens (z-index 25)
+    // it covers the cards (z-index 14-18) on its own. On reverse
+    // scroll, about-curtain closes and card 5 is immediately visible
+    // because we never faded it. Card 5 → card 4 → ... → card 1
+    // reverses cleanly via scrub.
+  }
+
   if (document.readyState === 'complete') {
     waitForMaster();
   } else {
