@@ -2009,3 +2009,342 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
 
   .service-card { width: 46vw; max-width: 560px; }
 }
+/* ============================================================
+   MOBILE COMPREHENSIVE FIX (â‰¤1024px)
+   Neutralize GSAP visual side-effects on mobile by forcing
+   elements in-flow with !important. Timeline still scrubs.
+
+   IMPORTANT: rules that GSAP needs to override at mobile sizes
+   (transforms / opacity on hero text and skills/work text) are
+   now wrapped in `body:not(.mobile-anim-active)` â€” when the
+   mobile choreography is active, those !important rules step
+   aside and GSAP takes control.
+   ============================================================ */
+@media (max-width: 1024px) {
+
+  /* 1. Root-level overflow guard */
+  html { overflow-x: hidden; }
+  body { overflow-x: hidden; max-width: 100vw; }
+
+  /* 2. Logo: force visible. Loader morph math is unreliable
+        at narrow viewports â€” bypass it. */
+  .logo { opacity: 1 !important; }
+  body:not(.loading) .loader { display: none !important; }
+
+  /* 3. Floating photo: kill it. */
+  .shared-photo { display: none !important; }
+  .photo-spacer {
+    background-image: url('assets/photo.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 18px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+  }
+  body.theme-light .photo-spacer {
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+  }
+
+  /* 4. Hero: neutralize horizontal exit translates on names.
+        Only when mobile choreography is NOT active. */
+  body:not(.mobile-anim-active) .hero { min-height: 100vh; overflow: hidden; }
+  body:not(.mobile-anim-active) .hero-content {
+    position: relative;
+    height: auto;
+    min-height: 100vh;
+    padding: 80px 24px 60px;
+  }
+  body:not(.mobile-anim-active) .side-left,
+  body:not(.mobile-anim-active) .side-right {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  /* 5. Skills & Work: pull text out of position:fixed into flow.
+        Only when mobile choreography is NOT active. */
+  body:not(.mobile-anim-active) .skills,
+  body:not(.mobile-anim-active) .work {
+    min-height: auto !important;
+    padding: 50px 0;
+  }
+  body:not(.mobile-anim-active) .skills-text,
+  body:not(.mobile-anim-active) .work-text {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 24px !important;
+    text-align: center;
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto;
+  }
+
+  /* 5b. Skills/Work paragraphs centered horizontally */
+  body:not(.mobile-anim-active) .skills-desc,
+  body:not(.mobile-anim-active) .work-desc {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* 6. Services: stack all 5 cards vertically. */
+  .services {
+    min-height: auto !important;
+    padding: 30px 16px 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .service-card,
+  #serviceCard, #serviceCard2, #serviceCard3, #serviceCard4, #serviceCard5 {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    transform: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+    pointer-events: auto;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  /* 7. ABOUT ME: center everything. */
+  .about-left {
+    padding-left: 0;
+    text-align: center;
+  }
+  .about-kicker { text-align: center; }
+  .about-heading {
+    text-align: center;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+  }
+  .about-desc {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .about-actions { justify-content: center; }
+  .about-socials { justify-content: center; }
+
+  .quote-text { overflow-wrap: break-word; }
+
+  /* 8. Long words break gracefully across all headings */
+  .name,
+  .skills-heading, .work-heading,
+  .service-title,
+  .career-role,
+  .contact-heading,
+  .projects-heading,
+  .career-heading,
+  .hook-title, .also-title {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+}
+
+/* ============================================================
+   MOBILE CENTERING FIX (â‰¤1024px)
+   Centers Projects, Career, Quote, Footer.
+   ============================================================ */
+@media (max-width: 1024px) {
+
+  .projects-header { text-align: center; }
+
+  .projects-also-label {
+    text-align: center;
+    padding-left: 0;
+  }
+
+  .project-also-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+  .also-thumb { width: 96px; height: 96px; }
+
+  .career-header { text-align: center; }
+  .career-item {
+    align-items: center;
+    text-align: center;
+  }
+  .career-period { margin-left: 0; }
+
+  .quote-text { text-align: center; }
+
+  .footer-inner {
+    text-align: center;
+    grid-template-columns: 1fr;
+  }
+  .footer-left { margin: 0 auto; }
+  .footer-logo { justify-content: center; }
+  .footer-right {
+    grid-template-columns: 1fr;
+    justify-content: center;
+  }
+  .footer-col ul { align-items: center; }
+  .footer-bottom {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+}
+
+/* ============================================================
+   PHONE TWEAKS (â‰¤600px)
+   ============================================================ */
+@media (max-width: 600px) {
+
+  /* Loader */
+  .letter { font-size: 100px; }
+  .emblem { width: 130px; }
+  .loader { gap: 24px; }
+
+  /* Logo tighter */
+  .logo-j, .logo-k { font-size: 30px; }
+  .logo-emblem { width: 34px; }
+  .site-header { padding: 18px 20px; }
+
+  /* Headings â€” slightly smaller for phones */
+  .name { font-size: 50px; }
+  .skills-heading, .work-heading { font-size: 32px; }
+  .projects-heading, .career-heading { font-size: 32px; }
+  .contact-heading { font-size: 32px; }
+  .about-heading { font-size: 30px; }
+
+  /* Photo */
+  .photo-spacer { width: 220px; height: 330px; }
+  .shared-photo { width: 220px; height: 330px; }
+
+  /* Section padding tighter (only when no animation) */
+  body:not(.mobile-anim-active) .skills,
+  body:not(.mobile-anim-active) .work { padding: 40px 0; }
+  .services { padding: 20px 14px 40px; }
+  .about-inner { padding: 80px 20px 24px; }
+  .projects-inner { padding: 50px 20px 32px; }
+  .career-inner { padding: 50px 20px 32px; }
+  .contact-cta { padding: 60px 20px; }
+  .footer-inner { padding: 0 20px 32px; }
+  .footer-bottom { padding: 0 20px; }
+}
+
+/* ============================================================
+   SMALL PHONE (â‰¤380px) â€” iPhone SE etc.
+   ============================================================ */
+@media (max-width: 380px) {
+
+  /* Loader */
+  .letter { font-size: 80px; }
+  .emblem { width: 100px; }
+  .loader { gap: 18px; }
+
+  /* Logo */
+  .logo-j, .logo-k { font-size: 26px; }
+  .logo-emblem { width: 30px; }
+  .site-header { padding: 14px 16px; }
+
+  /* Headings smaller still */
+  .name { font-size: 40px; }
+  .skills-heading, .work-heading { font-size: 28px; }
+  .projects-heading, .career-heading { font-size: 28px; }
+  .contact-heading { font-size: 26px; }
+  .about-heading { font-size: 24px; }
+
+  /* Photo */
+  .photo-spacer { width: 200px; height: 300px; }
+  .shared-photo { width: 200px; height: 300px; }
+
+  /* Tighter padding (only when no animation) */
+  body:not(.mobile-anim-active) .hero-content { padding: 60px 18px 40px; }
+  body:not(.mobile-anim-active) .skills-text,
+  body:not(.mobile-anim-active) .work-text { padding: 0 18px !important; }
+  .services { padding: 16px 12px 36px; }
+  .about-inner { padding: 70px 16px 20px; }
+  .projects-inner { padding: 40px 16px 28px; }
+  .career-inner { padding: 40px 16px 28px; }
+  .contact-cta { padding: 50px 16px; }
+  .footer-inner { padding: 0 16px 28px; }
+  .footer-bottom { padding: 0 16px; }
+  .quote { padding: 0 18px; }
+  .quote-text { font-size: 16px; }
+}
+
+/* ============================================================
+   MOBILE LOGO HIDE-ON-SCROLL (â‰¤1024px)
+   ============================================================ */
+@media (max-width: 1024px) {
+  .logo {
+    transition: opacity 0.3s ease;
+  }
+  body.scrolled .logo {
+    opacity: 0 !important;
+    pointer-events: none;
+  }
+}
+
+/* ============================================================
+   MOBILE GSAP CHOREOGRAPHY (â‰¤1024px)
+   When body has .mobile-anim-active class (added by
+   script-mobile.js), restructure hero/skills/work for the
+   vertical scroll-jacking timeline. Hero pins for 200vh,
+   side-left/right fade, photo translates Y, skills/work texts
+   become fixed overlays animated by GSAP.
+   ============================================================ */
+@media (max-width: 1024px) {
+
+  /* Hero: allow content to overflow while pinned */
+  body.mobile-anim-active .hero {
+    min-height: 100vh;
+    overflow: visible !important;
+  }
+
+  /* Hero-content lays out the stacked grid (Jenish / photo / Karki).
+     ScrollTrigger pins this element for the timeline duration. */
+  body.mobile-anim-active .hero-content {
+    position: relative;
+    height: 100vh;
+    min-height: 100vh;
+    padding: 80px 24px 60px;
+    overflow: visible;
+  }
+
+  /* Skills/work sections collapse â€” their text becomes a fixed
+     overlay during the pin. */
+  body.mobile-anim-active .skills,
+  body.mobile-anim-active .work {
+    height: 0;
+    min-height: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
+  }
+
+  /* Skills/work text become full-width fixed overlays.
+     Position is at top:0 (top of viewport); GSAP controls the
+     vertical translate to slide them in/out. */
+  body.mobile-anim-active .skills-text,
+  body.mobile-anim-active .work-text {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 32px !important;
+    margin: 0 !important;
+    text-align: center;
+    z-index: 16;
+    pointer-events: none;
+    /* opacity & transform controlled by GSAP */
+  }
+
+  body.mobile-anim-active .skills-desc,
+  body.mobile-anim-active .work-desc {
+    max-width: 480px !important;
+    margin: 0 auto !important;
+  }
+}
