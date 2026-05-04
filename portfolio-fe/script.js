@@ -5,8 +5,19 @@ if ('scrollRestoration' in history) {
 // ============================================================
 // HASH NAVIGATION — when arriving from a case study back-link
 // (e.g. index.html#projects), skip the JK loader entirely and
-// jump straight to the target section.
+// jump straight to the target section. On reload, strip the
+// hash so refresh always lands at the homepage top.
 // ============================================================
+try {
+  const nav = performance.getEntriesByType('navigation')[0];
+  const isReload = nav
+    ? nav.type === 'reload'
+    : (performance.navigation && performance.navigation.type === 1);
+  if (isReload && window.location.hash) {
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+  }
+} catch (e) {}
+
 const HAS_HASH = !!(window.location.hash && window.location.hash.length > 1);
 
 if (!HAS_HASH) {
