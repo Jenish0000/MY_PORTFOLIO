@@ -1968,3 +1968,20 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
     display: none;
   }
 }
+/* --- 9. MID-DESKTOP BREAKPOINT
+   Targets Windows laptops at 125% scaling (effective 1100–1440px).
+   Tightens the grid so the photo column doesn't crush the names. --- */
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .hero-content {
+    grid-template-columns: 1fr 280px 1fr;
+    gap: 48px;
+    padding: 0 48px;
+  }
+  .photo-spacer,
+  .shared-photo { width: 280px; height: 420px; }
+
+  .skills-text  { padding-left: 64px; max-width: 480px; }
+  .work-text    { padding-right: 64px; max-width: 480px; }
+
+  .service-card { width: 46vw; max-width: 560px; }
+}
