@@ -1961,3 +1961,8 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
   body.mobile-anim-active #serviceCard4 { z-index: 17 !important; }
   body.mobile-anim-active #serviceCard5 { z-index: 18 !important; }
 }
+@media (max-width: 1024px) {
+  .about-right {
+    display: none;
+  }
+}
