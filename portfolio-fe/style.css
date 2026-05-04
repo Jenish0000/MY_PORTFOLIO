@@ -119,7 +119,7 @@ body.theme-light .grid-glow {
   text-decoration: none;
   opacity: 0;
 }
-.logo-j, .logo-k { font-size: 58px; line-height: 1; letter-spacing: -0.01em;}
+.logo-j, .logo-k { font-size: 58px; line-height: 1; letter-spacing: -0.01em; }
 .logo-emblem {
   width: 68px; height: auto;
   filter: drop-shadow(0 0 12px rgba(255,255,255,0.08));
@@ -491,30 +491,15 @@ body.theme-light .grid-glow {
 
 /* NAV OVERLAY */
 .nav-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-
+  position: fixed; inset: 0;
   background: #f5f4f0;
-
-  /* HARD HIDE (important fix) */
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-
+  z-index: 100;
   transform: translateY(-100%);
-  transition:
-    transform 0.75s cubic-bezier(0.77, 0, 0.175, 1),
-    opacity 0.3s ease,
-    visibility 0.3s ease;
+  transition: transform 0.75s cubic-bezier(0.77, 0, 0.175, 1);
+  pointer-events: none;
 }
 body.theme-light .nav-overlay { background: #1a1a1a; }
-.nav-overlay.open {
-  transform: translateY(0);
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
+.nav-overlay.open { transform: translateY(0); pointer-events: auto; }
 .nav-inner {
   width: 100%; height: 100%;
   padding: 48px 80px;
@@ -608,7 +593,7 @@ body.theme-light .nav-contact a::after { background: #f5f4f0; }
   transform: scaleX(1); transform-origin: left;
 }
 
-/* Site-header z-110, nav-overlay z-100 → header above overlay */
+/* Site-header z-110, nav-overlay z-100 â†’ header above overlay */
 body:has(.nav-overlay.open) .logo {
   visibility: hidden;
   pointer-events: none;
@@ -1040,7 +1025,7 @@ body.theme-light .emblem {
 }
 
 /* ============================================================
-   PROJECTS — HOOK SECTION
+   PROJECTS â€” HOOK SECTION
    ============================================================ */
 .projects-stage {
   position: relative;
@@ -1409,7 +1394,7 @@ body.theme-light .projects-stage::after {
   border-radius: 4px;
 }
 .talabat-final::after {
-  content: '✓';
+  content: 'âœ“';
   position: absolute;
   bottom: 14px; left: 50%;
   transform: translateX(-50%);
@@ -1424,7 +1409,7 @@ body.theme-light .projects-stage::after {
   90%, 100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
 }
 
-/* SECONDARY ROW — Orion + Focusr */
+/* SECONDARY ROW â€” Orion + Focusr */
 .projects-also { margin-top: 16px; }
 .projects-also-label {
   font-family: 'Caveat', cursive;
@@ -1577,7 +1562,7 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
 }
 
 /* ============================================================
-   RESPONSIVE — base mobile/tablet (≤1024px)
+   RESPONSIVE â€” base mobile/tablet (â‰¤1024px)
    ============================================================ */
 @media (max-width: 1024px) {
   .quote { padding: 0 30px; }
@@ -1610,8 +1595,6 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
   .service-list li { font-size: 15px; }
   .about-inner { grid-template-columns: 1fr; padding: 100px 30px 30px; gap: 30px; }
   .about-heading { font-size: 36px; }
-  .about-right { display: none !important; }
-  .about-left { max-width: 720px; margin: 0 auto; }
   .about-right img { height: 360px; max-width: 280px; }
   .about-strip { padding: 16px 20px; font-size: 11px; flex-wrap: wrap; gap: 8px; }
   .projects-inner { padding: 60px 24px 40px; }
@@ -1636,379 +1619,6 @@ body.theme-light .project-also-card:hover { background: #d8d3c6; }
 }
 
 
-/* ============================================================
-   MOBILE COMPREHENSIVE FIX (≤1024px)
-   Neutralize GSAP visual side-effects on mobile by forcing
-   elements in-flow with !important. Timeline still scrubs.
-   ============================================================ */
-@media (max-width: 1024px) {
-
-  /* 1. Root-level overflow guard */
-  html { overflow-x: hidden; }
-  body { overflow-x: hidden; max-width: 100vw; }
-
-  /* 2. Logo: hide during loader, reveal after. The loader has
-        its own giant J-emblem-K; the header logo must not show
-        until the loader is gone, otherwise they overlap. */
-  body.loading .logo { opacity: 0 !important; }
-  body:not(.loading) .logo { opacity: 1 !important; }
-  body:not(.loading) .loader { display: none !important; }
-
-  /* 3. Floating photo: kill it. */
-  .shared-photo { display: none !important; }
-  .photo-spacer {
-    background-image: url('assets/photo.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    border-radius: 18px;
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
-  }
-  body.theme-light .photo-spacer {
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
-  }
-
-  /* 4. Hero: neutralize horizontal exit translates on names. */
-  .hero { min-height: 100vh; overflow: hidden; }
-  .hero-content {
-    position: relative;
-    height: auto;
-    min-height: 100vh;
-    padding: 80px 24px 60px;
-  }
-  .side-left, .side-right {
-    transform: none !important;
-    opacity: 1 !important;
-  }
-
-  /* 5. Skills & Work: pull text out of position:fixed into flow. */
-  .skills, .work {
-    min-height: auto !important;
-    padding: 50px 0;
-  }
-  .skills-text, .work-text {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    padding: 0 24px !important;
-    text-align: center;
-    opacity: 1 !important;
-    transform: none !important;
-    pointer-events: auto;
-  }
-
-  /* 5b. Skills/Work paragraphs: max-width:480px makes them a
-         fixed-width block. Center the block with auto margins
-         so it sits in the middle of the centered text container. */
-  .skills-desc, .work-desc {
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
-
-  /* 6. Services: stack all 5 cards vertically. */
-  .services {
-    min-height: auto !important;
-    padding: 30px 16px 50px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  .service-card,
-  #serviceCard, #serviceCard2, #serviceCard3, #serviceCard4, #serviceCard5 {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    transform: none !important;
-    filter: none !important;
-    opacity: 1 !important;
-    pointer-events: auto;
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
-  }
-
-  /* 7. ABOUT ME: center everything. The about-left default has
-        padding-left: 20px and no text-align — both wrong on mobile. */
-  .about-left {
-    padding-left: 0;
-    text-align: center;
-  }
-  .about-kicker { text-align: center; }
-  .about-heading {
-    text-align: center;
-    overflow-wrap: break-word;
-    word-break: break-word;
-    hyphens: auto;
-  }
-  .about-desc {
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .about-actions { justify-content: center; }
-  .about-socials { justify-content: center; }
-
-  .quote-text { overflow-wrap: break-word; }
-
-  /* 8. Long words break gracefully across all headings */
-  .name,
-  .skills-heading, .work-heading,
-  .service-title,
-  .career-role,
-  .contact-heading,
-  .projects-heading,
-  .career-heading,
-  .hook-title, .also-title {
-    overflow-wrap: break-word;
-    word-break: break-word;
-  }
-}
-
-/* ============================================================
-   MOBILE CENTERING FIX (≤1024px)
-   Centers Projects, Career, Quote, Footer.
-   ============================================================ */
-@media (max-width: 1024px) {
-
-  .projects-header { text-align: center; }
-
-  .projects-also-label {
-    text-align: center;
-    padding-left: 0;
-  }
-
-  .project-also-card {
-    flex-direction: column;
-    text-align: center;
-    gap: 16px;
-  }
-  .also-thumb { width: 96px; height: 96px; }
-
-  .career-header { text-align: center; }
-  .career-item {
-    align-items: center;
-    text-align: center;
-  }
-  .career-period { margin-left: 0; }
-
-  .quote-text { text-align: center; }
-
-  .footer-inner {
-    text-align: center;
-    grid-template-columns: 1fr;
-  }
-  .footer-left { margin: 0 auto; }
-  .footer-logo { justify-content: center; }
-  .footer-right {
-    grid-template-columns: 1fr;
-    justify-content: center;
-  }
-  .footer-col ul { align-items: center; }
-  .footer-bottom {
-    flex-direction: column;
-    gap: 16px;
-    text-align: center;
-  }
-}
-
-/* ============================================================
-   PHONE TWEAKS (≤600px)
-   Smaller loader and headings so they fit narrow viewports.
-   At @1024 the loader is 140 + 40 + 180 + 40 + 140 = 540px
-   which doesn't fit phones (375–414 wide). Reduce to ~378px.
-   ============================================================ */
-@media (max-width: 600px) {
-
-  /* Loader */
-  .letter { font-size: 100px; }
-  .emblem { width: 130px; }
-  .loader { gap: 24px; }
-
-  /* Logo tighter */
-  .logo-j, .logo-k { font-size: 30px; }
-  .logo-emblem { width: 34px; }
-  .site-header { padding: 18px 20px; }
-
-  /* Headings — slightly smaller for phones */
-  .name { font-size: 50px; }
-  .skills-heading, .work-heading { font-size: 32px; }
-  .projects-heading, .career-heading { font-size: 32px; }
-  .contact-heading { font-size: 32px; }
-  .about-heading { font-size: 30px; }
-
-  /* Photo */
-  .photo-spacer { width: 220px; height: 330px; }
-  .shared-photo { width: 220px; height: 330px; }
-
-  /* Section padding tighter */
-  .skills, .work { padding: 40px 0; }
-  .services { padding: 20px 14px 40px; }
-  .about-inner { padding: 80px 20px 24px; }
-  .projects-inner { padding: 50px 20px 32px; }
-  .career-inner { padding: 50px 20px 32px; }
-  .contact-cta { padding: 60px 20px; }
-  .footer-inner { padding: 0 20px 32px; }
-  .footer-bottom { padding: 0 20px; }
-}
-
-/* ============================================================
-   SMALL PHONE (≤380px) — iPhone SE etc.
-   Loader total ~296px to fit 375px viewport with margin.
-   Headings further reduced as user requested.
-   ============================================================ */
-@media (max-width: 380px) {
-
-  /* Loader */
-  .letter { font-size: 80px; }
-  .emblem { width: 100px; }
-  .loader { gap: 18px; }
-
-  /* Logo */
-  .logo-j, .logo-k { font-size: 26px; }
-  .logo-emblem { width: 30px; }
-  .site-header { padding: 14px 16px; }
-
-  /* Headings smaller still */
-  .name { font-size: 40px; }
-  .skills-heading, .work-heading { font-size: 28px; }
-  .projects-heading, .career-heading { font-size: 28px; }
-  .contact-heading { font-size: 26px; }
-  .about-heading { font-size: 24px; }
-
-  /* Photo */
-  .photo-spacer { width: 200px; height: 300px; }
-  .shared-photo { width: 200px; height: 300px; }
-
-  /* Tighter padding */
-  .hero-content { padding: 60px 18px 40px; }
-  .skills-text, .work-text { padding: 0 18px !important; }
-  .services { padding: 16px 12px 36px; }
-  .about-inner { padding: 70px 16px 20px; }
-  .projects-inner { padding: 40px 16px 28px; }
-  .career-inner { padding: 40px 16px 28px; }
-  .contact-cta { padding: 50px 16px; }
-  .footer-inner { padding: 0 16px 28px; }
-  .footer-bottom { padding: 0 16px; }
-  .quote { padding: 0 18px; }
-  .quote-text { font-size: 16px; }
-}
-
-/* ============================================================
-   MOBILE LOGO HIDE-ON-SCROLL (≤1024px)
-   User wants logo only visible on the homescreen (hero section).
-   body.scrolled is added via inline JS in index.html when the
-   user scrolls past 60% of the viewport height.
-   ============================================================ */
-@media (max-width: 1024px) {
-  .logo {
-    transition: opacity 0.3s ease;
-  }
-  body.scrolled .logo {
-    opacity: 0 !important;
-    pointer-events: none;
-  }
-}
-
-/* ============================================================
-   SCALING FIX — Mac/Windows DPI parity
-   DESKTOP-ONLY (≥1025px). Wrapped in a media query so the
-   clamp() minimums don't override the mobile rules above.
-   ============================================================ */
-@media (min-width: 1025px) {
-
-  /* --- 1. FLUID HERO + LOADER --- */
-  .letter        { font-size: clamp(140px, 16vw, 280px); }
-  .emblem        { width: clamp(180px, 20vw, 320px); }
-
-  .logo-j, .logo-k { font-size: clamp(38px, 3.6vw, 58px); }
-  .logo-emblem     { width: clamp(44px, 4.2vw, 68px); }
-  .site-header     { padding: clamp(20px, 2vw, 32px) clamp(28px, 3.2vw, 52px); }
-
-  .hero-content {
-    gap: clamp(40px, 5vw, 80px);
-    padding: 0 clamp(40px, 5vw, 80px);
-    grid-template-columns: 1fr clamp(260px, 20vw, 320px) 1fr;
-  }
-  .photo-spacer,
-  .shared-photo {
-    width:  clamp(260px, 20vw, 320px);
-    height: clamp(390px, 30vw, 480px);
-  }
-  .name { font-size: clamp(64px, 7vw, 110px); }
-
-  /* --- 2. FLUID SKILLS + WORK TEXT BLOCKS --- */
-  .skills-text {
-    padding-left: clamp(40px, 7vw, 120px);
-    max-width: min(620px, 46vw);
-  }
-  .work-text {
-    padding-right: clamp(40px, 7vw, 120px);
-    max-width: min(620px, 46vw);
-  }
-  .skills-heading,
-  .work-heading { font-size: clamp(40px, 4.4vw, 64px); }
-  .skills-kicker,
-  .work-kicker  { font-size: clamp(20px, 1.9vw, 28px); }
-
-  /* --- 3. SERVICE CARDS --- */
-  .service-card {
-    padding: clamp(36px, 3.6vw, 56px) clamp(36px, 4vw, 60px);
-    width: clamp(420px, 44vw, 640px);
-  }
-  .service-title { font-size: clamp(24px, 2.4vw, 34px); }
-
-  /* --- 4. PROJECTS / CAREER / CONTACT HEADINGS --- */
-  .projects-heading,
-  .career-heading { font-size: clamp(40px, 4.4vw, 64px); }
-  .contact-heading { font-size: clamp(44px, 5vw, 72px); }
-  .career-role     { font-size: clamp(26px, 2.5vw, 36px); }
-
-  .projects-inner,
-  .career-inner { padding: clamp(50px, 5vw, 80px) clamp(40px, 5vw, 80px); }
-
-  /* --- 5. ABOUT CURTAIN --- */
-  .about-inner { padding: clamp(80px, 7vw, 110px) clamp(40px, 6vw, 100px) 30px; gap: clamp(30px, 4vw, 60px); }
-  .about-heading { font-size: clamp(36px, 3.8vw, 56px); margin-bottom: 20px; }
-  .about-desc    { margin-bottom: 28px; }
-  .about-actions { margin-bottom: 28px; }
-
-  /* --- 6. ABOUT IMAGE — match hero photo dimensions --- */
-  .about-right img {
-    width: clamp(260px, 20vw, 320px);
-    max-width: 320px;
-    height: clamp(390px, 30vw, 480px);
-  }
-
-  /* --- 7. QUOTE --- */
-  .quote { padding: 0 clamp(40px, 6vw, 100px); }
-  .quote-text { font-size: clamp(20px, 2.2vw, 32px); }
-
-  /* --- 8. NAV OVERLAY --- */
-  .nav-list a { font-size: clamp(48px, 6vw, 84px); }
-  .nav-inner  { padding: clamp(32px, 3.6vw, 48px) clamp(40px, 5vw, 80px); }
-}
-
-/* --- 9. MID-DESKTOP BREAKPOINT
-   Targets Windows laptops at 125% scaling (effective 1100–1440px).
-   Tightens the grid so the photo column doesn't crush the names. --- */
-@media (min-width: 1025px) and (max-width: 1440px) {
-  .hero-content {
-    grid-template-columns: 1fr 280px 1fr;
-    gap: 48px;
-    padding: 0 48px;
-  }
-  .photo-spacer,
-  .shared-photo { width: 280px; height: 420px; }
-
-  .skills-text  { padding-left: 64px; max-width: 480px; }
-  .work-text    { padding-right: 64px; max-width: 480px; }
-
-  .service-card { width: 46vw; max-width: 560px; }
-}
 /* ============================================================
    MOBILE COMPREHENSIVE FIX (â‰¤1024px)
    Neutralize GSAP visual side-effects on mobile by forcing
