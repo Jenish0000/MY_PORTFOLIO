@@ -68,8 +68,7 @@
         st.kill(true);
       }
     });
-
-    gsap.set([
+gsap.set([
       '#sideLeft', '#sideRight',
       '#skillsText', '#workText',
       '#sharedPhoto', '.photo-spacer',
@@ -77,6 +76,23 @@
       '#serviceCard4', '#serviceCard5'
     ], {
       clearProps: 'transform,opacity,filter,willChange'
+    });
+
+    // Immediately re-apply target post-clearProps states so the CSS
+    // defaults (opacity:0 on sides, center for cards) don't paint
+    // for 1–2 frames before buildTimeline / buildServicesTimeline run.
+    gsap.set(['#sideLeft', '#sideRight'], { y: 0, opacity: 1 });
+    gsap.set('.photo-spacer',             { y: 0 });
+    gsap.set('#skillsText',               { y: '100vh',  opacity: 0 });
+    gsap.set('#workText',                 { y: '-100vh', opacity: 0 });
+    gsap.set([
+      '#serviceCard', '#serviceCard2', '#serviceCard3',
+      '#serviceCard4', '#serviceCard5'
+    ], {
+      xPercent: -50,
+      yPercent: -50,
+      y: '100vh',
+      opacity: 1
     });
 
     document.body.classList.add('mobile-anim-active');
